@@ -13,7 +13,34 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside class="mocks">Mocks</el-aside>
+      <el-aside class="mocks">
+        <div class="mock-list">
+          <div class="mock-item">
+            <el-button circle>M</el-button>
+          </div>
+          <div class="mock-item">
+            <el-button circle>O</el-button>
+          </div>
+          <div class="mock-item">
+            <el-button circle>C</el-button>
+          </div>
+          <div class="mock-item">
+            <el-button circle>K</el-button>
+          </div>
+          <div class="mock-item">
+            <el-button circle>M</el-button>
+          </div>
+          <div class="mock-item">
+            <el-button circle>A</el-button>
+          </div>
+          <div class="mock-item">
+            <el-button circle>N</el-button>
+          </div>
+        </div>
+        <div class="add-btn">
+          <el-button class="add-btn" icon="el-icon-plus" circle></el-button>
+        </div>
+      </el-aside>
       <el-aside class="apis">Apis</el-aside>
       <el-container>
         <el-main>Api Details</el-main>
@@ -64,13 +91,48 @@
   .el-aside {
     color: #333;
     text-align: center;
-    line-height: 200px;
+    line-height: 60px;
   }
 
   .el-aside.mocks {
-    background: #F3F3F3;
+    background: #202225;
     width: 70px !important;
     overflow-y: scroll;
+  }
+  .el-aside.mocks .mock-list {
+    margin-top: 20px;
+  }
+  .el-aside.mocks .mock-item {
+    height: 60px;
+  }
+  .el-aside.mocks .mock-item .el-button {
+    width: 50px;
+    height: 50px;
+    border: 0;
+    background: #2f3136;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 300;
+    transition: border-radius .25s ease, background .25s ease;
+  }
+  .el-aside.mocks .mock-item .el-button:hover {
+    background: rgb(114, 137, 218);
+    border-radius: 15px;
+  }
+  .el-aside.mocks .add-btn .el-button {
+    width: 50px;
+    height: 50px;
+    border: 1px dashed #535559;
+    background: transparent;
+    color: #535559;
+    font-size: 22px;
+    font-weight: 300;
+    transition: border-color .25s ease,color .25s ease;
+  }
+  .el-aside.mocks .add-btn .el-button:hover {
+    border: 1px dashed #fff;
+    color: hsla(0,0%,100%,.75);
+    background: transparent;
   }
 
   .el-aside.apis {
