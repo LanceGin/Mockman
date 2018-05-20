@@ -12,4 +12,7 @@
 
 <style>
   /* CSS */
+  #app {
+    height: 100vh;
+  }
 </style>
