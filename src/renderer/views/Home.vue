@@ -41,13 +41,78 @@
           <el-button class="add-btn" icon="el-icon-plus" circle></el-button>
         </div>
       </el-aside>
-      <el-aside class="apis">Apis</el-aside>
+      <el-aside class="apis">
+        <el-collapse v-model="activeNames" @change="handleChange">
+          <el-collapse-item name="1">
+            <template slot="title">
+              <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
+            </template>
+            <div class="sub-req">
+              <span class="req-type">GET</span>
+              <span class="req-route">/mockman</span>
+            </div>
+            <div class="sub-req">
+              <span class="req-type">DELETE</span>
+              <span class="req-route">/mockman</span>
+            </div>
+            <div class="sub-req">
+              <span class="req-type">POST</span>
+              <span class="req-route">/mockman</span>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item name="2">
+            <template slot="title">
+              <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-02</span>
+            </template>
+            <div class="sub-req">
+              <span class="req-type">PUT</span>
+              <span class="req-route">/mockman</span>
+            </div>
+            <div class="sub-req">
+              <span class="req-type">PATCH</span>
+              <span class="req-route">/mockman</span>
+            </div>
+            <div class="sub-req">
+              <span class="req-type">OPTIONS</span>
+              <span class="req-route">/mockman</span>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
+        <div class="single-req">
+          <span class="req-type">GET</span>
+          <span class="req-route">/mockman</span>
+        </div>
+        <div class="single-req">
+          <span class="req-type">POST</span>
+          <span class="req-route">/mockman</span>
+        </div>
+        <div class="single-req">
+          <span class="req-type">DELETE</span>
+          <span class="req-route">/mockman</span>
+        </div>
+      </el-aside>
       <el-container>
         <el-main>Api Details</el-main>
       </el-container>
     </el-container>
   </el-container>
 </template>
+
+<script>
+  export default {
+    name: 'home',
+    data() {
+      return {
+        activeNames: ['1'],
+      };
+    },
+    methods: {
+      handleChange(val) {
+        console.log(val);
+      },
+    },
+  };
+</script>
 
 <style>
   body {
@@ -90,11 +155,11 @@
   
   .el-aside {
     color: #333;
-    text-align: center;
     line-height: 60px;
   }
 
   .el-aside.mocks {
+    text-align: center;
     background: #202225;
     width: 70px !important;
     overflow-y: scroll;
@@ -136,8 +201,69 @@
   }
 
   .el-aside.apis {
-    background: #246245;
-    width: 200px !important;
+    background: #2f3136;
+    width: 260px !important;
+  }
+  .el-aside.apis .el-collapse {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .el-collapse-item__header {
+    background: transparent;
+    color: #72767d;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 0;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .el-collapse-item__header:hover {
+    color: #B9BBBE;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .el-collapse-item__arrow {
+    line-height: 30px;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .el-collapse-item__wrap {
+    background: transparent;
+    border-bottom: 0;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .el-collapse-item__content {
+    color: #fff;
+    padding-bottom: 0;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .sub-req {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .sub-req:hover {
+    background: rgba(79,84,92,.6);
+    cursor: pointer;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .sub-req .req-type {
+    display: inline-block;
+    width: 60px;
+    color: #72767d;
+  }
+  .el-aside.apis .el-collapse .el-collapse-item .sub-req .req-route {
+    color: #72767d;
+  }
+  .el-aside.apis .single-req {
+    height: 30px;
+    line-height: 30px;
+    color: #72767d;
+    font-size: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .el-aside.apis .single-req:hover {
+    background: rgba(79,84,92,.6);
+    cursor: pointer;
+  }
+  .el-aside.apis .single-req .req-type {
+    display: inline-block;
+    width: 60px;
+    color: #72767d;
   }
   
   .el-main {
