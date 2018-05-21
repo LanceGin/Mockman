@@ -42,6 +42,18 @@
         </div>
       </el-aside>
       <el-aside class="apis">
+        <div class="mock-info">
+          <div>
+            <el-input value="MockServer" class="mock-name" placeholder="Server Name"></el-input>
+            <el-button type="text" icon="el-icon-caret-right"></el-button>
+          </div>
+          <div>
+            <span class="host">localhost:</span>
+            <el-input value="3001" class="port" placeholder="Port"></el-input>
+            <span class="sign">/</span>
+            <el-input value="" class="prefix" placeholder="Prefix"></el-input>
+          </div>
+        </div>
         <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item name="1">
             <template slot="title">
@@ -157,7 +169,6 @@
   
   .el-aside {
     color: #333;
-    line-height: 60px;
   }
 
   .el-aside.mocks {
@@ -205,6 +216,76 @@
   .el-aside.apis {
     background: #2f3136;
     width: 260px !important;
+  }
+  .el-aside.apis .mock-info {
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+    box-sizing: border-box;
+    color: #fff;
+    text-align: right;
+    padding: 0 10px;
+  }
+  .el-aside.apis .mock-info .el-button--text {
+    padding: 0;
+    font-size: 20px;
+    color: #67c23a;
+  }
+  .el-aside.apis .mock-info div {
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    color: #c0c3cb;
+  }
+  .el-aside.apis .mock-info div:first-child {
+    border-bottom: 1px solid #36393f;
+  }
+  .el-aside.apis .mock-info div .mock-name {
+    float: left;
+    width: 160px;
+  }
+  .el-aside.apis .mock-info div .mock-name .el-input__inner {
+    background: transparent;
+    border: 0;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    color: #c0c3cb;
+  }
+  .el-aside.apis .mock-info div .mock-name .el-input__inner::-webkit-input-placeholder {
+    color: #72767d;
+  }
+  .el-aside.apis .mock-info div .host,
+  .el-aside.apis .mock-info div .port,
+  .el-aside.apis .mock-info div .sign,
+  .el-aside.apis .mock-info div .prefix {
+    float: left;
+  }
+  .el-aside.apis .mock-info div .sign {
+    display: inline-block;
+    padding: 0 5px;
+  }
+  .el-aside.apis .mock-info div .port {
+    width: 50px;
+  }
+  .el-aside.apis .mock-info div .port .el-input__inner {
+    padding: 0 2px;
+    background: transparent;
+    border: 0;
+    color: #c0c3cb;
+  }
+  .el-aside.apis .mock-info div .port .el-input__inner::-webkit-input-placeholder {
+    color: #72767d;
+  }
+  .el-aside.apis .mock-info div .prefix {
+    width: 80px;
+  }
+  .el-aside.apis .mock-info div .prefix .el-input__inner {
+    padding: 0 2px;
+    background: transparent;
+    border: 0;
+    color: #c0c3cb;
+  }
+  .el-aside.apis .mock-info div .prefix .el-input__inner::-webkit-input-placeholder {
+    color: #72767d;
   }
   .el-aside.apis .el-collapse {
     padding-left: 10px;
