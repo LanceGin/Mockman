@@ -54,53 +54,59 @@
             <el-input value="" class="prefix" placeholder="Prefix"></el-input>
           </div>
         </div>
-        <el-collapse v-model="activeNames" @change="handleChange">
-          <el-collapse-item name="1">
-            <template slot="title">
-              <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
-            </template>
-            <div class="sub-req">
-              <span class="req-type get">GET</span>
-              <span class="req-route">/mockman</span>
-            </div>
-            <div class="sub-req">
-              <span class="req-type delete">DELETE</span>
-              <span class="req-route">/mockman</span>
-            </div>
-            <div class="sub-req">
-              <span class="req-type post">POST</span>
-              <span class="req-route">/mockman</span>
-            </div>
-          </el-collapse-item>
-          <el-collapse-item name="2">
-            <template slot="title">
-              <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-02</span>
-            </template>
-            <div class="sub-req">
-              <span class="req-type put">PUT</span>
-              <span class="req-route">/mockman</span>
-            </div>
-            <div class="sub-req">
-              <span class="req-type patch">PATCH</span>
-              <span class="req-route">/mockman</span>
-            </div>
-            <div class="sub-req">
-              <span class="req-type options">OPTIONS</span>
-              <span class="req-route">/mockman</span>
-            </div>
-          </el-collapse-item>
-        </el-collapse>
-        <div class="single-req">
-          <span class="req-type get">GET</span>
-          <span class="req-route">/mockman</span>
-        </div>
-        <div class="single-req">
-          <span class="req-type post">POST</span>
-          <span class="req-route">/mockman</span>
-        </div>
-        <div class="single-req">
-          <span class="req-type delete">DELETE</span>
-          <span class="req-route">/mockman</span>
+        <div>
+          <div class="api-header">
+            <span class="note">Api</span>
+            <el-button type="text" icon="el-icon-plus"></el-button>
+          </div>
+          <el-collapse v-model="activeNames" @change="handleChange">
+            <el-collapse-item name="1">
+              <template slot="title">
+                <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
+              </template>
+              <div class="sub-req">
+                <span class="req-type get">GET</span>
+                <span class="req-route">/mockman</span>
+              </div>
+              <div class="sub-req">
+                <span class="req-type delete">DELETE</span>
+                <span class="req-route">/mockman</span>
+              </div>
+              <div class="sub-req">
+                <span class="req-type post">POST</span>
+                <span class="req-route">/mockman</span>
+              </div>
+            </el-collapse-item>
+            <el-collapse-item name="2">
+              <template slot="title">
+                <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-02</span>
+              </template>
+              <div class="sub-req">
+                <span class="req-type put">PUT</span>
+                <span class="req-route">/mockman</span>
+              </div>
+              <div class="sub-req">
+                <span class="req-type patch">PATCH</span>
+                <span class="req-route">/mockman</span>
+              </div>
+              <div class="sub-req">
+                <span class="req-type options">OPTIONS</span>
+                <span class="req-route">/mockman</span>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
+          <div class="single-req">
+            <span class="req-type get">GET</span>
+            <span class="req-route">/mockman</span>
+          </div>
+          <div class="single-req">
+            <span class="req-type post">POST</span>
+            <span class="req-route">/mockman</span>
+          </div>
+          <div class="single-req">
+            <span class="req-type delete">DELETE</span>
+            <span class="req-route">/mockman</span>
+          </div>
         </div>
       </el-aside>
       <el-container>
@@ -290,6 +296,27 @@
   }
   .el-aside.apis .mock-info div .prefix .el-input__inner::-webkit-input-placeholder {
     color: #72767d;
+  }
+  .el-aside.apis .api-header {
+    padding: 0 10px;
+    text-align: right;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+  }
+  .el-aside.apis .api-header .note {
+    color: #72767d;
+    font-size: 12px;
+    font-weight: 500;
+    float: left;
+  }
+  .el-aside.apis .api-header .el-button {
+    color: #72767d;
+    font-weight: 500;
+    transition: color .25s ease;
+  }
+  .el-aside.apis .api-header .el-button:hover{
+    color: #B9BBBE;
   }
   .el-aside.apis .el-collapse {
     padding-left: 10px;
