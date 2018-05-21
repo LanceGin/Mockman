@@ -149,6 +149,7 @@
     background: #5B5B5B;
     color: #fff;
     border: 0;
+    transition: background .25s ease;
   }
   .feature .el-button:hover {
     background: #6E6E6E;
@@ -177,7 +178,7 @@
     border: 0;
     background: #2f3136;
     color: #fff;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 300;
     transition: border-radius .25s ease, background .25s ease;
   }
@@ -216,6 +217,7 @@
     height: 30px;
     line-height: 30px;
     border-bottom: 0;
+    transition: color .25s ease;
   }
   .el-aside.apis .el-collapse .el-collapse-item .el-collapse-item__header:hover {
     color: #B9BBBE;
@@ -236,6 +238,7 @@
     line-height: 30px;
     padding-left: 10px;
     padding-right: 10px;
+    transition: background .25s ease;
   }
   .el-aside.apis .el-collapse .el-collapse-item .sub-req:hover {
     background: rgba(79,84,92,.6);
@@ -256,6 +259,7 @@
     font-size: 13px;
     padding-left: 10px;
     padding-right: 10px;
+    transition: background .25s ease;
   }
   .el-aside.apis .single-req:hover {
     background: rgba(79,84,92,.6);
