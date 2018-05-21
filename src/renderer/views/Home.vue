@@ -48,15 +48,15 @@
               <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
             </template>
             <div class="sub-req">
-              <span class="req-type">GET</span>
+              <span class="req-type get">GET</span>
               <span class="req-route">/mockman</span>
             </div>
             <div class="sub-req">
-              <span class="req-type">DELETE</span>
+              <span class="req-type delete">DELETE</span>
               <span class="req-route">/mockman</span>
             </div>
             <div class="sub-req">
-              <span class="req-type">POST</span>
+              <span class="req-type post">POST</span>
               <span class="req-route">/mockman</span>
             </div>
           </el-collapse-item>
@@ -65,29 +65,29 @@
               <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-02</span>
             </template>
             <div class="sub-req">
-              <span class="req-type">PUT</span>
+              <span class="req-type put">PUT</span>
               <span class="req-route">/mockman</span>
             </div>
             <div class="sub-req">
-              <span class="req-type">PATCH</span>
+              <span class="req-type patch">PATCH</span>
               <span class="req-route">/mockman</span>
             </div>
             <div class="sub-req">
-              <span class="req-type">OPTIONS</span>
+              <span class="req-type options">OPTIONS</span>
               <span class="req-route">/mockman</span>
             </div>
           </el-collapse-item>
         </el-collapse>
         <div class="single-req">
-          <span class="req-type">GET</span>
+          <span class="req-type get">GET</span>
           <span class="req-route">/mockman</span>
         </div>
         <div class="single-req">
-          <span class="req-type">POST</span>
+          <span class="req-type post">POST</span>
           <span class="req-route">/mockman</span>
         </div>
         <div class="single-req">
-          <span class="req-type">DELETE</span>
+          <span class="req-type delete">DELETE</span>
           <span class="req-route">/mockman</span>
         </div>
       </el-aside>
@@ -115,6 +115,7 @@
 </script>
 
 <style>
+  /* common style */
   body {
     margin: 0;
   }
@@ -271,6 +272,26 @@
     color: #333;
     text-align: center;
     line-height: 160px;
+  }
+
+  /* request type color */
+  .req-type.get {
+    color: rgb(114, 137, 218) !important;
+  }
+  .req-type.post {
+    color: #49cc90 !important;
+  }
+  .req-type.delete {
+    color: #f93e3e !important;
+  }
+  .req-type.put {
+    color: #fca130 !important;
+  }
+  .req-type.patch {
+    color: #50e3c2 !important;
+  }
+  .req-type.options {
+    color: #50e3c2 !important;
   }
   
 </style>
