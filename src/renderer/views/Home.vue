@@ -48,7 +48,7 @@
             <el-button type="text" icon="el-icon-caret-right"></el-button>
           </div>
           <div>
-            <span class="host">localhost:</span>
+            <span class="host">localhost :</span>
             <el-input value="3001" class="port" placeholder="Port"></el-input>
             <span class="sign">/</span>
             <el-input value="" class="prefix" placeholder="Prefix"></el-input>
@@ -258,6 +258,10 @@
   .el-aside.apis .mock-info div .sign,
   .el-aside.apis .mock-info div .prefix {
     float: left;
+  }
+  .el-aside.apis .mock-info div .host,
+  .el-aside.apis .mock-info div .sign {
+    cursor: default;
   }
   .el-aside.apis .mock-info div .sign {
     display: inline-block;
