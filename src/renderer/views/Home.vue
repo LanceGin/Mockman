@@ -15,39 +15,9 @@
     <el-container>
       <el-aside class="mocks">
         <div class="mock-list">
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>M</el-button>
-            </el-tooltip>
-          </div>
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>O</el-button>
-            </el-tooltip>
-          </div>
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>C</el-button>
-            </el-tooltip>
-          </div>
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>K</el-button>
-            </el-tooltip>
-          </div>
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>M</el-button>
-            </el-tooltip>
-          </div>
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>A</el-button>
-            </el-tooltip>
-          </div>
-          <div class="mock-item">
-            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
-              <el-button circle>N</el-button>
+          <div class="mock-item" v-for="mock in mocks">
+            <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
+              <el-button circle>{{ mock.name }}</el-button>
             </el-tooltip>
           </div>
         </div>
@@ -138,6 +108,15 @@
     data() {
       return {
         activeNames: ['1'],
+        mocks: [
+          { name: 'M', content: 'MockServer' },
+          { name: 'O', content: 'MockServer' },
+          { name: 'C', content: 'MockServer' },
+          { name: 'K', content: 'MockServer' },
+          { name: 'M', content: 'MockServer' },
+          { name: 'A', content: 'MockServer' },
+          { name: 'N', content: 'MockServer' },
+        ],
       };
     },
     methods: {
@@ -403,8 +382,8 @@
   }
   
   .el-main {
-    background-color: #E9EEF3;
-    color: #333;
+    background-color: #36393e;
+    color: #fff;
     text-align: center;
     line-height: 160px;
   }
