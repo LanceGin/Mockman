@@ -16,29 +16,45 @@
       <el-aside class="mocks">
         <div class="mock-list">
           <div class="mock-item">
-            <el-button circle>M</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>M</el-button>
+            </el-tooltip>
           </div>
           <div class="mock-item">
-            <el-button circle>O</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>O</el-button>
+            </el-tooltip>
           </div>
           <div class="mock-item">
-            <el-button circle>C</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>C</el-button>
+            </el-tooltip>
           </div>
           <div class="mock-item">
-            <el-button circle>K</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>K</el-button>
+            </el-tooltip>
           </div>
           <div class="mock-item">
-            <el-button circle>M</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>M</el-button>
+            </el-tooltip>
           </div>
           <div class="mock-item">
-            <el-button circle>A</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>A</el-button>
+            </el-tooltip>
           </div>
           <div class="mock-item">
-            <el-button circle>N</el-button>
+            <el-tooltip content="MockServer" placement="right" :visible-arrow="false">
+              <el-button circle>N</el-button>
+            </el-tooltip>
           </div>
         </div>
         <div class="add-btn">
-          <el-button class="add-btn" icon="el-icon-plus" circle></el-button>
+          <el-tooltip content="New Mock Server" placement="right" :visible-arrow="false">
+            <el-button class="add-btn" icon="el-icon-plus" circle></el-button>
+          </el-tooltip>
         </div>
       </el-aside>
       <el-aside class="apis">
@@ -136,6 +152,9 @@
   /* common style */
   body {
     margin: 0;
+  }
+  .el-tooltip__popper.is-dark {
+    background: #000;
   }
 
   .el-container {
