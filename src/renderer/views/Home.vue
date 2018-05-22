@@ -96,7 +96,46 @@
         </div>
       </el-aside>
       <el-container>
-        <el-main>Api Details</el-main>
+        <el-main class="api-detail">
+          <div class="api-info">
+            <div>
+              <el-dropdown trigger="click" placement="bottom" class="type">
+                <span class="el-dropdown-link">
+                  GET<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>GET</el-dropdown-item>
+                  <el-dropdown-item>POST</el-dropdown-item>
+                  <el-dropdown-item>PUT</el-dropdown-item>
+                  <el-dropdown-item>PATCH</el-dropdown-item>
+                  <el-dropdown-item>DELETE</el-dropdown-item>
+                  <el-dropdown-item>OPTIONS</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <span class="sign">/</span>
+              <el-input value="mockman" class="path" placeholder="path"></el-input>
+              <el-dropdown trigger="click" placement="bottom" class="status">
+                <span class="el-dropdown-link">
+                  200 OK<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>304 Not Modified</el-dropdown-item>
+                  <el-dropdown-item>400 Bad Request</el-dropdown-item>
+                  <el-dropdown-item>403 Forbidden</el-dropdown-item>
+                  <el-dropdown-item>404 Not Found</el-dropdown-item>
+                  <el-dropdown-item>500 Internal Server Error</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <span class="time-title">TIME</span>
+              <el-input
+                placeholder="0"
+                class="time"
+                value="0">
+              </el-input>
+              <span>ms</span>
+            </div>
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </el-container>
@@ -384,8 +423,45 @@
   .el-main {
     background-color: #36393e;
     color: #fff;
-    text-align: center;
-    line-height: 160px;
+    padding: 0 20px;
+  }
+  .el-main.api-detail .api-info {
+    text-align: right;
+  }
+  .el-main.api-detail .api-info div {
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    color: #c0c3cb;
+    border-bottom: 1px solid red;
+  }
+  .el-main.api-detail .api-info div .type,
+  .el-main.api-detail .api-info div .sign,
+  .el-main.api-detail .api-info div .path {
+    float: left;
+  }
+  .el-main.api-detail .api-info div .sign {
+    margin-left: 2px;
+  }
+  .el-main.api-detail .api-info div .path {
+    width: 400px;
+    margin-left: 2px;
+  }
+  .el-main.api-detail .api-info div .path .el-input__inner {
+    background: transparent;
+    border: 0;
+  }
+  .el-main.api-detail .api-info div .time-title {
+    margin-left: 20px;
+  }
+  .el-main.api-detail .api-info div .time {
+    width: 40px;
+  }
+  .el-main.api-detail .api-info div .time .el-input__inner {
+    background: transparent;
+    border: 0;
+    width: 40px;
+    padding: 0 5px;
   }
 
   /* request type color */
