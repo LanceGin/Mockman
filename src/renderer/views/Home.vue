@@ -135,6 +135,12 @@
               <span>ms</span>
             </div>
           </div>
+          <div class="req-res">
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="REQUEST" name="request">REQUEST</el-tab-pane>
+              <el-tab-pane label="RESPONSE" name="response">RESPONSE</el-tab-pane>
+            </el-tabs>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -156,11 +162,15 @@
           { name: 'A', content: 'MockServer' },
           { name: 'N', content: 'MockServer' },
         ],
+        activeName: 'request',
       };
     },
     methods: {
       handleChange(val) {
         console.log(val);
+      },
+      handleClick(tab, event) {
+        console.log(tab, event);
       },
     },
   };
@@ -423,17 +433,20 @@
   .el-main {
     background-color: #36393e;
     color: #fff;
-    padding: 0 20px;
+    padding: 0 0;
   }
   .el-main.api-detail .api-info {
     text-align: right;
+    padding: 0 20px;
   }
   .el-main.api-detail .api-info div {
     height: 50px;
     line-height: 50px;
     font-size: 16px;
     color: #c0c3cb;
-    border-bottom: 1px solid red;
+  }
+  .el-main.api-detail .api-info div:first-child {
+    border-bottom: 1px solid #606266;
   }
   .el-main.api-detail .api-info div .type,
   .el-main.api-detail .api-info div .sign,
@@ -462,6 +475,29 @@
     border: 0;
     width: 40px;
     padding: 0 5px;
+  }
+  .el-main.api-detail .req-res .el-tabs__header {
+    padding: 0 20px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+    box-sizing: border-box;
+  }
+  .el-main.api-detail .req-res .el-tabs__content {
+    padding: 0 20px;
+  }
+  .el-main.api-detail .req-res .el-tabs__nav-wrap::after {
+    height: 0;
+  }
+  .el-main.api-detail .req-res .el-tabs__item {
+    height: 50px;
+    line-height: 50px;
+    color: #c0c3cb;
+  }
+  .el-main.api-detail .req-res .el-tabs__item:hover,
+  .el-main.api-detail .req-res .el-tabs__item.is-active {
+    color: #7289da;
+  }
+  .el-main.api-detail .req-res .el-tabs__active-bar {
+    background: #7289da;
   }
 
   /* request type color */
