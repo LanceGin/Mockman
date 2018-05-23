@@ -136,9 +136,21 @@
             </div>
           </div>
           <div class="req-res">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-              <el-tab-pane label="REQUEST" name="request">REQUEST</el-tab-pane>
-              <el-tab-pane label="RESPONSE" name="response">RESPONSE</el-tab-pane>
+            <el-tabs v-model="activeHttp" @tab-click="handleHttpClick">
+              <el-tab-pane label="REQUEST" name="request">
+                <el-tabs v-model="activeReq" @tab-click="handleReqClick">
+                  <el-tab-pane label="Params" name="params">Params</el-tab-pane>
+                  <el-tab-pane label="Body" name="body">Body</el-tab-pane>
+                  <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
+                </el-tabs>
+              </el-tab-pane>
+              <el-tab-pane label="RESPONSE" name="response">
+                <el-tabs v-model="activeRes" @tab-click="handleResClick">
+                  <el-tab-pane label="Body" name="body">Body</el-tab-pane>
+                  <el-tab-pane label="Cookies" name="cookies">Cookies</el-tab-pane>
+                  <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
+                </el-tabs>
+              </el-tab-pane>
             </el-tabs>
           </div>
         </el-main>
@@ -162,14 +174,22 @@
           { name: 'A', content: 'MockServer' },
           { name: 'N', content: 'MockServer' },
         ],
-        activeName: 'request',
+        activeHttp: 'request',
+        activeReq: 'params',
+        activeRes: 'body',
       };
     },
     methods: {
       handleChange(val) {
         console.log(val);
       },
-      handleClick(tab, event) {
+      handleHttpClick(tab, event) {
+        console.log(tab, event);
+      },
+      handleReqClick(tab, event) {
+        console.log(tab, event);
+      },
+      handleResClick(tab, event) {
         console.log(tab, event);
       },
     },
@@ -446,7 +466,7 @@
     color: #c0c3cb;
   }
   .el-main.api-detail .api-info div:first-child {
-    border-bottom: 1px solid #606266;
+    border-bottom: 1px solid #45474b;
   }
   .el-main.api-detail .api-info div .type,
   .el-main.api-detail .api-info div .sign,
@@ -498,6 +518,16 @@
   }
   .el-main.api-detail .req-res .el-tabs__active-bar {
     background: #7289da;
+  }
+
+  .el-main.api-detail .req-res .el-tabs__content .el-tabs {
+    background: hsla(218,5%,47%,.3);
+    border-radius: 5px;
+    padding-bottom: 20px;
+  }
+  .el-main.api-detail .req-res .el-tabs__content .el-tabs .el-tabs__header {
+    box-shadow: none;
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
   }
 
   /* request type color */
