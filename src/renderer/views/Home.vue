@@ -532,22 +532,22 @@
 
   /* request type color */
   .req-type.get {
-    color: #33c6c5!important;
+    color: #33c6c5 !important;
   }
   .req-type.post {
-    color: #49cc90 !important;
+    color: #f77b20 !important;
   }
   .req-type.delete {
-    color: #f93e3e !important;
+    color: #ff3c3c !important;
   }
   .req-type.put {
-    color: #fca130 !important;
+    color: #8787eb !important;
   }
   .req-type.patch {
-    color: #50e3c2 !important;
+    color: #59a3f0 !important;
   }
   .req-type.options {
-    color: #50e3c2 !important;
+    color: #5bcba0 !important;
   }
   
 </style>
