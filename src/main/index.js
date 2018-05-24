@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron' // eslint-disable-line
+import { app, BrowserWindow, Menu } from 'electron' // eslint-disable-line
 
 /**
  * Set `__static` path to static files in production
@@ -9,18 +9,84 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow;
+let mainMenu;
+
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`;
 
 function createWindow() {
   /**
+   * Initial menu options
+   */
+  const template = [
+    {
+      role: 'editMenu',
+    },
+    {
+      label: 'Window',
+      submenu: [
+        {
+          role: 'minimize',
+        },
+        {
+          role: 'close',
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Mockman',
+          accelerator: 'CmdOrCtrl+O',
+          click: () => {
+            app.emit('activate');
+          },
+        },
+      ],
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forcereload' },
+        { role: 'toggledevtools' },
+        { type: 'separator' },
+        { role: 'resetzoom' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' },
+      ],
+    },
+  ];
+
+  if (process.platform === 'darwin') {
+    template.unshift({
+      label: app.getName(),
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'services', submenu: [] },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideothers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' },
+      ],
+    });
+  }
+
+  mainMenu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(mainMenu);
+
+  /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 800,
     useContentSize: true,
-    width: 1000,
+    width: 1200,
   });
 
   mainWindow.loadURL(winURL);
