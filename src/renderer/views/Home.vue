@@ -139,7 +139,22 @@
             <el-tabs v-model="activeHttp" @tab-click="handleHttpClick">
               <el-tab-pane label="REQUEST" name="request">
                 <el-tabs v-model="activeReq" @tab-click="handleReqClick">
-                  <el-tab-pane label="Params" name="params">Params</el-tab-pane>
+                  <el-tab-pane label="Params" name="params">
+                    <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+                      <el-checkbox v-model="checked"></el-checkbox>
+                      <el-form-item prop="email">
+                        <el-input v-model="dynamicValidateForm.email"></el-input>
+                      </el-form-item>
+                      <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
+                        <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
+                        <el-button @click="addDomain">新增域名</el-button>
+                        <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
+                      </el-form-item>
+                    </el-form>
+                  </el-tab-pane>
                   <el-tab-pane label="Body" name="body">Body</el-tab-pane>
                   <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
                 </el-tabs>
@@ -177,6 +192,13 @@
         activeHttp: 'request',
         activeReq: 'params',
         activeRes: 'body',
+        dynamicValidateForm: {
+          domains: [{
+            value: '',
+          }],
+          email: '',
+        },
+        checked: true,
       };
     },
     methods: {
@@ -191,6 +213,21 @@
       },
       handleResClick(tab, event) {
         console.log(tab, event);
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      removeDomain(item) {
+        const index = this.dynamicValidateForm.domains.indexOf(item);
+        if (index !== -1) {
+          this.dynamicValidateForm.domains.splice(index, 1);
+        }
+      },
+      addDomain() {
+        this.dynamicValidateForm.domains.push({
+          value: '',
+          key: Date.now(),
+        });
       },
     },
   };
@@ -523,6 +560,8 @@
 
   .el-main.api-detail .req-res .el-tabs__content .el-tabs {
     background: hsla(218,5%,47%,.3);
+    height: calc(100vh - 200px);
+    overflow-y: scroll;
     border-radius: 5px;
     padding-bottom: 20px;
   }
