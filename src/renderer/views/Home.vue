@@ -451,6 +451,7 @@
   }
   
   .el-main {
+    display: block;
     background-color: #36393e;
     color: #fff;
     padding: 0 0;
