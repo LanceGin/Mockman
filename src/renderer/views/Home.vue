@@ -267,7 +267,7 @@
     transition: border-radius .25s ease, background .25s ease;
   }
   .el-aside.mocks .mock-item .el-button:hover {
-    background: rgb(114, 137, 218);
+    background: #33c6c5;
     border-radius: 15px;
   }
   .el-aside.mocks .add-btn .el-button {
@@ -514,10 +514,10 @@
   }
   .el-main.api-detail .req-res .el-tabs__item:hover,
   .el-main.api-detail .req-res .el-tabs__item.is-active {
-    color: #7289da;
+    color: #33c6c5;
   }
   .el-main.api-detail .req-res .el-tabs__active-bar {
-    background: #7289da;
+    background: #33c6c5;
   }
 
   .el-main.api-detail .req-res .el-tabs__content .el-tabs {
@@ -532,7 +532,7 @@
 
   /* request type color */
   .req-type.get {
-    color: rgb(114, 137, 218) !important;
+    color: #33c6c5!important;
   }
   .req-type.post {
     color: #49cc90 !important;
