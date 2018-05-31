@@ -137,23 +137,31 @@
           </div>
           <div class="req-res">
             <el-tabs v-model="activeHttp" @tab-click="handleHttpClick">
-              <el-tab-pane label="REQUEST" name="request">
+              <el-tab-pane label="REQUEST" name="request" class="request">
                 <el-tabs v-model="activeReq" @tab-click="handleReqClick">
-                  <el-tab-pane label="Params" name="params">
+                  <el-tab-pane label="Params" name="params" class="params">
+
                     <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
-                      <el-checkbox v-model="checked"></el-checkbox>
                       <el-form-item prop="email">
-                        <el-input v-model="dynamicValidateForm.email"></el-input>
+                        <el-input v-model="dynamicValidateForm.email" class="key">
+                          <template slot="prepend">
+                            <el-checkbox v-model="checked"></el-checkbox>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicValidateForm.email" class="value">
+                          <el-button slot="append" icon="el-icon-close"></el-button>
+                        </el-input>
                       </el-form-item>
-                      <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
+                      <!-- <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
                         <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
                       </el-form-item>
                       <el-form-item>
                         <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
                         <el-button @click="addDomain">新增域名</el-button>
                         <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
-                      </el-form-item>
+                      </el-form-item> -->
                     </el-form>
+
                   </el-tab-pane>
                   <el-tab-pane label="Body" name="body">Body</el-tab-pane>
                   <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
@@ -568,6 +576,14 @@
   .el-main.api-detail .req-res .el-tabs__content .el-tabs .el-tabs__header {
     box-shadow: none;
     border-bottom: 1px solid hsla(0,0%,100%,.1);
+  }
+  .el-main.api-detail .req-res .request .params .key {
+    width: 50%;
+    float: left;
+  }
+  .el-main.api-detail .req-res .request .params .value {
+    width: 50%;
+    float: right;
   }
 
   /* request type color */
