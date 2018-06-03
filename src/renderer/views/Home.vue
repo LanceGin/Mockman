@@ -152,14 +152,34 @@
                           <el-button slot="append" icon="el-icon-close"></el-button>
                         </el-input>
                       </el-form-item>
+                      <el-form-item prop="email">
+                        <el-input v-model="dynamicValidateForm.email" class="key">
+                          <template slot="prepend">
+                            <el-checkbox v-model="checked"></el-checkbox>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicValidateForm.email" class="value">
+                          <el-button slot="append" icon="el-icon-close"></el-button>
+                        </el-input>
+                      </el-form-item>
+                      <el-form-item prop="email">
+                        <el-input v-model="dynamicValidateForm.email" class="key">
+                          <template slot="prepend">
+                            <el-checkbox v-model="checked"></el-checkbox>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicValidateForm.email" class="value">
+                          <el-button slot="append" icon="el-icon-close"></el-button>
+                        </el-input>
+                      </el-form-item>
                       <!-- <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
                         <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
-                      </el-form-item>
+                      </el-form-item> -->
                       <el-form-item>
                         <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
                         <el-button @click="addDomain">新增域名</el-button>
                         <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
-                      </el-form-item> -->
+                      </el-form-item>
                     </el-form>
 
                   </el-tab-pane>
@@ -576,6 +596,9 @@
   .el-main.api-detail .req-res .el-tabs__content .el-tabs .el-tabs__header {
     box-shadow: none;
     border-bottom: 1px solid hsla(0,0%,100%,.1);
+  }
+  .el-main.api-detail .req-res .el-tabs__content .el-form.demo-dynamic .el-form-item__content {
+    margin-left: 0!important;
   }
   .el-main.api-detail .req-res .request .params .key {
     width: 50%;
