@@ -99,38 +99,38 @@
         <el-main class="api-detail">
           <div class="api-info">
             <div>
-              <el-dropdown trigger="click" placement="bottom" class="type">
+              <el-dropdown trigger="click" placement="bottom" class="type" @command="handleReqType">
                 <span class="el-dropdown-link">
-                  GET<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{ apiDetails.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>GET</el-dropdown-item>
-                  <el-dropdown-item>POST</el-dropdown-item>
-                  <el-dropdown-item>PUT</el-dropdown-item>
-                  <el-dropdown-item>PATCH</el-dropdown-item>
-                  <el-dropdown-item>DELETE</el-dropdown-item>
-                  <el-dropdown-item>OPTIONS</el-dropdown-item>
+                  <el-dropdown-item command="get">GET</el-dropdown-item>
+                  <el-dropdown-item command="post">POST</el-dropdown-item>
+                  <el-dropdown-item command="put">PUT</el-dropdown-item>
+                  <el-dropdown-item command="patch">PATCH</el-dropdown-item>
+                  <el-dropdown-item command="delete">DELETE</el-dropdown-item>
+                  <el-dropdown-item command="options">OPTIONS</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="sign">/</span>
-              <el-input value="mockman" class="path" placeholder="path"></el-input>
-              <el-dropdown trigger="click" placement="bottom" class="status">
+              <el-input :value="apiDetails.path" class="path" placeholder="path"></el-input>
+              <el-dropdown trigger="click" placement="bottom" class="status" @command="handleResCode">
                 <span class="el-dropdown-link">
                   200 OK<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>304 Not Modified</el-dropdown-item>
-                  <el-dropdown-item>400 Bad Request</el-dropdown-item>
-                  <el-dropdown-item>403 Forbidden</el-dropdown-item>
-                  <el-dropdown-item>404 Not Found</el-dropdown-item>
-                  <el-dropdown-item>500 Internal Server Error</el-dropdown-item>
+                  <el-dropdown-item command="304">304 Not Modified</el-dropdown-item>
+                  <el-dropdown-item command="400">400 Bad Request</el-dropdown-item>
+                  <el-dropdown-item command="403">403 Forbidden</el-dropdown-item>
+                  <el-dropdown-item command="404">404 Not Found</el-dropdown-item>
+                  <el-dropdown-item command="500">500 Internal Server Error</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="time-title">TIME</span>
               <el-input
                 placeholder="0"
                 class="time"
-                value="0">
+                :value="apiDetails.latency">
               </el-input>
               <span>ms</span>
             </div>
@@ -224,6 +224,7 @@
           method: 'get',
           path: 'mockman',
           resCode: '200',
+          latency: '0',
           request: {
             params: [{ key: '', required: true }],
             body: [{ key: '', required: true }],
@@ -256,6 +257,14 @@
       },
       handleResClick(tab, event) {
         console.log(tab, event);
+      },
+      // handle change http request type
+      handleReqType(command) {
+        this.apiDetails.method = command;
+      },
+      // handle change response code
+      handleResCode(command) {
+        this.$message(command);
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -558,7 +567,7 @@
     margin-left: 2px;
   }
   .el-main.api-detail .api-info div .path {
-    width: 400px;
+    width: 260px;
     margin-left: 2px;
   }
   .el-main.api-detail .api-info div .path .el-input__inner {
