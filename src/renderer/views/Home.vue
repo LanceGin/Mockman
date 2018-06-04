@@ -175,11 +175,11 @@
                       <!-- <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
                         <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
                       </el-form-item> -->
-                      <el-form-item>
+                      <!-- <el-form-item>
                         <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
                         <el-button @click="addDomain">新增域名</el-button>
                         <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
-                      </el-form-item>
+                      </el-form-item> -->
                     </el-form>
 
                   </el-tab-pane>
@@ -220,6 +220,21 @@
         activeHttp: 'request',
         activeReq: 'params',
         activeRes: 'body',
+        apiDetails: {
+          method: 'get',
+          path: 'mockman',
+          resCode: '200',
+          request: {
+            params: [{ key: '', required: true }],
+            body: [{ key: '', required: true }],
+            headers: [{ key: '', required: true }],
+          },
+          response: {
+            body: { type: 'json', value: '' },
+            cookies: [{ key: '', value: '' }],
+            headers: [{ key: '', value: '' }],
+          },
+        },
         dynamicValidateForm: {
           domains: [{
             value: '',
