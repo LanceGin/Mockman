@@ -597,16 +597,39 @@
     box-shadow: none;
     border-bottom: 1px solid hsla(0,0%,100%,.1);
   }
+  .el-main.api-detail .req-res .el-tabs__content .el-form.demo-dynamic .el-form-item {
+    margin-bottom: 6px;
+  }
   .el-main.api-detail .req-res .el-tabs__content .el-form.demo-dynamic .el-form-item__content {
     margin-left: 0!important;
   }
   .el-main.api-detail .req-res .request .params .key {
-    width: 50%;
+    width: 48%;
     float: left;
   }
+  .el-main.api-detail .req-res .request .params .key .el-input-group__prepend {
+    border-radius: 0;
+    padding: 0 10px;
+    background: transparent;
+    border: 0;
+  }
   .el-main.api-detail .req-res .request .params .value {
-    width: 50%;
+    width: 48%;
     float: right;
+  }
+  .el-main.api-detail .req-res .request .params .value .el-input-group__append {
+    border-radius: 0;
+    padding: 0 10px;
+    background: transparent;
+    border: 0;
+  }
+  .el-main.api-detail .req-res .request .params .key .el-input__inner,
+  .el-main.api-detail .req-res .request .params .value .el-input__inner {
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #606266;
+    color: #dcdfe6;
   }
 
   /* request type color */
