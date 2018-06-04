@@ -654,6 +654,8 @@
     border: 0;
     border-bottom: 1px solid #606266;
     color: #dcdfe6;
+    height: 26px;
+    line-height: 26px;
   }
 
   /* request type color */
