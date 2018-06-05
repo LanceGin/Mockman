@@ -145,7 +145,7 @@
                       <el-form-item prop="email">
                         <el-input v-model="dynamicValidateForm.email" class="key">
                           <template slot="prepend">
-                            <el-checkbox v-model="checked"></el-checkbox>
+                            <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="dynamicValidateForm.email" class="value">
@@ -155,7 +155,7 @@
                       <el-form-item prop="email">
                         <el-input v-model="dynamicValidateForm.email" class="key">
                           <template slot="prepend">
-                            <el-checkbox v-model="checked"></el-checkbox>
+                            <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="dynamicValidateForm.email" class="value">
@@ -165,7 +165,7 @@
                       <el-form-item prop="email">
                         <el-input v-model="dynamicValidateForm.email" class="key">
                           <template slot="prepend">
-                            <el-checkbox v-model="checked"></el-checkbox>
+                            <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="dynamicValidateForm.email" class="value">
