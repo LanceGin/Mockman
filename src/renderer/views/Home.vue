@@ -573,6 +573,10 @@
   .el-main.api-detail .api-info div .path .el-input__inner {
     background: transparent;
     border: 0;
+    color: #c0c3cb;
+  }
+  .el-main.api-detail .api-info div .path .el-input__inner::-webkit-input-placeholder {
+    color: #72767d;
   }
   .el-main.api-detail .api-info div .time-title {
     margin-left: 20px;
@@ -585,6 +589,10 @@
     border: 0;
     width: 40px;
     padding: 0 5px;
+    color: #c0c3cb;
+  }
+  .el-main.api-detail .api-info div .time .el-input__inner::-webkit-input-placeholder {
+    color: #72767d;
   }
   .el-main.api-detail .req-res .el-tabs__header {
     padding: 0 20px;
