@@ -641,11 +641,16 @@
     width: 48%;
     float: right;
   }
-  .el-main.api-detail .req-res .request .params .value .el-input-group__append {
+  .el-main.api-detail .req-res .el-checkbox-button__inner,
+  .el-main.api-detail .req-res .el-input-group__append {
     border-radius: 0;
     padding: 0 10px;
     background: transparent;
     border: 0;
+  }
+  .el-main.api-detail .req-res .el-checkbox-button__inner:hover,
+  .el-main.api-detail .req-res .el-input-group__append:hover {
+    color: #dcdfe6;
   }
   .el-main.api-detail .req-res .request .params .key .el-input__inner,
   .el-main.api-detail .req-res .request .params .value .el-input__inner {
