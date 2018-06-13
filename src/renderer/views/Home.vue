@@ -103,27 +103,18 @@
                 <span class="el-dropdown-link">
                   {{ apiDetails.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="get">GET</el-dropdown-item>
-                  <el-dropdown-item command="post">POST</el-dropdown-item>
-                  <el-dropdown-item command="put">PUT</el-dropdown-item>
-                  <el-dropdown-item command="patch">PATCH</el-dropdown-item>
-                  <el-dropdown-item command="delete">DELETE</el-dropdown-item>
-                  <el-dropdown-item command="options">OPTIONS</el-dropdown-item>
+                <el-dropdown-menu slot="dropdown" class="http-method">
+                  <el-dropdown-item v-for="item in httpMethod" :command="item.command">{{ item.name }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="sign">/</span>
               <el-input :value="apiDetails.path" class="path" placeholder="path"></el-input>
               <el-dropdown trigger="click" placement="bottom" class="status" @command="handleResCode">
                 <span class="el-dropdown-link">
-                  200 OK<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{ apiDetails.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="304">304 Not Modified</el-dropdown-item>
-                  <el-dropdown-item command="400">400 Bad Request</el-dropdown-item>
-                  <el-dropdown-item command="403">403 Forbidden</el-dropdown-item>
-                  <el-dropdown-item command="404">404 Not Found</el-dropdown-item>
-                  <el-dropdown-item command="500">500 Internal Server Error</el-dropdown-item>
+                <el-dropdown-menu slot="dropdown" class="res-code">
+                  <el-dropdown-item v-for="item in resCode" :command="item.command">{{ item.command }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="time-title">TIME</span>
@@ -203,6 +194,10 @@
 </template>
 
 <script>
+  // import http method
+  import httpMethod from '@/utils/http-method';
+  import resCode from '@/utils/res-code';
+
   export default {
     name: 'home',
     data() {
@@ -217,13 +212,15 @@
           { name: 'A', content: 'MockServer' },
           { name: 'N', content: 'MockServer' },
         ],
+        httpMethod: null,
+        resCode: null,
         activeHttp: 'request',
         activeReq: 'params',
         activeRes: 'body',
         apiDetails: {
           method: 'get',
           path: 'mockman',
-          resCode: '200',
+          resCode: '200 - OK',
           latency: '0',
           request: {
             params: [{ key: '', required: true }],
@@ -245,6 +242,10 @@
         checked: true,
       };
     },
+    mounted() {
+      this.httpMethod = httpMethod;
+      this.resCode = resCode;
+    },
     methods: {
       handleChange(val) {
         console.log(val);
@@ -264,7 +265,7 @@
       },
       // handle change response code
       handleResCode(command) {
-        this.$message(command);
+        this.apiDetails.resCode = command;
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -292,6 +293,14 @@
   }
   .el-tooltip__popper.is-dark {
     background: #000;
+  }
+  .el-dropdown-menu.el-popper.res-code {
+    top: 100px;
+    height: calc(100vh - 200px);
+    overflow: scroll;
+  }
+  .el-dropdown-menu.el-popper.http-method .popper__arrow {
+    display: none;
   }
 
   .el-container {
