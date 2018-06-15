@@ -572,6 +572,10 @@
   .el-main.api-detail .api-info div .path {
     float: left;
   }
+  .el-main.api-detail .api-info div .type {
+    width: 100px;
+    text-align: center;
+  }
   .el-main.api-detail .api-info div .sign {
     margin-left: 2px;
   }
