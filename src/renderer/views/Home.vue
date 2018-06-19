@@ -133,34 +133,29 @@
                   <el-tab-pane label="Params" name="params" class="params">
 
                     <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
-                      <el-form-item prop="email">
+                      <el-form-item
+                        v-for= "(param, index) in apiDetails.request.params"
+                        :key="param.key"
+                        :prop="apiDetails.request.params[index].value">
                         <el-input v-model="dynamicValidateForm.email" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="dynamicValidateForm.email" class="value">
-                          <el-button slot="append" icon="el-icon-close"></el-button>
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeDomain(param)"></el-button>
                         </el-input>
                       </el-form-item>
-                      <el-form-item prop="email">
+                      <el-form-item
+                        key="addBtn"
+                        prop="newParam">
                         <el-input v-model="dynamicValidateForm.email" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="dynamicValidateForm.email" class="value">
-                          <el-button slot="append" icon="el-icon-close"></el-button>
-                        </el-input>
-                      </el-form-item>
-                      <el-form-item prop="email">
-                        <el-input v-model="dynamicValidateForm.email" class="key">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                        </el-input>
-                        <el-input v-model="dynamicValidateForm.email" class="value">
-                          <el-button slot="append" icon="el-icon-close"></el-button>
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addDomain()"></el-button>
                         </el-input>
                       </el-form-item>
                       <!-- <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
@@ -268,19 +263,22 @@
         this.apiDetails.resCode = command;
       },
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        console.log(formName);
+        // this.$refs[formName].resetFields();
       },
       removeDomain(item) {
-        const index = this.dynamicValidateForm.domains.indexOf(item);
-        if (index !== -1) {
-          this.dynamicValidateForm.domains.splice(index, 1);
-        }
+        console.log(11111, item);
+        // const index = this.dynamicValidateForm.domains.indexOf(item);
+        // if (index !== -1) {
+        //   this.dynamicValidateForm.domains.splice(index, 1);
+        // }
       },
       addDomain() {
-        this.dynamicValidateForm.domains.push({
-          value: '',
-          key: Date.now(),
-        });
+        console.log('add domains');
+        // this.dynamicValidateForm.domains.push({
+        //   value: '',
+        //   key: Date.now(),
+        // });
       },
     },
   };
