@@ -131,41 +131,32 @@
               <el-tab-pane label="REQUEST" name="request" class="request">
                 <el-tabs v-model="activeReq" @tab-click="handleReqClick">
                   <el-tab-pane label="Params" name="params" class="params">
-
-                    <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+                    <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
                         v-for= "(param, index) in apiDetails.request.params"
                         :key="param.key"
                         :prop="apiDetails.request.params[index].value">
-                        <el-input v-model="dynamicValidateForm.email" class="key">
+                        <el-input v-model="param.key" class="key">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="dynamicValidateForm.email" class="value">
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeDomain(param)"></el-button>
+                        <el-input v-model="param.key" class="value">
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
                         </el-input>
                       </el-form-item>
                       <el-form-item
                         key="addBtn"
                         prop="newParam">
-                        <el-input v-model="dynamicValidateForm.email" class="key">
+                        <el-input v-model="dynamicReqParam.key" class="key">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="checked"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="dynamicValidateForm.email" class="value">
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addDomain()"></el-button>
+                        <el-input v-model="dynamicReqParam.key" class="value">
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam()"></el-button>
                         </el-input>
                       </el-form-item>
-                      <!-- <el-form-item v-for="(domain, index) in dynamicValidateForm.domains" :label="'域名'" :key="domain.key" :prop="'domains.' + index + '.value'" >
-                        <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
-                      </el-form-item> -->
-                      <!-- <el-form-item>
-                        <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
-                        <el-button @click="addDomain">新增域名</el-button>
-                        <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
-                      </el-form-item> -->
                     </el-form>
 
                   </el-tab-pane>
@@ -218,7 +209,7 @@
           resCode: '200 - OK',
           latency: '0',
           request: {
-            params: [{ key: '', required: true }],
+            params: [],
             body: [{ key: '', required: true }],
             headers: [{ key: '', required: true }],
           },
@@ -228,11 +219,9 @@
             headers: [{ key: '', value: '' }],
           },
         },
-        dynamicValidateForm: {
-          domains: [{
-            value: '',
-          }],
-          email: '',
+        dynamicReqParam: {
+          key: '',
+          required: true,
         },
         checked: true,
       };
@@ -243,16 +232,16 @@
     },
     methods: {
       handleChange(val) {
-        console.log(val);
+        this.$message(val);
       },
       handleHttpClick(tab, event) {
-        console.log(tab, event);
+        this.$message(tab, event);
       },
       handleReqClick(tab, event) {
-        console.log(tab, event);
+        this.$message(tab, event);
       },
       handleResClick(tab, event) {
-        console.log(tab, event);
+        this.$message(tab, event);
       },
       // handle change http request type
       handleReqType(command) {
@@ -262,23 +251,19 @@
       handleResCode(command) {
         this.apiDetails.resCode = command;
       },
-      resetForm(formName) {
-        console.log(formName);
-        // this.$refs[formName].resetFields();
+      // request params block handler
+      removeReqParam(item) {
+        const index = this.apiDetails.request.params.indexOf(item);
+        if (index !== -1) {
+          this.apiDetails.request.params.splice(index, 1);
+        }
       },
-      removeDomain(item) {
-        console.log(11111, item);
-        // const index = this.dynamicValidateForm.domains.indexOf(item);
-        // if (index !== -1) {
-        //   this.dynamicValidateForm.domains.splice(index, 1);
-        // }
-      },
-      addDomain() {
-        console.log('add domains');
-        // this.dynamicValidateForm.domains.push({
-        //   value: '',
-        //   key: Date.now(),
-        // });
+      addReqParam() {
+        this.apiDetails.request.params.push(this.dynamicReqParam);
+        this.dynamicReqParam = {
+          key: '',
+          required: true,
+        };
       },
     },
   };
