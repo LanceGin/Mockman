@@ -12,3 +12,4 @@ thumbs.db
 package-lock.json
 *.plist
 *.sh
+static/mockman.sqlite
