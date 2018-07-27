@@ -3,6 +3,15 @@
  */
 
 import { ipcMain } from 'electron';
+import path from 'path';
+import Sequelize from 'sequelize';
+
+const sqlLocation = path.join(__static, '/dev.sqlite');
+const sequelize = new Sequelize('main', null, null, {
+  dialect: 'sqlite',
+});
+
+console.log(11111, sqlLocation);
 
 // getMocks api
 ipcMain.on('getMocks', (e, arg) => {

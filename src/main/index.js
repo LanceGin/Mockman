@@ -8,6 +8,9 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\') // eslint-disable-line
 }
 
+// require ipcMain event
+require('./ipcMain');
+
 let mainWindow;
 let mainMenu;
 

@@ -184,6 +184,9 @@
   import httpMethod from '@/utils/http-method';
   import resCode from '@/utils/res-code';
 
+  // require ipcRenderer
+  import { ipcRenderer } from 'electron';
+
   export default {
     name: 'home',
     data() {
@@ -229,6 +232,9 @@
     mounted() {
       this.httpMethod = httpMethod;
       this.resCode = resCode;
+
+      // test sequelize
+      ipcRenderer.send('getMocks', 'test');
     },
     methods: {
       handleChange(val) {
