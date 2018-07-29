@@ -1,6 +1,6 @@
 # <img alt="Mockman" width="150" height="150" src="http://orhcxc3kd.bkt.clouddn.com/256x256.png"/>
 
-> `Mockman` is an open source app for providing mock server with one button, the rules of api definition are based on `swagger`, so that you can import your swagger `json` or `yml` file and run them as a mock server.
+> `Mockman` is an open source app for providing mock server, the rules of api definition are based on `swagger`, so that you can import your swagger `json` or `yml` file and run them as a mock server.
 
 ## Screenshots
 
