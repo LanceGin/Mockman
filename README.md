@@ -10,6 +10,42 @@
 
 > None
 
+## Todos
+
+### Server
+
+- [x] ipcMain && ipcRender communication
+- [x] dababase support
+- [ ] create a new mock
+- [ ] update a mock
+- [ ] remove a mock
+- [ ] query a mock info
+- [ ] create an api
+- [ ] update an api
+- [ ] remove an api
+- [ ] query an api info
+- [ ] start an express server with a mock config
+
+### Client
+
+- [x] brand header dislay
+- [x] mock sider display
+- [x] mock-detail and api-list display
+- [x] api-detail display
+- [ ] create a new mock
+- [ ] update a mock
+- [ ] remove a mock
+- [ ] query a mock info
+- [ ] create an api
+- [ ] update an api
+- [ ] remove an api
+- [ ] query an api info
+- [ ] request params check list
+- [ ] response k-v input group
+- [ ] response code editor
+
+
+
 ## License
 
 [![license](https://img.shields.io/github/license/lancegin/mockman.svg)]()
