@@ -20,6 +20,9 @@
 # install dependencies
 yarn # or npm install
 
+# rebuild sqlite3 !!!!!important!!!!!
+yarn run rebuild # or npm run rebuild
+
 # serve with hot reload at localhost:9080
 yarn run dev # or npm run dev
 
