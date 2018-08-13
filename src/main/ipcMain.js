@@ -11,19 +11,42 @@ const sequelize = new Sequelize('main', null, null, {
   dialect: 'sqlite',
 });
 
-console.log(11111, sqlLocation);
-
-// getMocks api
-ipcMain.on('getMocks', (e, arg) => {
-  console.log('getMocks', e, arg);
+// create a new mock
+ipcMain.on('newMock', (e, arg) => {
+  console.log('newMock', e, arg);
 });
 
-// mockInfo api
-ipcMain.on('mockInfo', (e, arg) => {
-  console.log('mockInfo', e, arg);
+// update a mock
+ipcMain.on('updateMock', (e, arg) => {
+  console.log('updateMock', e, arg);
 });
 
-// apiInfo api
-ipcMain.on('apiInfo', (e, arg) => {
-  console.log('apiInfo', e, arg);
+// remove a mock
+ipcMain.on('removeMock', (e, arg) => {
+  console.log('removeMock', e, arg);
+});
+
+// get mock list
+ipcMain.on('getMockList', (e, arg) => {
+  console.log('getMockList', e, arg);
+});
+
+// create a new api
+ipcMain.on('newApi', (e, arg) => {
+  console.log('newApi', e, arg);
+});
+
+// update a new api
+ipcMain.on('updateApi', (e, arg) => {
+  console.log('updateApi', e, arg);
+});
+
+// remove an api
+ipcMain.on('removeApi', (e, arg) => {
+  console.log('removeApi', e, arg);
+});
+
+// get api list
+ipcMain.on('getApiList', (e, arg) => {
+  console.log('getApiList', e, arg);
 });
