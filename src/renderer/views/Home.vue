@@ -130,8 +130,8 @@
             <el-tabs v-model="activeHttp" @tab-click="handleHttpClick">
               <el-tab-pane label="REQUEST" name="request" class="request">
                 <el-tabs v-model="activeReq" @tab-click="handleReqClick">
+                  <!-- dynamic params panel start -->
                   <el-tab-pane label="Params" name="params" class="params">
-                    <!-- dynamic params form start -->
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
                         v-for= "(param, index) in apiDetails.request.params"
@@ -156,14 +156,76 @@
                           </template>
                         </el-input>
                         <el-input v-model="dynamicReqParam.key" class="value">
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam()"></el-button>
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('params')"></el-button>
                         </el-input>
                       </el-form-item>
                     </el-form>
-                    <!-- dynamic params form end -->
                   </el-tab-pane>
-                  <el-tab-pane label="Body" name="body">Body</el-tab-pane>
-                  <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
+                  <!-- dynamic params panel end -->
+                  <!-- dynamic body panel start -->
+                  <el-tab-pane label="Body" name="body" class="params body">
+                    <el-form label-width="100px" class="demo-dynamic">
+                      <el-form-item
+                        v-for= "(param, index) in apiDetails.request.body"
+                        :key="index"
+                        :prop="apiDetails.request.body[index].value">
+                        <el-input v-model="param.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="param.key" class="value">
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
+                        </el-input>
+                      </el-form-item>
+
+                      <el-form-item
+                        key="addBtn"
+                        prop="newParam">
+                        <el-input v-model="dynamicReqParam.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicReqParam.key" class="value">
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('body')"></el-button>
+                        </el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-tab-pane>
+                  <!-- dynamic body panel end -->
+                  <!-- dynamic header panel start -->
+                  <el-tab-pane label="Headers" name="header" class="params headers">
+                    <el-form label-width="100px" class="demo-dynamic">
+                      <el-form-item
+                        v-for= "(param, index) in apiDetails.request.headers"
+                        :key="index"
+                        :prop="apiDetails.request.headers[index].value">
+                        <el-input v-model="param.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="param.key" class="value">
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
+                        </el-input>
+                      </el-form-item>
+
+                      <el-form-item
+                        key="addBtn"
+                        prop="newParam">
+                        <el-input v-model="dynamicReqParam.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicReqParam.key" class="value">
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('headers')"></el-button>
+                        </el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-tab-pane>
+                  <!-- dynamic header panel end -->
                 </el-tabs>
               </el-tab-pane>
               <el-tab-pane label="RESPONSE" name="response">
@@ -215,8 +277,8 @@
           latency: '0',
           request: {
             params: [],
-            body: [{ key: '', required: true }],
-            headers: [{ key: '', required: true }],
+            body: [],
+            headers: [],
           },
           response: {
             body: { type: 'json', value: '' },
@@ -266,8 +328,8 @@
           this.apiDetails.request.params.splice(index, 1);
         }
       },
-      addReqParam() {
-        this.apiDetails.request.params.push(this.dynamicReqParam);
+      addReqParam(subReq) {
+        this.apiDetails.request[subReq].push(this.dynamicReqParam);
         this.dynamicReqParam = {
           key: '',
           required: true,
