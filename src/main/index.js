@@ -9,7 +9,8 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 // require ipcMain event
-require('./ipcMain');
+require('./mockAction');
+require('./apiAction');
 
 let mainWindow;
 let mainMenu;
