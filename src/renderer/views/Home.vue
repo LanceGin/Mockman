@@ -131,10 +131,11 @@
               <el-tab-pane label="REQUEST" name="request" class="request">
                 <el-tabs v-model="activeReq" @tab-click="handleReqClick">
                   <el-tab-pane label="Params" name="params" class="params">
+                    <!-- dynamic params form start -->
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
                         v-for= "(param, index) in apiDetails.request.params"
-                        :key="param.key"
+                        :key="index"
                         :prop="apiDetails.request.params[index].value">
                         <el-input v-model="param.key" class="key">
                           <template slot="prepend">
@@ -145,6 +146,7 @@
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
                         </el-input>
                       </el-form-item>
+
                       <el-form-item
                         key="addBtn"
                         prop="newParam">
@@ -158,7 +160,7 @@
                         </el-input>
                       </el-form-item>
                     </el-form>
-
+                    <!-- dynamic params form end -->
                   </el-tab-pane>
                   <el-tab-pane label="Body" name="body">Body</el-tab-pane>
                   <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
