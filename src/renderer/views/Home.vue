@@ -302,16 +302,20 @@
     },
     methods: {
       handleChange(val) {
-        this.$message(val);
+        console.log(111, val);
+        // this.$message(val);
       },
       handleHttpClick(tab, event) {
-        this.$message(tab, event);
+        console.log(2222, tab, event);
+        // this.$message(tab, event);
       },
       handleReqClick(tab, event) {
-        this.$message(tab, event);
+        console.log(3333, tab, event);
+        // this.$message(tab, event);
       },
       handleResClick(tab, event) {
-        this.$message(tab, event);
+        console.log(4444, tab, event);
+        // this.$message(tab, event);
       },
       // handle change http request type
       handleReqType(command) {
