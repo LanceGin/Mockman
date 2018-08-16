@@ -230,7 +230,9 @@
               </el-tab-pane>
               <el-tab-pane label="RESPONSE" name="response">
                 <el-tabs v-model="activeRes" @tab-click="handleResClick">
-                  <el-tab-pane label="Body" name="body">Body</el-tab-pane>
+                  <el-tab-pane label="Body" name="body" class="editor-container">
+                    <json-editor ref="resBody" v-model="apiDetails.response.body.value"></json-editor>
+                  </el-tab-pane>
                   <el-tab-pane label="Cookies" name="cookies">Cookies</el-tab-pane>
                   <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
                 </el-tabs>
@@ -247,12 +249,14 @@
   // import http method
   import httpMethod from '@/utils/http-method';
   import resCode from '@/utils/res-code';
+  import jsonEditor from '@/components/jsonEditor';
 
   // require ipcRenderer
   import { ipcRenderer } from 'electron';
 
   export default {
     name: 'home',
+    components: { jsonEditor },
     data() {
       return {
         activeNames: ['1'],
@@ -281,7 +285,7 @@
             headers: [],
           },
           response: {
-            body: { type: 'json', value: '' },
+            body: { type: 'json', value: null },
             cookies: [{ key: '', value: '' }],
             headers: [{ key: '', value: '' }],
           },
@@ -301,12 +305,20 @@
       ipcRenderer.send('getMocks', 'test');
     },
     methods: {
+      // fresh the code-editor
+      freshCodeEditor() {
+        window.setTimeout(() => {
+          console.log(666, this.$refs.resBody);
+          this.$refs.resBody.refresh();
+        });
+      },
       handleChange(val) {
         console.log(111, val);
         // this.$message(val);
       },
       handleHttpClick(tab, event) {
         console.log(2222, tab, event);
+        this.freshCodeEditor();
         // this.$message(tab, event);
       },
       handleReqClick(tab, event) {
@@ -315,6 +327,7 @@
       },
       handleResClick(tab, event) {
         console.log(4444, tab, event);
+        this.freshCodeEditor();
         // this.$message(tab, event);
       },
       // handle change http request type
@@ -347,6 +360,13 @@
   /* common style */
   body {
     margin: 0;
+  }
+  .editor-container {
+    position: relative;
+    height: 100%;
+  }
+  .CodeMirror {
+    height: calc(100vh - 250px);
   }
   .el-tooltip__popper.is-dark {
     background: #000;
@@ -698,6 +718,9 @@
   .el-main.api-detail .req-res .el-tabs__content .el-tabs .el-tabs__header {
     box-shadow: none;
     border-bottom: 1px solid hsla(0,0%,100%,.1);
+  }
+  .el-main.api-detail .req-res .el-tabs__content .el-tabs .el-tabs__content {
+    height: calc(100vh - 265px);
   }
   .el-main.api-detail .req-res .el-tabs__content .el-form.demo-dynamic .el-form-item {
     margin-bottom: 6px;
