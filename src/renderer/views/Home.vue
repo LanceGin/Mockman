@@ -143,7 +143,7 @@
                           </template>
                         </el-input>
                         <el-input v-model="param.key" class="value">
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'params')"></el-button>
                         </el-input>
                       </el-form-item>
 
@@ -175,7 +175,7 @@
                           </template>
                         </el-input>
                         <el-input v-model="param.key" class="value">
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'body')"></el-button>
                         </el-input>
                       </el-form-item>
 
@@ -207,7 +207,7 @@
                           </template>
                         </el-input>
                         <el-input v-model="param.key" class="value">
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param)"></el-button>
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'headers')"></el-button>
                         </el-input>
                       </el-form-item>
 
@@ -228,13 +228,71 @@
                   <!-- dynamic header panel end -->
                 </el-tabs>
               </el-tab-pane>
-              <el-tab-pane label="RESPONSE" name="response">
+              <el-tab-pane label="RESPONSE" name="response" class="response">
                 <el-tabs v-model="activeRes" @tab-click="handleResClick">
                   <el-tab-pane label="Body" name="body" class="editor-container">
                     <json-editor ref="resBody" v-model="apiDetails.response.body.value"></json-editor>
                   </el-tab-pane>
-                  <el-tab-pane label="Cookies" name="cookies">Cookies</el-tab-pane>
-                  <el-tab-pane label="Headers" name="header">Headers</el-tab-pane>
+                  <el-tab-pane label="Cookies" name="cookies" class="params cookies">
+                    <el-form label-width="100px" class="demo-dynamic">
+                      <el-form-item
+                        v-for= "(param, index) in apiDetails.response.cookies"
+                        :key="index"
+                        :prop="apiDetails.response.cookies[index].value">
+                        <el-input v-model="param.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="param.key" class="value">
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'cookies')"></el-button>
+                        </el-input>
+                      </el-form-item>
+
+                      <el-form-item
+                        key="addBtn"
+                        prop="newParam">
+                        <el-input v-model="dynamicResParam.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicResParam.key" class="value">
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('cookies')"></el-button>
+                        </el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-tab-pane>
+                  <el-tab-pane label="Headers" name="header" class="params headers">
+                    <el-form label-width="100px" class="demo-dynamic">
+                      <el-form-item
+                        v-for= "(param, index) in apiDetails.response.headers"
+                        :key="index"
+                        :prop="apiDetails.response.headers[index].value">
+                        <el-input v-model="param.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="param.key" class="value">
+                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'headers')"></el-button>
+                        </el-input>
+                      </el-form-item>
+
+                      <el-form-item
+                        key="addBtn"
+                        prop="newParam">
+                        <el-input v-model="dynamicResParam.key" class="key">
+                          <template slot="prepend">
+                            <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                          </template>
+                        </el-input>
+                        <el-input v-model="dynamicResParam.key" class="value">
+                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('headers')"></el-button>
+                        </el-input>
+                      </el-form-item>
+                    </el-form>
+                  </el-tab-pane>
                 </el-tabs>
               </el-tab-pane>
             </el-tabs>
@@ -286,11 +344,15 @@
           },
           response: {
             body: { type: 'json', value: null },
-            cookies: [{ key: '', value: '' }],
-            headers: [{ key: '', value: '' }],
+            cookies: [],
+            headers: [],
           },
         },
         dynamicReqParam: {
+          key: '',
+          required: true,
+        },
+        dynamicResParam: {
           key: '',
           required: true,
         },
@@ -339,15 +401,29 @@
         this.apiDetails.resCode = command;
       },
       // request params block handler
-      removeReqParam(item) {
-        const index = this.apiDetails.request.params.indexOf(item);
+      removeReqParam(item, subReq) {
+        const index = this.apiDetails.request[subReq].indexOf(item);
         if (index !== -1) {
-          this.apiDetails.request.params.splice(index, 1);
+          this.apiDetails.request[subReq].splice(index, 1);
         }
       },
       addReqParam(subReq) {
         this.apiDetails.request[subReq].push(this.dynamicReqParam);
         this.dynamicReqParam = {
+          key: '',
+          required: true,
+        };
+      },
+      // response params block handler
+      removeResParam(item, subRes) {
+        const index = this.apiDetails.response[subRes].indexOf(item);
+        if (index !== -1) {
+          this.apiDetails.response[subRes].splice(index, 1);
+        }
+      },
+      addResParam(subRes) {
+        this.apiDetails.response[subRes].push(this.dynamicResParam);
+        this.dynamicResParam = {
           key: '',
           required: true,
         };
@@ -728,17 +804,20 @@
   .el-main.api-detail .req-res .el-tabs__content .el-form.demo-dynamic .el-form-item__content {
     margin-left: 0!important;
   }
-  .el-main.api-detail .req-res .request .params .key {
+  .el-main.api-detail .req-res .request .params .key,
+  .el-main.api-detail .req-res .response .params .key {
     width: 48%;
     float: left;
   }
-  .el-main.api-detail .req-res .request .params .key .el-input-group__prepend {
+  .el-main.api-detail .req-res .request .params .key .el-input-group__prepend,
+  .el-main.api-detail .req-res .response .params .key .el-input-group__prepend {
     border-radius: 0;
     padding: 0 10px;
     background: transparent;
     border: 0;
   }
-  .el-main.api-detail .req-res .request .params .value {
+  .el-main.api-detail .req-res .request .params .value,
+  .el-main.api-detail .req-res .response .params .value {
     width: 48%;
     float: right;
   }
@@ -754,7 +833,9 @@
     color: #dcdfe6;
   }
   .el-main.api-detail .req-res .request .params .key .el-input__inner,
-  .el-main.api-detail .req-res .request .params .value .el-input__inner {
+  .el-main.api-detail .req-res .request .params .value .el-input__inner,
+  .el-main.api-detail .req-res .response .params .key .el-input__inner,
+  .el-main.api-detail .req-res .response .params .value .el-input__inner {
     border-radius: 0;
     background: transparent;
     border: 0;
