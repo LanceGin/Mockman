@@ -91,6 +91,7 @@ function createWindow() {
     height: 800,
     useContentSize: true,
     width: 1200,
+    backgroundColor: '#464646',
   });
 
   mainWindow.loadURL(winURL);
