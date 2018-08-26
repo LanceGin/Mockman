@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+    html {
+      background: #464646;
+    }
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    @-webkit-keyframes rotate-loading {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes loading-text-opacity {
+      0% {
+        opacity: 0
+      }
+      20% {
+        opacity: 0
+      }
+      50% {
+        opacity: 1
+      }
+      100% {
+        opacity: 0
+      }
+    }
+    .loading-container,
+    .loading {
+      height: 199px;
+      position: relative;
+      width: 199px;
+      border-radius: 100%;
+    }
+    .loading-container {
+      margin: 80px auto;
+    }
+    .loading {
+      border: 2px solid transparent;
+      border-color: transparent #aaa transparent #aaa;
+      -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+      -webkit-transform-origin: 50% 50%;
+    }
+    .loading-container .loading {
+      -webkit-transition: all 0.5s ease-in-out;
+    }
+    #loading-text {
+      -webkit-animation: loading-text-opacity 1.5s linear 0s infinite normal;
+      color: #ccc;
+      font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+      font-weight: bold;
+      margin-top: 72px;
+      opacity: 0;
+      position: absolute;
+      text-align: center;
+      text-transform: uppercase;
+      top: 0;
+      width: 188px;
+      font-size: 14px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="loading-container">
+      <div class="loading"></div>
+      <div id="loading-text">
+        Mockman
+      </div>
+    </div>
+  </body>
+</html>
