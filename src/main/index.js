@@ -14,10 +14,14 @@ require('./apiAction');
 
 let mainWindow;
 let mainMenu;
+let splash;
 
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`;
+const splashURL = process.env.NODE_ENV === 'development'
+  ? `file://${__static}/splash.html`
+  : `file://${__dirname}/static/splash.html`;
 
 function createWindow() {
   /**
@@ -92,9 +96,22 @@ function createWindow() {
     useContentSize: true,
     width: 1200,
     backgroundColor: '#464646',
+    show: false,
   });
 
+  splash = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    alwaysOnTop: true,
+    title: 'Mockman',
+  });
+  splash.loadURL(splashURL);
   mainWindow.loadURL(winURL);
+
+  mainWindow.once('ready-to-show', () => {
+    splash.destroy();
+    mainWindow.show();
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
