@@ -23,7 +23,7 @@
         </div>
         <div class="add-btn">
           <el-tooltip content="New Mock Server" placement="right" :visible-arrow="false">
-            <el-button class="add-btn" icon="el-icon-plus" circle></el-button>
+            <el-button class="add-btn" icon="el-icon-plus" circle @click="handleNewMock"></el-button>
           </el-tooltip>
         </div>
       </el-aside>
@@ -364,7 +364,7 @@
       this.resCode = resCode;
 
       // test sequelize
-      ipcRenderer.send('getMocks', 'test');
+      this.mocks = ipcRenderer.sendSync('getMockList');
     },
     methods: {
       // fresh the code-editor
@@ -427,6 +427,13 @@
           key: '',
           required: true,
         };
+      },
+      handleNewMock() {
+        let signal = ipcRenderer.sendSync('newMock');
+        while (signal === 'success') {
+          this.mocks = ipcRenderer.sendSync('getMockList');
+          signal = 'done';
+        }
       },
     },
   };
