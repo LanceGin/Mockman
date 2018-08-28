@@ -17,7 +17,8 @@
         <div class="mock-list">
           <div class="mock-item" v-for="mock in mocks">
             <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
-              <el-button circle>{{ mock.name }}</el-button>
+              <el-button circle class="active" v-if="mock.id === activeMock.id">{{ mock.name }}</el-button>
+              <el-button circle v-else @click="switchActiveMock(mock)">{{ mock.name }}</el-button>
             </el-tooltip>
           </div>
         </div>
@@ -30,14 +31,14 @@
       <el-aside class="apis">
         <div class="mock-info">
           <div>
-            <el-input value="MockServer" class="mock-name" placeholder="Server Name"></el-input>
+            <el-input :value="activeMock.content" class="mock-name" placeholder="Server Name"></el-input>
             <el-button type="text" icon="el-icon-caret-right"></el-button>
           </div>
           <div>
             <span class="host">localhost :</span>
-            <el-input value="3001" class="port" placeholder="Port"></el-input>
+            <el-input :value="activeMock.port" class="port" placeholder="Port"></el-input>
             <span class="sign">/</span>
-            <el-input value="" class="prefix" placeholder="Prefix"></el-input>
+            <el-input :value="activeMock.prefix" class="prefix" placeholder="Prefix"></el-input>
           </div>
         </div>
         <div>
@@ -318,15 +319,8 @@
     data() {
       return {
         activeNames: ['1'],
-        mocks: [
-          { name: 'M', content: 'MockServer' },
-          { name: 'O', content: 'MockServer' },
-          { name: 'C', content: 'MockServer' },
-          { name: 'K', content: 'MockServer' },
-          { name: 'M', content: 'MockServer' },
-          { name: 'A', content: 'MockServer' },
-          { name: 'N', content: 'MockServer' },
-        ],
+        mocks: [],
+        activeMock: {},
         httpMethod: null,
         resCode: null,
         activeHttp: 'request',
@@ -365,32 +359,46 @@
 
       // test sequelize
       this.mocks = ipcRenderer.sendSync('getMockList');
+      this.activeMock = this.mocks[0];
     },
     methods: {
+      // initial the dynamic params
+      initDynamicReqParam() {
+        this.dynamicReqParam = {
+          key: '',
+          required: true,
+        };
+      },
+      initDynamicResParam() {
+        this.dynamicResParam = {
+          key: '',
+          required: true,
+        };
+      },
       // fresh the code-editor
       freshCodeEditor() {
         window.setTimeout(() => {
-          console.log(666, this.$refs.resBody);
           this.$refs.resBody.refresh();
         });
       },
+      // switch active mock
+      switchActiveMock(mock) {
+        this.activeMock = mock;
+      },
       handleChange(val) {
         console.log(111, val);
-        // this.$message(val);
       },
-      handleHttpClick(tab, event) {
-        console.log(2222, tab, event);
+      handleHttpClick() {
+        this.initDynamicResParam();
+        this.initDynamicReqParam();
         this.freshCodeEditor();
-        // this.$message(tab, event);
       },
-      handleReqClick(tab, event) {
-        console.log(3333, tab, event);
-        // this.$message(tab, event);
+      handleReqClick() {
+        this.initDynamicReqParam();
       },
-      handleResClick(tab, event) {
-        console.log(4444, tab, event);
+      handleResClick() {
+        this.initDynamicResParam();
         this.freshCodeEditor();
-        // this.$message(tab, event);
       },
       // handle change http request type
       handleReqType(command) {
@@ -523,6 +531,10 @@
     font-size: 16px;
     font-weight: 300;
     transition: border-radius .25s ease, background .25s ease;
+  }
+  .el-aside.mocks .mock-item .el-button.active {
+    background: #33c6c5;
+    border-radius: 15px;
   }
   .el-aside.mocks .mock-item .el-button:hover {
     background: #33c6c5;
