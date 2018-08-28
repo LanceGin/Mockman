@@ -31,14 +31,14 @@
       <el-aside class="apis">
         <div class="mock-info">
           <div>
-            <el-input :value="activeMock.content" class="mock-name" placeholder="Server Name"></el-input>
+            <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
             <el-button type="text" icon="el-icon-caret-right"></el-button>
           </div>
           <div>
             <span class="host">localhost :</span>
-            <el-input :value="activeMock.port" class="port" placeholder="Port"></el-input>
+            <el-input v-model="activeMock.port" @blur="handleUpdateMock" class="port" placeholder="Port"></el-input>
             <span class="sign">/</span>
-            <el-input :value="activeMock.prefix" class="prefix" placeholder="Prefix"></el-input>
+            <el-input v-model="activeMock.prefix" @blur="handleUpdateMock" class="prefix" placeholder="Prefix"></el-input>
           </div>
         </div>
         <div>
@@ -438,6 +438,13 @@
       },
       handleNewMock() {
         let signal = ipcRenderer.sendSync('newMock');
+        while (signal === 'success') {
+          this.mocks = ipcRenderer.sendSync('getMockList');
+          signal = 'done';
+        }
+      },
+      handleUpdateMock() {
+        let signal = ipcRenderer.sendSync('updateMock', this.activeMock);
         while (signal === 'success') {
           this.mocks = ipcRenderer.sendSync('getMockList');
           signal = 'done';
