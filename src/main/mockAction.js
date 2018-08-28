@@ -19,8 +19,25 @@ ipcMain.on('newMock', (e) => {
 });
 
 // update a mock
-ipcMain.on('updateMock', (e, arg) => {
-  console.log('updateMock', e, arg);
+ipcMain.on('updateMock', (e, mock) => {
+  const name = mock.content.slice(0, 1);
+  const sql = `
+    UPDATE mocks
+    SET name = :name, content = :content, port = :port, prefix = :prefix, updated_at = datetime('now')
+    WHERE id = :id;
+  `;
+  sequelize.query(sql, {
+    type: sequelize.QueryTypes.UPDATE,
+    replacements: {
+      name,
+      content: mock.content,
+      port: mock.port,
+      prefix: mock.prefix,
+      id: mock.id,
+    },
+  }).then(() => {
+    e.returnValue = 'success';
+  });
 });
 
 // remove a mock
