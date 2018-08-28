@@ -15,7 +15,15 @@
     <el-container>
       <el-aside class="mocks">
         <div class="mock-list">
-          <div class="mock-item" v-for="mock in mocks">
+          <!-- context menu start -->
+          <context-menu ref="mockOp">
+            <ul>
+              <li>Start server</li>
+              <li>Delete</li>
+            </ul>
+          </context-menu>
+          <!-- context menu end -->
+          <div class="mock-item" v-for="mock in mocks" @contextmenu.prevent="handleContextMenu">
             <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
               <el-button circle class="active" v-if="mock.id === activeMock.id">{{ mock.name }}</el-button>
               <el-button circle v-else @click="switchActiveMock(mock)">{{ mock.name }}</el-button>
@@ -309,13 +317,14 @@
   import httpMethod from '@/utils/http-method';
   import resCode from '@/utils/res-code';
   import jsonEditor from '@/components/jsonEditor';
+  import contextMenu from '@/components/contextMenu';
 
   // require ipcRenderer
   import { ipcRenderer } from 'electron';
 
   export default {
     name: 'home',
-    components: { jsonEditor },
+    components: { jsonEditor, contextMenu },
     data() {
       return {
         activeNames: ['1'],
@@ -384,6 +393,10 @@
       // switch active mock
       switchActiveMock(mock) {
         this.activeMock = mock;
+      },
+      // contextmenu
+      handleContextMenu(e) {
+        this.$refs.mockOp.open(e);
       },
       handleChange(val) {
         console.log(111, val);
