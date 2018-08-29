@@ -41,8 +41,19 @@ ipcMain.on('updateMock', (e, mock) => {
 });
 
 // remove a mock
-ipcMain.on('removeMock', (e, arg) => {
-  console.log('removeMock', e, arg);
+ipcMain.on('removeMock', (e, mock) => {
+  const sql = `
+    DELETE FROM mocks
+    WHERE id = :mockId;
+  `;
+  sequelize.query(sql, {
+    type: sequelize.QueryTypes.DELETE,
+    replacements: {
+      mockId: mock.id,
+    },
+  }).then(() => {
+    e.returnValue = 'success';
+  });
 });
 
 // get mock list
