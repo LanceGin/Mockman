@@ -1,6 +1,6 @@
 # <img alt="Mockman" width="150" height="150" src="http://orhcxc3kd.bkt.clouddn.com/256x256.png"/>
 
-> `Mockman` is an open source app for providing mock server, the rules of api definition are based on `swagger`, so that you can import your swagger `json` or `yml` file and run them as a mock server.
+> `Mockman` is an open source app to create and manage your  mock servers easily
 
 ## Screenshots
 
@@ -16,10 +16,10 @@
 
 - [x] ipcMain && ipcRender communication
 - [x] dababase support
-- [ ] create a new mock
-- [ ] update a mock
-- [ ] remove a mock
-- [ ] query a mock info
+- [x] create a new mock
+- [x] update a mock
+- [x] remove a mock
+- [x] query a mock info
 - [ ] create an api
 - [ ] update an api
 - [ ] remove an api
@@ -32,17 +32,17 @@
 - [x] mock sider display
 - [x] mock-detail and api-list display
 - [x] api-detail display
-- [ ] create a new mock
-- [ ] update a mock
-- [ ] remove a mock
-- [ ] query a mock info
+- [x] create a new mock
+- [x] update a mock
+- [x] remove a mock
+- [x] query a mock info
 - [ ] create an api
 - [ ] update an api
 - [ ] remove an api
 - [ ] query an api info
 - [ ] request params check list
 - [ ] response k-v input group
-- [ ] response code editor
+- [x] response code editor
 
 
 
@@ -54,22 +54,22 @@
 
 ``` bash
 # install dependencies
-yarn # or npm install
+yarn
 
-# rebuild sqlite3 !!!!!important!!!!!
-yarn run rebuild # or npm run rebuild
+# rebuild sqlite3 
+yarn run rebuild # !!!!!important!!!!!
 
 # serve with hot reload at localhost:9080
-yarn run dev # or npm run dev
+yarn run dev 
 
 # build electron application for production
-yarn run build # or npm run build
+yarn run build 
 
 # run unit tests
-yarn test # or npm test
+yarn test 
 
 # lint all JS/Vue component files in `src/`
-yarn run lint # or npm run lint
+yarn run lint 
 
 ```
 
