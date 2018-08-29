@@ -15,18 +15,18 @@
     <el-container>
       <el-aside class="mocks">
         <div class="mock-list">
-          <!-- context menu start -->
-          <context-menu ref="mockOp">
-            <ul>
-              <li>Start server</li>
-              <li>Delete</li>
-            </ul>
-          </context-menu>
-          <!-- context menu end -->
           <div class="mock-item" v-for="mock in mocks">
+            <!-- context menu start -->
+            <context-menu :ref="`CM${mock.id}`">
+              <ul>
+                <li>Start server</li>
+                <li @click="handleRemoveMock(mock)">Remove</li>
+              </ul>
+            </context-menu>
+            <!-- context menu end -->
             <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
-              <el-button circle class="active" v-if="mock.id === activeMock.id" @click.native.right="handleContextMenu">{{ mock.name }}</el-button>
-              <el-button circle v-else @click="switchActiveMock(mock)" @click.native.right="handleContextMenu">{{ mock.name }}</el-button>
+              <el-button circle class="active" v-if="mock.id === activeMock.id" @click.native.right="handleContextMenu($event, mock)">{{ mock.name }}</el-button>
+              <el-button circle v-else @click="switchActiveMock(mock)" @click.native.right="handleContextMenu($event, mock)">{{ mock.name }}</el-button>
             </el-tooltip>
           </div>
         </div>
@@ -395,8 +395,9 @@
         this.activeMock = mock;
       },
       // contextmenu
-      handleContextMenu(e) {
-        this.$refs.mockOp.open(e);
+      handleContextMenu(e, mock) {
+        const ref = `CM${mock.id}`;
+        this.$refs[ref][0].open(e);
       },
       handleChange(val) {
         console.log(111, val);
@@ -449,6 +450,7 @@
           required: true,
         };
       },
+      // create a new mock
       handleNewMock() {
         let signal = ipcRenderer.sendSync('newMock');
         while (signal === 'success') {
@@ -456,8 +458,17 @@
           signal = 'done';
         }
       },
+      // update a mock
       handleUpdateMock() {
         let signal = ipcRenderer.sendSync('updateMock', this.activeMock);
+        while (signal === 'success') {
+          this.mocks = ipcRenderer.sendSync('getMockList');
+          signal = 'done';
+        }
+      },
+      // remove a mock
+      handleRemoveMock(mock) {
+        let signal = ipcRenderer.sendSync('removeMock', mock);
         while (signal === 'success') {
           this.mocks = ipcRenderer.sendSync('getMockList');
           signal = 'done';
