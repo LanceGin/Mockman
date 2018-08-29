@@ -128,7 +128,7 @@
   .context-menu {
     background: #202225;
     border: 0;
-    border-radius: 5px;
+    border-radius: 6px;
     display: block;
     margin: 0;
     padding: 0;
@@ -141,7 +141,7 @@
   }
   .context-menu ul {
     list-style: none;
-    padding: 0;
+    padding: 10px 0;
     margin: 0;
     font-size: 12px;
     font-weight: 600;
