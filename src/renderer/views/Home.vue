@@ -544,6 +544,9 @@
   .el-aside {
     color: #333;
   }
+  .el-aside::-webkit-scrollbar {
+    display: none;
+  }
 
   .el-aside.mocks {
     text-align: center;
@@ -584,6 +587,7 @@
     font-size: 22px;
     font-weight: 300;
     transition: border-color .25s ease,color .25s ease;
+    margin-bottom: 20px;
   }
   .el-aside.mocks .add-btn .el-button:hover {
     border: 1px dashed #fff;
