@@ -455,6 +455,7 @@
         let signal = ipcRenderer.sendSync('newMock');
         while (signal === 'success') {
           this.mocks = ipcRenderer.sendSync('getMockList');
+          this.activeMock = this.mocks[this.mocks.length - 1];
           signal = 'done';
         }
       },
@@ -471,6 +472,9 @@
         let signal = ipcRenderer.sendSync('removeMock', mock);
         while (signal === 'success') {
           this.mocks = ipcRenderer.sendSync('getMockList');
+          if (mock.id === this.activeMock.id) {
+            this.activeMock = this.mocks[this.mocks.length - 1];
+          }
           signal = 'done';
         }
       },
