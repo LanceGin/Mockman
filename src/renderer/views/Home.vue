@@ -23,10 +23,10 @@
             </ul>
           </context-menu>
           <!-- context menu end -->
-          <div class="mock-item" v-for="mock in mocks" @contextmenu.prevent="handleContextMenu">
+          <div class="mock-item" v-for="mock in mocks">
             <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
-              <el-button circle class="active" v-if="mock.id === activeMock.id">{{ mock.name }}</el-button>
-              <el-button circle v-else @click="switchActiveMock(mock)">{{ mock.name }}</el-button>
+              <el-button circle class="active" v-if="mock.id === activeMock.id" @click.native.right="handleContextMenu">{{ mock.name }}</el-button>
+              <el-button circle v-else @click="switchActiveMock(mock)" @click.native.right="handleContextMenu">{{ mock.name }}</el-button>
             </el-tooltip>
           </div>
         </div>
