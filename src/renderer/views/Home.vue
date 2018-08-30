@@ -96,14 +96,52 @@
           <div class="single-req">
             <span class="req-type get">GET</span>
             <span class="req-route">/mockman</span>
+            <span>
+              <el-button
+                type="text"
+                size="mini"
+                class="api-delete"><i class="el-icon-close"></i></el-button>
+            </span>
           </div>
           <div class="single-req">
             <span class="req-type post">POST</span>
             <span class="req-route">/mockman</span>
+            <span>
+              <el-button
+                type="text"
+                size="mini"
+                class="api-delete"><i class="el-icon-close"></i></el-button>
+            </span>
           </div>
           <div class="single-req">
             <span class="req-type delete">DELETE</span>
             <span class="req-route">/mockman</span>
+            <span>
+              <el-button
+                type="text"
+                size="mini"
+                class="api-delete"><i class="el-icon-close"></i></el-button>
+            </span>
+          </div>
+          <div class="single-req">
+            <span class="req-type delete">DELETE</span>
+            <span class="req-route">/mockman</span>
+            <span>
+              <el-button
+                type="text"
+                size="mini"
+                class="api-delete"><i class="el-icon-close"></i></el-button>
+            </span>
+          </div>
+          <div class="single-req">
+            <span class="req-type options">OPTIONS</span>
+            <span class="req-route">/mockman</span>
+            <span>
+              <el-button
+                type="text"
+                size="mini"
+                class="api-delete"><i class="el-icon-close"></i></el-button>
+            </span>
           </div>
         </div>
       </el-aside>
@@ -752,9 +790,22 @@
     padding-right: 10px;
     transition: background .25s ease;
   }
+  .el-aside.apis .single-req .api-delete {
+    display: none;
+    float: right;
+    color: #72767d;
+    font-weight: 500;
+    transition: color .25s ease;
+  }
   .el-aside.apis .single-req:hover {
     background: rgba(79,84,92,.6);
     cursor: pointer;
+  }
+  .el-aside.apis .single-req:hover .api-delete {
+    display: block;
+  }
+  .el-aside.apis .single-req:hover .api-delete:hover {
+    color: #B9BBBE;
   }
   .el-aside.apis .single-req .req-type {
     display: inline-block;
