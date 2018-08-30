@@ -54,7 +54,9 @@
             <span class="note">Api</span>
             <el-button type="text" icon="el-icon-plus"></el-button>
           </div>
-          <el-collapse v-model="activeNames" @change="handleChange">
+
+          <!-- TODO: classify the apis to diffrent tags -->
+          <!-- <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item name="1">
               <template slot="title">
                 <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
@@ -89,7 +91,8 @@
                 <span class="req-route">/mockman</span>
               </div>
             </el-collapse-item>
-          </el-collapse>
+          </el-collapse> -->
+
           <div class="single-req">
             <span class="req-type get">GET</span>
             <span class="req-route">/mockman</span>
@@ -327,7 +330,7 @@
     components: { jsonEditor, contextMenu },
     data() {
       return {
-        activeNames: ['1'],
+        // activeNames: [],
         mocks: [],
         activeMock: {},
         httpMethod: null,
@@ -694,7 +697,7 @@
   .el-aside.apis .api-header .el-button:hover{
     color: #B9BBBE;
   }
-  .el-aside.apis .el-collapse {
+  /*.el-aside.apis .el-collapse {
     padding-left: 10px;
     padding-right: 10px;
     border: 0;
@@ -739,7 +742,7 @@
   }
   .el-aside.apis .el-collapse .el-collapse-item .sub-req .req-route {
     color: #72767d;
-  }
+  }*/
   .el-aside.apis .single-req {
     height: 30px;
     line-height: 30px;
