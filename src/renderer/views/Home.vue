@@ -52,7 +52,7 @@
         <div>
           <div class="api-header">
             <span class="note">Api</span>
-            <el-button type="text" icon="el-icon-plus"></el-button>
+            <el-button type="text" icon="el-icon-plus" @click="handleNewApi"></el-button>
           </div>
 
           <!-- TODO: classify the apis to diffrent tags -->
@@ -93,56 +93,18 @@
             </el-collapse-item>
           </el-collapse> -->
 
-          <div class="single-req">
-            <span class="req-type get">GET</span>
-            <span class="req-route">/mockman</span>
+          <div class="single-req" v-for="api in apis">
+            <span :class="`req-type ${api.method}`">{{ api.method.toUpperCase() }}</span>
+            <span class="req-route">/{{ api.path }}</span>
             <span>
               <el-button
                 type="text"
                 size="mini"
-                class="api-delete"><i class="el-icon-close"></i></el-button>
+                class="api-delete"
+                @click="handleRemoveApi(api)"><i class="el-icon-close"></i></el-button>
             </span>
           </div>
-          <div class="single-req">
-            <span class="req-type post">POST</span>
-            <span class="req-route">/mockman</span>
-            <span>
-              <el-button
-                type="text"
-                size="mini"
-                class="api-delete"><i class="el-icon-close"></i></el-button>
-            </span>
-          </div>
-          <div class="single-req">
-            <span class="req-type delete">DELETE</span>
-            <span class="req-route">/mockman</span>
-            <span>
-              <el-button
-                type="text"
-                size="mini"
-                class="api-delete"><i class="el-icon-close"></i></el-button>
-            </span>
-          </div>
-          <div class="single-req">
-            <span class="req-type delete">DELETE</span>
-            <span class="req-route">/mockman</span>
-            <span>
-              <el-button
-                type="text"
-                size="mini"
-                class="api-delete"><i class="el-icon-close"></i></el-button>
-            </span>
-          </div>
-          <div class="single-req">
-            <span class="req-type options">OPTIONS</span>
-            <span class="req-route">/mockman</span>
-            <span>
-              <el-button
-                type="text"
-                size="mini"
-                class="api-delete"><i class="el-icon-close"></i></el-button>
-            </span>
-          </div>
+
         </div>
       </el-aside>
       <el-container>
@@ -411,9 +373,11 @@
       this.httpMethod = httpMethod;
       this.resCode = resCode;
 
-      // test sequelize
+      // get mocks
       this.mocks = ipcRenderer.sendSync('getMockList');
       this.activeMock = this.mocks[0];
+      // get api
+      this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
     },
     methods: {
       // initial the dynamic params
@@ -438,6 +402,7 @@
       // switch active mock
       switchActiveMock(mock) {
         this.activeMock = mock;
+        this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
       },
       // contextmenu
       handleContextMenu(e, mock) {
@@ -501,6 +466,7 @@
         while (signal === 'success') {
           this.mocks = ipcRenderer.sendSync('getMockList');
           this.activeMock = this.mocks[this.mocks.length - 1];
+          this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
           signal = 'done';
         }
       },
@@ -519,7 +485,25 @@
           this.mocks = ipcRenderer.sendSync('getMockList');
           if (mock.id === this.activeMock.id) {
             this.activeMock = this.mocks[this.mocks.length - 1];
+            this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
           }
+          signal = 'done';
+        }
+      },
+      // create a new api
+      handleNewApi() {
+        let signal = ipcRenderer.sendSync('newApi', this.activeMock.id);
+        while (signal === 'success') {
+          this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+          // this.activeApi = this.apis[this.apis.length - 1];
+          signal = 'done';
+        }
+      },
+      // remove an api
+      handleRemoveApi(api) {
+        let signal = ipcRenderer.sendSync('removeApi', api);
+        while (signal === 'success') {
+          this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
           signal = 'done';
         }
       },
