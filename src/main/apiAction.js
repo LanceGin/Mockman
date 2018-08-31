@@ -64,8 +64,26 @@ ipcMain.on('newApi', (e, mockId) => {
 });
 
 // update a new api
-ipcMain.on('updateApi', (e, arg) => {
-  console.log('updateApi', e, arg);
+ipcMain.on('updateApi', (e, api) => {
+  const sql = `
+    UPDATE apis
+    SET path = :path, method = :method, res_code = :resCode, latency = :latency, request = :request, response = :response, updated_at = datetime('now')
+    WHERE id = :id;
+  `;
+  sequelize.query(sql, {
+    type: sequelize.QueryTypes.UPDATE,
+    replacements: {
+      path: api.path,
+      method: api.method,
+      resCode: api.resCode,
+      latency: api.latency,
+      request: JSON.stringify(api.request),
+      response: JSON.stringify(api.response),
+      id: api.id,
+    },
+  }).then(() => {
+    e.returnValue = 'success';
+  });
 });
 
 // remove an api
