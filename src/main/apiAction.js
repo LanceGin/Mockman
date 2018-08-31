@@ -5,6 +5,7 @@
 import { ipcMain } from 'electron';
 import sequelize from './baseModel';
 
+// initial template for insertion
 const initApi = {
   method: 'get',
   path: 'mockman',
@@ -22,9 +23,26 @@ const initApi = {
   },
 };
 
+// transfer selected data to json object
+const formatApis = (apis) => {
+  const target = [];
+  apis.forEach((api) => {
+    target.push({
+      id: api.id,
+      mockId: api.mock_id,
+      method: api.method,
+      path: api.path,
+      resCode: api.res_code,
+      latency: api.latency,
+      request: JSON.parse(api.request),
+      response: JSON.parse(api.response),
+    });
+  });
+  return target;
+};
+
 // create a new api
 ipcMain.on('newApi', (e, mockId) => {
-  console.log(798689, mockId);
   const sql = `
     INSERT INTO apis (mock_id, path, method, res_code, latency, request, response, created_at, updated_at)
     VALUES (:mockId, :path, :method, :resCode, :latency, :request, :response, datetime('now'), datetime('now'));
@@ -68,7 +86,6 @@ ipcMain.on('removeApi', (e, api) => {
 
 // get api list
 ipcMain.on('getApiList', (e, mockId) => {
-  console.log(124324324, mockId);
   const sql = `
     SELECT *
     FROM apis
@@ -80,6 +97,6 @@ ipcMain.on('getApiList', (e, mockId) => {
       mockId,
     },
   }).then((apis) => {
-    e.returnValue = apis;
+    e.returnValue = formatApis(apis);
   });
 });
