@@ -20,10 +20,10 @@
 - [x] update a mock
 - [x] remove a mock
 - [x] query a mock info
-- [ ] create an api
-- [ ] update an api
-- [ ] remove an api
-- [ ] query an api info
+- [x] create an api
+- [x] update an api
+- [x] remove an api
+- [x] query an api info
 - [ ] start an express server with a mock config
 
 ### Client
@@ -36,10 +36,10 @@
 - [x] update a mock
 - [x] remove a mock
 - [x] query a mock info
-- [ ] create an api
+- [x] create an api
 - [ ] update an api
-- [ ] remove an api
-- [ ] query an api info
+- [x] remove an api
+- [x] query an api info
 - [ ] request params check list
 - [ ] response k-v input group
 - [x] response code editor
