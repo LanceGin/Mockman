@@ -93,7 +93,7 @@
             </el-collapse-item>
           </el-collapse> -->
 
-          <div class="single-req" v-for="api in apis">
+          <div v-for="api in apis" :class="`single-req ${activeApi.id === api.id ? 'avtive' : ''}`" @click="switchActiveApi(api)">
             <span :class="`req-type ${api.method}`">{{ api.method.toUpperCase() }}</span>
             <span class="req-route">/{{ api.path }}</span>
             <span>
@@ -344,6 +344,8 @@
         // api data
         apis: [],
         activeApi: {
+          id: 1,
+          mockId: 1,
           method: 'get',
           path: 'mockman',
           resCode: '200 - OK',
@@ -378,6 +380,7 @@
       this.activeMock = this.mocks[0];
       // get api
       this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+      console.log(111, this.apis);
     },
     methods: {
       // initial the dynamic params
@@ -403,6 +406,10 @@
       switchActiveMock(mock) {
         this.activeMock = mock;
         this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+      },
+      // switch active api
+      switchActiveApi(api) {
+        this.activeApi = api;
       },
       // contextmenu
       handleContextMenu(e, mock) {
@@ -786,6 +793,10 @@
     transition: color .25s ease;
   }
   .el-aside.apis .single-req:hover {
+    background: rgba(79,84,92,.6);
+    cursor: pointer;
+  }
+  .el-aside.apis .single-req.avtive {
     background: rgba(79,84,92,.6);
     cursor: pointer;
   }
