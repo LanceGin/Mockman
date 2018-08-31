@@ -120,7 +120,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="sign">/</span>
-              <el-input :value="activeApi.path" class="path" placeholder="path"></el-input>
+              <el-input v-model="activeApi.path" class="path" placeholder="path" @blur="handleUpdateApi"></el-input>
               <el-dropdown trigger="click" placement="bottom" class="status" @command="handleResCode">
                 <span class="el-dropdown-link">
                   {{ activeApi.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -133,7 +133,9 @@
               <el-input
                 placeholder="0"
                 class="time"
-                :value="activeApi.latency">
+                type="number"
+                v-model="activeApi.latency"
+                @blur="handleUpdateApi">
               </el-input>
               <span>ms</span>
             </div>
@@ -380,7 +382,7 @@
       this.activeMock = this.mocks[0];
       // get api
       this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
-      console.log(111, this.apis);
+      this.activeApi = this.apis[0];
     },
     methods: {
       // initial the dynamic params
@@ -406,6 +408,7 @@
       switchActiveMock(mock) {
         this.activeMock = mock;
         this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+        this.activeApi = this.apis[0];
       },
       // switch active api
       switchActiveApi(api) {
@@ -434,10 +437,12 @@
       // handle change http request type
       handleReqType(command) {
         this.activeApi.method = command;
+        this.handleUpdateApi();
       },
       // handle change response code
       handleResCode(command) {
         this.activeApi.resCode = command;
+        this.handleUpdateApi();
       },
       // request params block handler
       removeReqParam(item, subReq) {
@@ -502,7 +507,14 @@
         let signal = ipcRenderer.sendSync('newApi', this.activeMock.id);
         while (signal === 'success') {
           this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
-          // this.activeApi = this.apis[this.apis.length - 1];
+          this.activeApi = this.apis[this.apis.length - 1];
+          signal = 'done';
+        }
+      },
+      // update an api
+      handleUpdateApi() {
+        let signal = ipcRenderer.sendSync('updateApi', this.activeApi);
+        while (signal === 'success') {
           signal = 'done';
         }
       },
@@ -522,6 +534,13 @@
   /* common style */
   body {
     margin: 0;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"]{
+    -moz-appearance: textfield;
   }
   .editor-container {
     position: relative;
