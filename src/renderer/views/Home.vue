@@ -151,17 +151,17 @@
             <div>
               <el-dropdown trigger="click" placement="bottom" class="type" @command="handleReqType">
                 <span class="el-dropdown-link">
-                  {{ apiDetails.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{ activeApi.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown" class="http-method">
                   <el-dropdown-item v-for="item in httpMethod" :command="item.command">{{ item.name }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="sign">/</span>
-              <el-input :value="apiDetails.path" class="path" placeholder="path"></el-input>
+              <el-input :value="activeApi.path" class="path" placeholder="path"></el-input>
               <el-dropdown trigger="click" placement="bottom" class="status" @command="handleResCode">
                 <span class="el-dropdown-link">
-                  {{ apiDetails.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{ activeApi.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown" class="res-code">
                   <el-dropdown-item v-for="item in resCode" :command="item.command">{{ item.command }}</el-dropdown-item>
@@ -171,7 +171,7 @@
               <el-input
                 placeholder="0"
                 class="time"
-                :value="apiDetails.latency">
+                :value="activeApi.latency">
               </el-input>
               <span>ms</span>
             </div>
@@ -184,9 +184,9 @@
                   <el-tab-pane label="Params" name="params" class="params">
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
-                        v-for= "(param, index) in apiDetails.request.params"
+                        v-for= "(param, index) in activeApi.request.params"
                         :key="index"
-                        :prop="apiDetails.request.params[index].value">
+                        :prop="activeApi.request.params[index].value">
                         <el-input v-model="param.key" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
@@ -216,9 +216,9 @@
                   <el-tab-pane label="Body" name="body" class="params body">
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
-                        v-for= "(param, index) in apiDetails.request.body"
+                        v-for= "(param, index) in activeApi.request.body"
                         :key="index"
-                        :prop="apiDetails.request.body[index].value">
+                        :prop="activeApi.request.body[index].value">
                         <el-input v-model="param.key" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
@@ -248,9 +248,9 @@
                   <el-tab-pane label="Headers" name="header" class="params headers">
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
-                        v-for= "(param, index) in apiDetails.request.headers"
+                        v-for= "(param, index) in activeApi.request.headers"
                         :key="index"
-                        :prop="apiDetails.request.headers[index].value">
+                        :prop="activeApi.request.headers[index].value">
                         <el-input v-model="param.key" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
@@ -281,14 +281,14 @@
               <el-tab-pane label="RESPONSE" name="response" class="response">
                 <el-tabs v-model="activeRes" @tab-click="handleResClick">
                   <el-tab-pane label="Body" name="body" class="editor-container">
-                    <json-editor ref="resBody" v-model="apiDetails.response.body.value"></json-editor>
+                    <json-editor ref="resBody" v-model="activeApi.response.body.value"></json-editor>
                   </el-tab-pane>
                   <el-tab-pane label="Cookies" name="cookies" class="params cookies">
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
-                        v-for= "(param, index) in apiDetails.response.cookies"
+                        v-for= "(param, index) in activeApi.response.cookies"
                         :key="index"
-                        :prop="apiDetails.response.cookies[index].value">
+                        :prop="activeApi.response.cookies[index].value">
                         <el-input v-model="param.key" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
@@ -316,9 +316,9 @@
                   <el-tab-pane label="Headers" name="header" class="params headers">
                     <el-form label-width="100px" class="demo-dynamic">
                       <el-form-item
-                        v-for= "(param, index) in apiDetails.response.headers"
+                        v-for= "(param, index) in activeApi.response.headers"
                         :key="index"
-                        :prop="apiDetails.response.headers[index].value">
+                        :prop="activeApi.response.headers[index].value">
                         <el-input v-model="param.key" class="key">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
@@ -368,15 +368,20 @@
     components: { jsonEditor, contextMenu },
     data() {
       return {
-        // activeNames: [],
-        mocks: [],
-        activeMock: {},
-        httpMethod: null,
-        resCode: null,
+        // active tab
         activeHttp: 'request',
         activeReq: 'params',
         activeRes: 'body',
-        apiDetails: {
+        // activeNames: [],
+        // mock data
+        mocks: [],
+        activeMock: {},
+        // http-method and rescode list
+        httpMethod: null,
+        resCode: null,
+        // api data
+        apis: [],
+        activeApi: {
           method: 'get',
           path: 'mockman',
           resCode: '200 - OK',
@@ -400,7 +405,6 @@
           key: '',
           required: true,
         },
-        checked: true,
       };
     },
     mounted() {
@@ -457,21 +461,21 @@
       },
       // handle change http request type
       handleReqType(command) {
-        this.apiDetails.method = command;
+        this.activeApi.method = command;
       },
       // handle change response code
       handleResCode(command) {
-        this.apiDetails.resCode = command;
+        this.activeApi.resCode = command;
       },
       // request params block handler
       removeReqParam(item, subReq) {
-        const index = this.apiDetails.request[subReq].indexOf(item);
+        const index = this.activeApi.request[subReq].indexOf(item);
         if (index !== -1) {
-          this.apiDetails.request[subReq].splice(index, 1);
+          this.activeApi.request[subReq].splice(index, 1);
         }
       },
       addReqParam(subReq) {
-        this.apiDetails.request[subReq].push(this.dynamicReqParam);
+        this.activeApi.request[subReq].push(this.dynamicReqParam);
         this.dynamicReqParam = {
           key: '',
           required: true,
@@ -479,13 +483,13 @@
       },
       // response params block handler
       removeResParam(item, subRes) {
-        const index = this.apiDetails.response[subRes].indexOf(item);
+        const index = this.activeApi.response[subRes].indexOf(item);
         if (index !== -1) {
-          this.apiDetails.response[subRes].splice(index, 1);
+          this.activeApi.response[subRes].splice(index, 1);
         }
       },
       addResParam(subRes) {
-        this.apiDetails.response[subRes].push(this.dynamicResParam);
+        this.activeApi.response[subRes].push(this.dynamicResParam);
         this.dynamicResParam = {
           key: '',
           required: true,
