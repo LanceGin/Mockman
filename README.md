@@ -40,7 +40,7 @@
 - [ ] update an api
 - [x] remove an api
 - [x] query an api info
-- [ ] request params check list
+- [x] request params check list
 - [ ] response k-v input group
 - [x] response code editor
 
