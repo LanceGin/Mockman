@@ -155,8 +155,6 @@
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
-                        </el-input>
-                        <el-input v-model="param.key" class="value">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'params')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -168,8 +166,6 @@
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
-                        </el-input>
-                        <el-input v-model="dynamicReqParam.key" class="value">
                           <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('params')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -187,8 +183,6 @@
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
-                        </el-input>
-                        <el-input v-model="param.key" class="value">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'body')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -200,8 +194,6 @@
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
-                        </el-input>
-                        <el-input v-model="dynamicReqParam.key" class="value">
                           <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('body')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -219,8 +211,6 @@
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
-                        </el-input>
-                        <el-input v-model="param.key" class="value">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'headers')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -232,8 +222,6 @@
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
-                        </el-input>
-                        <el-input v-model="dynamicReqParam.key" class="value">
                           <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('headers')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -936,7 +924,7 @@
   }
   .el-main.api-detail .req-res .request .params .key,
   .el-main.api-detail .req-res .response .params .key {
-    width: 48%;
+    width: 100%;
     float: left;
   }
   .el-main.api-detail .req-res .request .params .key .el-input-group__prepend,
@@ -946,7 +934,6 @@
     background: transparent;
     border: 0;
   }
-  .el-main.api-detail .req-res .request .params .value,
   .el-main.api-detail .req-res .response .params .value {
     width: 48%;
     float: right;
@@ -963,7 +950,6 @@
     color: #dcdfe6;
   }
   .el-main.api-detail .req-res .request .params .key .el-input__inner,
-  .el-main.api-detail .req-res .request .params .value .el-input__inner,
   .el-main.api-detail .req-res .response .params .key .el-input__inner,
   .el-main.api-detail .req-res .response .params .value .el-input__inner {
     border-radius: 0;
