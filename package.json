@@ -26,7 +26,6 @@
     "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "dependencies": {
-    "axios": "^0.16.1",
     "codemirror": "^5.39.2",
     "element-ui": "^2.3.9",
     "jsonlint": "^1.6.3",
