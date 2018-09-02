@@ -116,7 +116,7 @@
                   {{ activeApi.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown" class="http-method">
-                  <el-dropdown-item v-for="item in httpMethod" :command="item.command">{{ item.name }}</el-dropdown-item>
+                  <el-dropdown-item v-for="item in httpMethod" :key="item.name" :command="item.command">{{ item.name }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="sign">/</span>
@@ -126,7 +126,7 @@
                   {{ activeApi.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown" class="res-code">
-                  <el-dropdown-item v-for="item in resCode" :command="item.command">{{ item.command }}</el-dropdown-item>
+                  <el-dropdown-item v-for="item in resCode" :key="item.command" :command="item.command">{{ item.command }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
               <span class="time-title">TIME</span>
