@@ -12,4 +12,5 @@ thumbs.db
 package-lock.json
 *.plist
 *.sh
+!native.sh
 static/mockman.sqlite
