@@ -151,7 +151,7 @@
                         v-for= "(param, index) in activeApi.request.params"
                         :key="index"
                         :prop="activeApi.request.params[index].value">
-                        <el-input v-model="param.key" class="key">
+                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
@@ -179,7 +179,7 @@
                         v-for= "(param, index) in activeApi.request.body"
                         :key="index"
                         :prop="activeApi.request.body[index].value">
-                        <el-input v-model="param.key" class="key">
+                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
@@ -207,7 +207,7 @@
                         v-for= "(param, index) in activeApi.request.headers"
                         :key="index"
                         :prop="activeApi.request.headers[index].value">
-                        <el-input v-model="param.key" class="key">
+                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
@@ -233,7 +233,10 @@
               <el-tab-pane label="RESPONSE" name="response" class="response">
                 <el-tabs v-model="activeRes" @tab-click="handleResClick">
                   <el-tab-pane label="Body" name="body" class="editor-container">
-                    <json-editor ref="resBody" v-model="activeApi.response.body.value"></json-editor>
+                    <json-editor
+                      ref="resBody"
+                      v-model="activeApi.response.body.value">
+                    </json-editor>
                   </el-tab-pane>
                   <el-tab-pane label="Cookies" name="cookies" class="params cookies">
                     <el-form label-width="100px" class="demo-dynamic">
@@ -241,12 +244,12 @@
                         v-for= "(param, index) in activeApi.response.cookies"
                         :key="index"
                         :prop="activeApi.response.cookies[index].value">
-                        <el-input v-model="param.key" class="key">
+                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="param.value" class="value">
+                        <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'cookies')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -271,12 +274,12 @@
                         v-for= "(param, index) in activeApi.response.headers"
                         :key="index"
                         :prop="activeApi.response.headers[index].value">
-                        <el-input v-model="param.key" class="key">
+                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="param.value" class="value">
+                        <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'headers')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -438,10 +441,12 @@
         const index = this.activeApi.request[subReq].indexOf(item);
         if (index !== -1) {
           this.activeApi.request[subReq].splice(index, 1);
+          this.handleUpdateApi();
         }
       },
       addReqParam(subReq) {
         this.activeApi.request[subReq].push(this.dynamicReqParam);
+        this.handleUpdateApi();
         this.dynamicReqParam = {
           key: '',
           required: true,
@@ -452,10 +457,12 @@
         const index = this.activeApi.response[subRes].indexOf(item);
         if (index !== -1) {
           this.activeApi.response[subRes].splice(index, 1);
+          this.handleUpdateApi();
         }
       },
       addResParam(subRes) {
         this.activeApi.response[subRes].push(this.dynamicResParam);
+        this.handleUpdateApi();
         this.dynamicResParam = {
           key: '',
           required: true,
