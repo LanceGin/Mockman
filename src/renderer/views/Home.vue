@@ -246,7 +246,7 @@
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="param.key" class="value">
+                        <el-input v-model="param.value" class="value">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'cookies')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -259,7 +259,7 @@
                             <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="dynamicResParam.key" class="value">
+                        <el-input v-model="dynamicResParam.value" class="value">
                           <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('cookies')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -276,7 +276,7 @@
                             <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="param.key" class="value">
+                        <el-input v-model="param.value" class="value">
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'headers')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -289,7 +289,7 @@
                             <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
-                        <el-input v-model="dynamicResParam.key" class="value">
+                        <el-input v-model="dynamicResParam.value" class="value">
                           <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('headers')"></el-button>
                         </el-input>
                       </el-form-item>
@@ -357,6 +357,7 @@
         },
         dynamicResParam: {
           key: '',
+          value: '',
           required: true,
         },
       };
