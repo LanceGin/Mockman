@@ -922,9 +922,12 @@
   .el-main.api-detail .req-res .el-tabs__content .el-form.demo-dynamic .el-form-item__content {
     margin-left: 0!important;
   }
-  .el-main.api-detail .req-res .request .params .key,
-  .el-main.api-detail .req-res .response .params .key {
+  .el-main.api-detail .req-res .request .params .key {
     width: 100%;
+    float: left;
+  }
+  .el-main.api-detail .req-res .response .params .key {
+    width: 48%;
     float: left;
   }
   .el-main.api-detail .req-res .request .params .key .el-input-group__prepend,
