@@ -17,7 +17,7 @@ const initApi = {
     headers: [],
   },
   response: {
-    body: { type: 'json', value: null },
+    body: { type: 'json', value: 'null' },
     cookies: [],
     headers: [],
   },

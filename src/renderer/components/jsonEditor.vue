@@ -28,7 +28,7 @@ export default {
     value(value) {
       const editorValue = this.jsonEditor.getValue();
       if (value !== editorValue) {
-        this.jsonEditor.setValue(JSON.stringify(this.value, null, 2));
+        this.jsonEditor.setValue(this.value);
       }
     },
   },
@@ -44,7 +44,7 @@ export default {
       lint: true,
     });
 
-    this.jsonEditor.setValue(JSON.stringify(this.value, null, 2));
+    this.jsonEditor.setValue(this.value);
     this.jsonEditor.on('change', (cm) => {
       this.$emit('changed', cm.getValue());
       this.$emit('input', cm.getValue());
