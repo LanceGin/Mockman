@@ -411,9 +411,9 @@
         const ref = `CM${mock.id}`;
         this.$refs[ref][0].open(e);
       },
-      handleChange(val) {
-        console.log(111, val);
-      },
+      // handleChange(val) {
+      //   console.log(111, val);
+      // },
       handleHttpClick() {
         this.initDynamicResParam();
         this.initDynamicReqParam();
