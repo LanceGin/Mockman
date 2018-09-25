@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "codemirror": "^5.39.2",
+    "cors": "^2.8.4",
     "element-ui": "^2.3.9",
     "express": "^4.16.3",
     "jsonlint": "^1.6.3",
