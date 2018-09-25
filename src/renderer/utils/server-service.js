@@ -1,21 +1,15 @@
 // server method with dynamic configuration
+const express = require('express')
 
-export default class serverService {
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
-  }
+const listenPort = (service, port) => {
+  service.listen(port, (err, res) => {
+    console.log("err:", err, "res:", res);
+  });
+};
 
-  // start server
-  start() {}
+export const start = (config) => {
+  const service = express();
+  const port = config.port;
 
-  // stop server
-  stop() {}
-
-  // set cors
-  serCors() {}
-
-  // ser routes
-  serRoutes() {}
+  listenPort(service, port);
 }
