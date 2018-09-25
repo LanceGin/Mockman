@@ -1,10 +1,10 @@
 // server method with dynamic configuration
-const express = require('express')
+const express = require('express');
 const cors = require('cors');
 
 const listenPort = (service, port) => {
   service.listen(port, (err, res) => {
-    console.log("err:", err, "res:", res);
+    console.log('err:', err, 'res:', res);
   });
 };
 
@@ -12,12 +12,12 @@ const setCors = (service) => {
   service.use(cors());
 };
 
-const serPrefix = (service, router, prefix) => {
+const setPrefix = (service, router, prefix) => {
   service.use(`/${prefix}`, router);
 };
 
 // set dynamic routes with configuration
-const setRoutes = (service, config) => {
+export const setRoutes = (service, config) => {
   const router = express.Router();
   const apis = config.apis;
   const prefix = config.prefix;
@@ -30,34 +30,34 @@ const setRoutes = (service, config) => {
     service[api.method](`/${api.path}`, (req, res) => {
       setTimeout(() => {
         // return status
-        res.sendStatus(api.resCode.slice(0, 3));
+        res.status(api.resCode.slice(0, 3));
 
         // set headers
         if (api.response.headers.length > 0) {
           api.response.headers.forEach((header) => {
             res.set(header.key, header.value);
-          })
+          });
         }
 
         // set cookies
         if (api.response.cookies.length > 0) {
           api.response.cookies.forEach((cookie) => {
             res.cookie(cookie.key, cookie.value);
-          })
+          });
         }
 
         // return json data
         res.json(JSON.parse(api.response.body.value));
-      }, parseInt(api.latency));
-    })
-  })
+      }, parseInt(api.latency, 10));
+    });
+  });
 };
 
-export default const start = (config) => {
+export const start = (config) => {
   const service = express();
   const port = config.port;
 
-  listenPort(service, port);
   setCors(service);
-  setRoutes(service, config)
+  setRoutes(service, config);
+  listenPort(service, port);
 };
