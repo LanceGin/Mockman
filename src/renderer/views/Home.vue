@@ -310,8 +310,8 @@
 
 <script>
   // import http method
-  import httpMethod from '@/utils/http-method';
-  import resCode from '@/utils/res-code';
+  import httpMethod from '@/utils/httpMethod';
+  import resCode from '@/utils/resCode';
   import jsonEditor from '@/components/jsonEditor';
   import contextMenu from '@/components/contextMenu';
 
