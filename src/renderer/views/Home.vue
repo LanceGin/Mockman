@@ -40,7 +40,7 @@
         <div class="mock-info">
           <div>
             <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
-            <el-button type="text" icon="el-icon-caret-right"></el-button>
+            <el-button type="text" icon="el-icon-caret-right" @click="handleServer"></el-button>
           </div>
           <div>
             <span class="host">localhost :</span>
@@ -312,6 +312,9 @@
   // import http method
   import httpMethod from '@/utils/httpMethod';
   import resCode from '@/utils/resCode';
+  import {
+    start,
+  } from '@/utils/serverService';
   import jsonEditor from '@/components/jsonEditor';
   import contextMenu from '@/components/contextMenu';
 
@@ -414,6 +417,13 @@
       // handleChange(val) {
       //   console.log(111, val);
       // },
+      // start or stop server service
+      handleServer() {
+        const conf = this.activeMock;
+        conf.apis = this.apis;
+        console.log(1111, conf);
+        start(conf);
+      },
       handleHttpClick() {
         this.initDynamicResParam();
         this.initDynamicReqParam();
