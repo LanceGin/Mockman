@@ -46,13 +46,24 @@ ipcMain.on('removeMock', (e, mock) => {
     DELETE FROM mocks
     WHERE id = :mockId;
   `;
+  const rmApiSql = `
+    DELETE FROM apis
+    WHERE mock_id = :mockId;
+  `;
   sequelize.query(sql, {
     type: sequelize.QueryTypes.DELETE,
     replacements: {
       mockId: mock.id,
     },
   }).then(() => {
-    e.returnValue = 'success';
+    sequelize.query(rmApiSql, {
+      type: sequelize.QueryTypes.DELETE,
+      replacements: {
+        mockId: mock.id,
+      },
+    }).then(() => {
+      e.returnValue = 'success';
+    });
   });
 });
 
