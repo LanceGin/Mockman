@@ -40,7 +40,22 @@
         <div class="mock-info">
           <div>
             <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
-            <el-button type="text" icon="el-icon-caret-right" @click="handleServer"></el-button>
+            <el-button
+              v-if="activeMock.status === 'running'"
+              key="running"
+              class="running"
+              type="text"
+              icon="el-icon-loading"
+              @click="handleServer">
+            </el-button>
+            <el-button
+              v-else
+              key="stop"
+              class="stop"
+              type="text"
+              icon="el-icon-caret-right"
+              @click="handleServer">
+            </el-button>
           </div>
           <div>
             <span class="host">localhost :</span>
@@ -419,8 +434,12 @@
       handleServer() {
         const conf = this.activeMock;
         conf.apis = this.apis;
-        console.log(1111, conf);
-        ss.start(conf);
+        if (conf.status === 'running') {
+          ss.stop(conf);
+        } else {
+          ss.start(conf);
+        }
+        this.$forceUpdate();
       },
       handleHttpClick() {
         this.initDynamicResParam();
@@ -665,7 +684,12 @@
     text-align: right;
     padding: 0 10px;
   }
-  .el-aside.apis .mock-info .el-button--text {
+  .el-aside.apis .mock-info .el-button--text.running {
+    padding: 0;
+    font-size: 20px;
+    color: red;
+  }
+  .el-aside.apis .mock-info .el-button--text.stop {
     padding: 0;
     font-size: 20px;
     color: #67c23a;

@@ -10,24 +10,49 @@ export default class serverService {
   /**
     * initial and start an express instance with configration
     *
-    * @params { config } 
+    * @params { config }
     * @desc all configration of an express instance, include routes, port,
     *       latancy, response, request etc.
     *
     */
   static start(config) {
+    console.log(111, config);
     const service = express();
     const port = config.port;
 
     this.setCors(service);
     this.setRoutes(service, config);
-    this.listenPort(service, port);
+
+    const serviceIns = service.listen(port);
+
+    config.serviceIns = serviceIns;
+    config.status = 'running';
+    config.startedAt = new Date();
+    // handle errors
+    serviceIns.on('error', (err) => {
+      console.log(err);
+    });
+  }
+
+  /**
+    * stop an express instance
+    *
+    * @params { config }
+    * @desc all configration of an express instance, serverIns is required
+    *
+    */
+  static stop(config) {
+    const serviceIns = config.serviceIns;
+    serviceIns.close();
+    config.status = 'stop';
+    config.serviceIns = null;
+    config.startedAt = null;
   }
 
   /**
     * set CORS to the express instance
     *
-    * @params { service } 
+    * @params { service }
     * @desc the express instance
     *
     */
@@ -38,11 +63,11 @@ export default class serverService {
   /**
     * set globle prefix to an express instance
     *
-    * @params { service } 
+    * @params { service }
     * @desc the express instance
-    * @params { router } 
+    * @params { router }
     * @desc main router of the express instance
-    * @params { prefix } 
+    * @params { prefix }
     * @desc prefix string
     *
     */
@@ -53,9 +78,9 @@ export default class serverService {
   /**
     * set routes to an express instance
     *
-    * @params { service } 
+    * @params { service }
     * @desc the express instance
-    * @params { config } 
+    * @params { config }
     * @desc all configration of an express instance, include routes, port,
     *       latancy, response, request etc.
     *
@@ -93,21 +118,6 @@ export default class serverService {
           res.json(JSON.parse(api.response.body.value));
         }, parseInt(api.latency, 10));
       });
-    });
-  }
-
-  /**
-    * set port to an express instance
-    *
-    * @params { service } 
-    * @desc the express instance
-    * @params { port } 
-    * @desc port string
-    *
-    */
-  static listenPort(service, port) {
-    service.listen(port, (err, res) => {
-      console.log('err:', err, 'res:', res);
     });
   }
 }
