@@ -522,6 +522,7 @@
           if (mock.id === this.activeMock.id) {
             this.activeMock = this.mocks[this.mocks.length - 1];
             this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+            this.activeApi = this.apis[0];
           }
           signal = 'done';
         }
