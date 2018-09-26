@@ -501,6 +501,7 @@
         while (signal === 'success') {
           this.mocks = ipcRenderer.sendSync('getMockList');
           this.activeMock = this.mocks[this.mocks.length - 1];
+          this.handleNewApi();
           this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
           signal = 'done';
         }
