@@ -1,8 +1,20 @@
-// server method with dynamic configuration
+/**
+  * serverService class to generate and configure express server
+  * @dependecies { express, cors }
+  *
+  */
 const express = require('express');
 const cors = require('cors');
 
 export default class serverService {
+  /**
+    * initial and start an express instance with configration
+    *
+    * @params { config } 
+    * @desc all configration of an express instance, include routes, port,
+    *       latancy, response, request etc.
+    *
+    */
   static start(config) {
     const service = express();
     const port = config.port;
@@ -12,14 +24,42 @@ export default class serverService {
     this.listenPort(service, port);
   }
 
+  /**
+    * set CORS to the express instance
+    *
+    * @params { service } 
+    * @desc the express instance
+    *
+    */
   static setCors(service) {
     service.use(cors());
   }
 
+  /**
+    * set globle prefix to an express instance
+    *
+    * @params { service } 
+    * @desc the express instance
+    * @params { router } 
+    * @desc main router of the express instance
+    * @params { prefix } 
+    * @desc prefix string
+    *
+    */
   static setPrefix(service, router, prefix) {
     service.use(`/${prefix}`, router);
   }
 
+  /**
+    * set routes to an express instance
+    *
+    * @params { service } 
+    * @desc the express instance
+    * @params { config } 
+    * @desc all configration of an express instance, include routes, port,
+    *       latancy, response, request etc.
+    *
+    */
   static setRoutes(service, config) {
     const router = express.Router();
     const apis = config.apis;
@@ -56,6 +96,15 @@ export default class serverService {
     });
   }
 
+  /**
+    * set port to an express instance
+    *
+    * @params { service } 
+    * @desc the express instance
+    * @params { port } 
+    * @desc port string
+    *
+    */
   static listenPort(service, port) {
     service.listen(port, (err, res) => {
       console.log('err:', err, 'res:', res);
