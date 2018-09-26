@@ -687,7 +687,7 @@
   .el-aside.apis .mock-info .el-button--text.running {
     padding: 0;
     font-size: 20px;
-    color: red;
+    color: #ff3c3c;
   }
   .el-aside.apis .mock-info .el-button--text.stop {
     padding: 0;
