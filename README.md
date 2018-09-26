@@ -1,6 +1,8 @@
 # <img alt="Mockman" width="150" height="150" src="http://orhcxc3kd.bkt.clouddn.com/256x256.png"/>
 
-> `Mockman` is an open source app to create and manage your  mock servers easily
+> `Mockman` is a powerful and convenient tool that helps you to manage and start mock servers locally.
+> 
+> With the app, you can easily configure the routes, request format and response of a mock server
 
 ## Screenshots
 
@@ -24,7 +26,8 @@
 - [x] update an api
 - [x] remove an api
 - [x] query an api info
-- [ ] start an express server with a mock config
+- [x] start an express server with a mock config
+- [ ] handle errors while starting the server
 
 ### Client
 
@@ -37,12 +40,15 @@
 - [x] remove a mock
 - [x] query a mock info
 - [x] create an api
-- [ ] update an api
+- [x] update an api
 - [x] remove an api
 - [x] query an api info
 - [x] request params check list
-- [ ] response k-v input group
+- [x] response k-v input group
 - [x] response code editor
+- [ ] add blur event to jsonEditor
+- [ ] group the apis with tag
+- [ ] check the conflict of all mocks
 
 
 
