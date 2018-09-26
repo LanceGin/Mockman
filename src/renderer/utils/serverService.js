@@ -2,62 +2,63 @@
 const express = require('express');
 const cors = require('cors');
 
-const listenPort = (service, port) => {
-  service.listen(port, (err, res) => {
-    console.log('err:', err, 'res:', res);
-  });
-};
+export default class serverService {
+  static start(config) {
+    const service = express();
+    const port = config.port;
 
-const setCors = (service) => {
-  service.use(cors());
-};
+    this.setCors(service);
+    this.setRoutes(service, config);
+    this.listenPort(service, port);
+  }
 
-const setPrefix = (service, router, prefix) => {
-  service.use(`/${prefix}`, router);
-};
+  static setCors(service) {
+    service.use(cors());
+  }
 
-// set dynamic routes with configuration
-export const setRoutes = (service, config) => {
-  const router = express.Router();
-  const apis = config.apis;
-  const prefix = config.prefix;
+  static setPrefix(service, router, prefix) {
+    service.use(`/${prefix}`, router);
+  }
 
-  // set prefix to a specific mock server
-  setPrefix(service, router, prefix);
+  static setRoutes(service, config) {
+    const router = express.Router();
+    const apis = config.apis;
+    const prefix = config.prefix;
 
-  // create routes
-  apis.forEach((api) => {
-    service[api.method](`/${api.path}`, (req, res) => {
-      setTimeout(() => {
-        // return status
-        res.status(api.resCode.slice(0, 3));
+    // set prefix to a specific mock server
+    this.setPrefix(service, router, prefix);
 
-        // set headers
-        if (api.response.headers.length > 0) {
-          api.response.headers.forEach((header) => {
-            res.set(header.key, header.value);
-          });
-        }
+    // create routes
+    apis.forEach((api) => {
+      service[api.method](`/${api.path}`, (req, res) => {
+        setTimeout(() => {
+          // return status
+          res.status(api.resCode.slice(0, 3));
 
-        // set cookies
-        if (api.response.cookies.length > 0) {
-          api.response.cookies.forEach((cookie) => {
-            res.cookie(cookie.key, cookie.value);
-          });
-        }
+          // set headers
+          if (api.response.headers.length > 0) {
+            api.response.headers.forEach((header) => {
+              res.set(header.key, header.value);
+            });
+          }
 
-        // return json data
-        res.json(JSON.parse(api.response.body.value));
-      }, parseInt(api.latency, 10));
+          // set cookies
+          if (api.response.cookies.length > 0) {
+            api.response.cookies.forEach((cookie) => {
+              res.cookie(cookie.key, cookie.value);
+            });
+          }
+
+          // return json data
+          res.json(JSON.parse(api.response.body.value));
+        }, parseInt(api.latency, 10));
+      });
     });
-  });
-};
+  }
 
-export const start = (config) => {
-  const service = express();
-  const port = config.port;
-
-  setCors(service);
-  setRoutes(service, config);
-  listenPort(service, port);
-};
+  static listenPort(service, port) {
+    service.listen(port, (err, res) => {
+      console.log('err:', err, 'res:', res);
+    });
+  }
+}

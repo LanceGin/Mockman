@@ -312,9 +312,7 @@
   // import http method
   import httpMethod from '@/utils/httpMethod';
   import resCode from '@/utils/resCode';
-  import {
-    start,
-  } from '@/utils/serverService';
+  import ss from '@/utils/serverService';
   import jsonEditor from '@/components/jsonEditor';
   import contextMenu from '@/components/contextMenu';
 
@@ -422,7 +420,7 @@
         const conf = this.activeMock;
         conf.apis = this.apis;
         console.log(1111, conf);
-        start(conf);
+        ss.start(conf);
       },
       handleHttpClick() {
         this.initDynamicResParam();
