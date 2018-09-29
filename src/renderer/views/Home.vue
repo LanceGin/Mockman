@@ -872,8 +872,15 @@
   }
   .el-aside.apis .single-req .req-type {
     display: inline-block;
+    overflow: hidden;
     width: 60px;
     color: #72767d;
+  }
+  .el-aside.apis .single-req .req-route {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
   }
   
   .el-main {
