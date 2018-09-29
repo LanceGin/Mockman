@@ -8,8 +8,8 @@
       <div class="feature">
         <el-button size="small">Import</el-button>
         <el-button size="small">Export</el-button>
-        <el-button size="small">Docs</el-button>
-        <el-button size="small">Feedback</el-button>
+        <el-button size="small" @click="handleOuterClick('docs')">Docs</el-button>
+        <el-button size="small" @click="handleOuterClick('feedback')">Feedback</el-button>
       </div>
     </el-header>
     <el-container>
@@ -411,6 +411,20 @@
         window.setTimeout(() => {
           this.$refs.resBody.refresh();
         });
+      },
+      // handle outer click
+      handleOuterClick(pos) {
+        const shell = require('electron').shell;
+        switch (pos) {
+          case 'docs':
+            shell.openExternal('https://github.com/LanceGin/Mockman');
+            break;
+          case 'feedback':
+            shell.openExternal('https://github.com/LanceGin/Mockman/issues');
+            break;
+          default:
+            break;
+        }
       },
       // switch active mock
       switchActiveMock(mock) {
