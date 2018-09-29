@@ -250,7 +250,8 @@
                   <el-tab-pane label="Body" name="body" class="editor-container">
                     <json-editor
                       ref="resBody"
-                      v-model="activeApi.response.body.value">
+                      v-model="activeApi.response.body.value"
+                      @blur="handleUpdateApi">
                     </json-editor>
                   </el-tab-pane>
                   <el-tab-pane label="Cookies" name="cookies" class="params cookies">

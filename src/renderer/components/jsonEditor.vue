@@ -49,6 +49,10 @@ export default {
       this.$emit('changed', cm.getValue());
       this.$emit('input', cm.getValue());
     });
+    // emit blur method to parent component
+    this.jsonEditor.on('blur', () => {
+      this.$emit('blur');
+    });
   },
   methods: {
     getValue() {
