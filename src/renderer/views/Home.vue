@@ -437,7 +437,7 @@
         if (conf.status === 'running') {
           ss.stop(conf);
         } else {
-          ss.start(conf);
+          ss.start(conf, this);
         }
         this.$forceUpdate();
       },

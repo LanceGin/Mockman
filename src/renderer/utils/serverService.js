@@ -15,7 +15,7 @@ export default class serverService {
     *       latancy, response, request etc.
     *
     */
-  static start(config) {
+  static start(config, self) {
     console.log(111, config);
     const service = express();
     const port = config.port;
@@ -25,9 +25,14 @@ export default class serverService {
 
     const serviceIns = service.listen(port);
 
-    config.serviceIns = serviceIns;
-    config.status = 'running';
-    config.startedAt = new Date();
+    if (serviceIns.listening === true) {
+      config.serviceIns = serviceIns;
+      config.status = 'running';
+      config.startedAt = new Date();
+    } else {
+      self.$message.error('cannot start the server, check the configration');
+    }
+
     // handle errors
     serviceIns.on('error', (err) => {
       console.log(err);
