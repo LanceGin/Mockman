@@ -102,27 +102,41 @@ export default class serverService {
     apis.forEach((api) => {
       service[api.method](`/${api.path}`, (req, res) => {
         setTimeout(() => {
-          // return status
-          res.status(api.resCode.slice(0, 3));
-
-          // set headers
-          if (api.response.headers.length > 0) {
-            api.response.headers.forEach((header) => {
-              res.set(header.key, header.value);
-            });
-          }
-
-          // set cookies
-          if (api.response.cookies.length > 0) {
-            api.response.cookies.forEach((cookie) => {
-              res.cookie(cookie.key, cookie.value);
-            });
-          }
-
-          // return json data
-          res.json(JSON.parse(api.response.body.value));
+          this.resSuccess(res, api);
         }, parseInt(api.latency, 10));
       });
     });
+  }
+
+  /**
+    * return successful response
+    *
+    * @params { res }
+    * @desc route response
+    *
+    * @params { api }
+    * @desc api info
+    *
+    */
+  static resSuccess(res, api) {
+    // return status
+    res.status(api.resCode.slice(0, 3));
+
+    // set headers
+    if (api.response.headers.length > 0) {
+      api.response.headers.forEach((header) => {
+        res.set(header.key, header.value);
+      });
+    }
+
+    // set cookies
+    if (api.response.cookies.length > 0) {
+      api.response.cookies.forEach((cookie) => {
+        res.cookie(cookie.key, cookie.value);
+      });
+    }
+
+    // return json data
+    res.json(JSON.parse(api.response.body.value));
   }
 }
