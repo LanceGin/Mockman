@@ -592,7 +592,7 @@
     position: relative;
     height: 100%;
   }
-  .CodeMirror {
+  .cm-s-monokai.CodeMirror {
     height: calc(100vh - 250px);
   }
   .el-tooltip__popper.is-dark {
@@ -974,10 +974,9 @@
 
   .el-main.api-detail .req-res .el-tabs__content .el-tabs {
     background: hsla(218,5%,47%,.3);
-    height: calc(100vh - 200px);
+    height: calc(100vh - 180px);
     overflow-y: scroll;
     border-radius: 5px;
-    padding-bottom: 20px;
   }
   .el-main.api-detail .req-res .el-tabs__content .el-tabs .el-tabs__header {
     box-shadow: none;
