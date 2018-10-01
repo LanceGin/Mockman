@@ -514,7 +514,8 @@
       handleNewMock() {
         let signal = ipcRenderer.sendSync('newMock');
         while (signal === 'success') {
-          this.mocks = ipcRenderer.sendSync('getMockList');
+          const newMockList = ipcRenderer.sendSync('getMockList');
+          this.mocks.push(newMockList[newMockList.length - 1]);
           this.activeMock = this.mocks[this.mocks.length - 1];
           this.handleNewApi();
           this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
@@ -525,7 +526,12 @@
       handleUpdateMock() {
         let signal = ipcRenderer.sendSync('updateMock', this.activeMock);
         while (signal === 'success') {
-          this.mocks = ipcRenderer.sendSync('getMockList');
+          this.mocks.map((mock) => {
+            if (mock.id === this.activeMock.id) {
+              mock = this.activeMock;
+            }
+            return mock;
+          });
           signal = 'done';
         }
       },
@@ -533,7 +539,7 @@
       handleRemoveMock(mock) {
         let signal = ipcRenderer.sendSync('removeMock', mock);
         while (signal === 'success') {
-          this.mocks = ipcRenderer.sendSync('getMockList');
+          this.mocks.splice(this.mocks.indexOf(mock), 1);
           if (mock.id === this.activeMock.id) {
             this.activeMock = this.mocks[this.mocks.length - 1];
             this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
