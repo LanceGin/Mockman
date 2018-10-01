@@ -112,7 +112,7 @@ export default class serverService {
     * return successful response
     *
     * @params { res }
-    * @desc route response
+    * @desc service response
     *
     * @params { api }
     * @desc api info
@@ -138,5 +138,25 @@ export default class serverService {
 
     // return json data
     res.json(JSON.parse(api.response.body.value));
+  }
+
+  /**
+    * return error response
+    *
+    * @params { res }
+    * @desc service response
+    *
+    * @params { type }
+    * @desc error type
+    *
+    */
+  static resError(res, type) {
+    // return status
+    res.status(400);
+
+    // return error details
+    res.json({
+      error: `Required ${type} is missed.`,
+    });
   }
 }
