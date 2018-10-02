@@ -5,6 +5,8 @@
   */
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const multer = require('multer');
 
 export default class serverService {
   /**
@@ -16,10 +18,12 @@ export default class serverService {
     *
     */
   static start(config, self) {
-    console.log(111, config);
     const service = express();
+    const formData = multer();
     const port = config.port;
 
+    service.use(bodyParser.json());
+    service.all('/*', formData.array());
     this.setCors(service);
     this.setRoutes(service, config);
 
@@ -32,11 +36,6 @@ export default class serverService {
     } else {
       self.$message.error('cannot start the server, check the configration');
     }
-
-    // handle errors
-    serviceIns.on('error', (err) => {
-      console.log(err);
-    });
   }
 
   /**
@@ -94,6 +93,11 @@ export default class serverService {
     const router = express.Router();
     const apis = config.apis;
     const prefix = config.prefix;
+    const emumReqRes = {
+      body: 'body',
+      headers: 'headers',
+      params: 'query',
+    };
 
     // set prefix to a specific mock server
     this.setPrefix(service, router, prefix);
@@ -101,8 +105,30 @@ export default class serverService {
     // create routes
     apis.forEach((api) => {
       service[api.method](`/${api.path}`, (req, res) => {
+        const errorDetails = [];
         setTimeout(() => {
-          this.resSuccess(res, api);
+          // check required params, body form data and headers
+          Object.keys(api.request).forEach((item) => {
+            if (api.request[item].length > 0) {
+              api.request[item].map((conf) => {
+                if (!(conf.key in req[emumReqRes[item]])) {
+                  errorDetails.push({
+                    key: conf.key,
+                    details: `required ${item}.`,
+                  });
+                }
+                return conf;
+              });
+            }
+          });
+
+          if (errorDetails.length !== 0) {
+            // response error
+            this.resError(res, errorDetails);
+          } else {
+            // response success
+            this.resSuccess(res, api);
+          }
         }, parseInt(api.latency, 10));
       });
     });
@@ -150,13 +176,16 @@ export default class serverService {
     * @desc error type
     *
     */
-  static resError(res, type) {
+  static resError(res, errors) {
     // return status
     res.status(400);
 
     // return error details
     res.json({
-      error: `Required ${type} is missed.`,
+      errors,
     });
+
+    // end the reponse process
+    res.end();
   }
 }
