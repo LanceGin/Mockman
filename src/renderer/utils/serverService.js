@@ -22,8 +22,7 @@ export default class serverService {
     const formData = multer();
     const port = config.port;
 
-    service.use(bodyParser.json());
-    service.all('/*', formData.array());
+    this.parseBody(service, formData);
     this.setCors(service);
     this.setRoutes(service, config);
 
@@ -51,6 +50,21 @@ export default class serverService {
     config.status = 'stop';
     config.serviceIns = null;
     config.startedAt = null;
+  }
+
+  /**
+    * parse the body formData in a requst
+    *
+    * @params { service }
+    * @desc the express instance
+    *
+    * @params { formData }
+    * @desc multer object
+    *
+    */
+  static parseBody(service, formData) {
+    service.use(bodyParser.json());
+    service.all('/*', formData.array());
   }
 
   /**
