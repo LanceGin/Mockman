@@ -14,6 +14,6 @@ module.exports = {
   overwrite: true,
   platform: process.env.BUILD_TARGET || 'all',
   extraResource: [
-    path.join(__dirname, '../static/dev.sqlite')
+    path.join(__dirname, '../static/mockman.sqlite')
   ]
 }

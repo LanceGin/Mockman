@@ -1,7 +1,7 @@
 {
   "name": "mockman",
-  "productName": "mockman",
-  "version": "0.0.0",
+  "productName": "Mockman",
+  "version": "1.0.0",
   "author": "lancegin <gin.lance.inside@hotmail.com>",
   "description": "A desktop client to provide mock server.",
   "license": null,
