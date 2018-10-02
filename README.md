@@ -27,7 +27,7 @@
 - [x] remove an api
 - [x] query an api info
 - [x] start an express server with a mock config
-- [ ] handle errors while starting the server
+- [x] handle errors while starting the server
 
 ### Client
 
@@ -46,7 +46,7 @@
 - [x] request params check list
 - [x] response k-v input group
 - [x] response code editor
-- [ ] add blur event to jsonEditor
+- [x] add blur event to jsonEditor
 - [ ] group the apis with tag
 - [ ] check the conflict of all mocks
 
@@ -57,28 +57,6 @@
 [![license](https://img.shields.io/github/license/lancegin/mockman.svg)]()
 
 ## Contribute
-
-### Dev
-
-``` bash
-# install dependencies
-yarn
-
-# rebuild sqlite3 
-yarn run rebuild # !!!!!important!!!!!
-
-# serve with hot reload at localhost:9080
-yarn run dev 
-
-# run unit tests
-yarn test 
-
-# lint all JS/Vue component files in `src/`
-yarn run lint 
-
-```
-
-### Build
 
 ``` bash
 # install native dependencies through `native.sh`
