@@ -19,7 +19,6 @@
             <!-- context menu start -->
             <context-menu :ref="`CM${mock.id}`">
               <ul>
-                <li>Start server</li>
                 <li @click="handleRemoveMock(mock)">Remove</li>
               </ul>
             </context-menu>
@@ -936,12 +935,12 @@
     margin-left: 20px;
   }
   .el-main.api-detail .api-info div .time {
-    width: 40px;
+    width: 60px;
   }
   .el-main.api-detail .api-info div .time .el-input__inner {
     background: transparent;
     border: 0;
-    width: 40px;
+    width: 60px;
     padding: 0 5px;
     color: #c0c3cb;
   }
