@@ -1,16 +1,20 @@
 # <img alt="Mockman" width="150" height="150" src="http://orhcxc3kd.bkt.clouddn.com/256x256.png"/>
 
+![](https://img.shields.io/github/repo-size/lancegin/mockman.svg)
+![](https://img.shields.io/github/release/lancegin/mockman.svg)
+![](https://img.shields.io/github/last-commit/lancegin/mockman.svg)
+
 > `Mockman` is a powerful and convenient tool that helps you to manage and start mock servers locally.
 > 
 > With the app, you can easily configure the routes, request format and response of a mock server
 
 ## Screenshots
 
-![Mockman](http://orhcxc3kd.bkt.clouddn.com/mockman-main.png)
+![Mockman](http://orhcxc3kd.bkt.clouddn.com/mockman.png)
 
-## Features
+## Feature
 
-> None
+![Feature](http://orhcxc3kd.bkt.clouddn.com/mockman-preview.jpg)
 
 ## Todos
 
@@ -49,6 +53,8 @@
 - [x] add blur event to jsonEditor
 - [ ] group the apis with tag
 - [ ] check the conflict of all mocks
+- [ ] add a log panel to show the logs of an active mock server process
+- [ ] add https support
 
 
 
