@@ -165,14 +165,18 @@ export default class serverService {
     // set headers
     if (api.response.headers.length > 0) {
       api.response.headers.forEach((header) => {
-        res.set(header.key, header.value);
+        if (header.required) {
+          res.set(header.key, header.value);
+        }
       });
     }
 
     // set cookies
     if (api.response.cookies.length > 0) {
       api.response.cookies.forEach((cookie) => {
-        res.cookie(cookie.key, cookie.value);
+        if (cookie.required) {
+          res.cookie(cookie.key, cookie.value);
+        }
       });
     }
 
