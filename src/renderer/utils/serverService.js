@@ -33,7 +33,10 @@ export default class serverService {
       config.status = 'running';
       config.startedAt = new Date();
     } else {
-      self.$message.error('cannot start the server, check the configration');
+      self.$notify.error({
+        title: 'Error',
+        message: 'The port is already in use.',
+      });
     }
   }
 
