@@ -544,6 +544,7 @@
             }
             return mock;
           });
+          this.activeMock.name = this.activeMock.content.slice(0, 1);
           signal = 'done';
         }
       },
