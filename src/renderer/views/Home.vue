@@ -169,7 +169,7 @@
                         :prop="activeApi.request.params[index].value">
                         <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'params')"></el-button>
                         </el-input>
@@ -197,7 +197,7 @@
                         :prop="activeApi.request.body[index].value">
                         <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'body')"></el-button>
                         </el-input>
@@ -225,7 +225,7 @@
                         :prop="activeApi.request.headers[index].value">
                         <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                           <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'headers')"></el-button>
                         </el-input>
@@ -263,7 +263,7 @@
                         :prop="activeApi.response.cookies[index].value">
                         <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
@@ -293,7 +293,7 @@
                         :prop="activeApi.response.headers[index].value">
                         <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
                           <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
                           </template>
                         </el-input>
                         <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
