@@ -50,6 +50,14 @@
               @click="handleServer">
             </el-button>
             <el-button
+              v-else-if="activeMock.status === 'forRefresh'"
+              key="running"
+              class="for-refresh"
+              type="text"
+              icon="el-icon-refresh"
+              @click="handleServer">
+            </el-button>
+            <el-button
               v-else
               key="stop"
               class="stop"
@@ -452,6 +460,9 @@
         conf.apis = this.apis;
         if (conf.status === 'running') {
           ss.stop(conf);
+        } else if (conf.status === 'forRefresh') {
+          ss.stop(conf);
+          ss.start(conf, this);
         } else {
           ss.start(conf, this);
         }
@@ -563,6 +574,10 @@
         let signal = ipcRenderer.sendSync('updateApi', this.activeApi);
         while (signal === 'success') {
           signal = 'done';
+          if (this.activeMock.status === 'running') {
+            this.activeMock.status = 'forRefresh';
+            this.$forceUpdate();
+          }
         }
       },
       // remove an api
@@ -712,6 +727,11 @@
     padding: 0;
     font-size: 20px;
     color: #ff3c3c;
+  }
+  .el-aside.apis .mock-info .el-button--text.for-refresh {
+    padding: 0;
+    font-size: 20px;
+    color: #f77b20;
   }
   .el-aside.apis .mock-info .el-button--text.stop {
     padding: 0;
