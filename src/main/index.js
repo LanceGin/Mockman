@@ -57,7 +57,7 @@ function createWindow() {
       submenu: [
         { role: 'reload' },
         { role: 'forcereload' },
-        { role: 'toggledevtools' },
+        // { role: 'toggledevtools' },
         { type: 'separator' },
         { role: 'resetzoom' },
         { role: 'zoomin' },
@@ -95,6 +95,7 @@ function createWindow() {
     height: 800,
     useContentSize: true,
     width: 1200,
+    minWidth: 1000,
     backgroundColor: '#464646',
     show: false,
   });
