@@ -12,8 +12,5 @@ module.exports = {
   ignore: /(^\/(src|test|\.[a-z]+|README|yarn|static|dist\/web))|\.gitkeep/,
   out: path.join(__dirname, '../build'),
   overwrite: true,
-  platform: process.env.BUILD_TARGET || 'all',
-  extraResource: [
-    path.join(__dirname, '../static/mockman.sqlite')
-  ]
+  platform: process.env.BUILD_TARGET || 'all'
 }
