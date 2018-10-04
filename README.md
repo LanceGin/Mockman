@@ -8,13 +8,28 @@
 > 
 > With the app, you can easily configure the routes, request format and response of a mock server
 
-## Screenshots
+## Screenshot
 
 ![Mockman](http://orhcxc3kd.bkt.clouddn.com/mockman.png)
 
-## Feature
+## Usage
 
 ![Feature](http://orhcxc3kd.bkt.clouddn.com/mockman-preview.jpg)
+
+1. Create your mock server - `click the add button`
+2. Configure the `name`, `port` and `prefix` of your move server, make sure the port is not in use, or Mockman will give you a error notification.
+3. Add some apis for your mock server.
+4. Configure the `method`, `route`, `response code`, `latency`, `required request options` and `reponse data` of each api.
+5. Start the server - `click the start button`.
+6. After all, you can test your api locally.
+
+> Where will your api data be stored?
+> 
+> Your data will be stored as a `sqlite file` absolutely on your local, the path will be different on different operation system. 
+> 
+> * `%APPDATA%`  for Windows
+> * `$XDG_CONFIG_HOME or ~/.config` for Linux
+> * `~/Library/Application Support` for macOS
 
 ## Todos
 
