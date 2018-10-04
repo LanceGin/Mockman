@@ -77,7 +77,7 @@
             <el-input v-model="activeMock.prefix" @blur="handleUpdateMock" class="prefix" placeholder="Prefix"></el-input>
           </div>
         </div>
-        <div v-if="activeMock === undefined"></div>
+        <div class="empty-mock" v-if="activeMock === undefined"></div>
         <div v-else>
           <div class="api-header">
             <span class="note">Api</span>
@@ -130,14 +130,16 @@
                 type="text"
                 size="mini"
                 class="api-delete"
-                @click="handleRemoveApi(api)"><i class="el-icon-close"></i></el-button>
+                @click.stop="handleRemoveApi(api)"><i class="el-icon-close"></i></el-button>
             </span>
           </div>
 
         </div>
       </el-aside>
       <el-container>
-        <el-main class="api-detail" v-if="activeApi === undefined"></el-main>
+        <el-main class="api-detail" v-if="activeApi === undefined">
+          <div class="empty-api"></div>
+        </el-main>
         <el-main class="api-detail" v-else>
           <div class="api-info">
             <div>
@@ -412,8 +414,6 @@
         this.apis = [];
       }
       this.activeApi = this.apis[0];
-
-      console.log(11111, this.mocks.length, this.activeMock, this.activeApi);
     },
     methods: {
       // initial the dynamic params
@@ -578,7 +578,6 @@
             this.activeMock = this.mocks[0];
             this.activeApi = this.apis[0];
           }
-
           signal = 'done';
         }
       },
@@ -606,7 +605,15 @@
       handleRemoveApi(api) {
         let signal = ipcRenderer.sendSync('removeApi', api);
         while (signal === 'success') {
-          this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+          if (this.apis.length > 1) {
+            this.apis.splice(this.apis.indexOf(api), 1);
+            if (api.id === this.activeApi.id) {
+              this.activeApi = this.apis[this.apis.length - 1];
+            }
+          } else {
+            this.apis = [];
+            this.activeApi = this.apis[0];
+          }
           signal = 'done';
         }
       },
@@ -737,6 +744,13 @@
   .el-aside.apis {
     background: #2f3136;
     width: 260px !important;
+  }
+  .el-aside.apis .empty-mock {
+    height: 300px;
+    width: 170px;
+    margin: 5vh auto;
+    background: url('../assets/mock-error.png') no-repeat;
+    background-size: contain;
   }
   .el-aside.apis .mock-info {
     box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
@@ -937,6 +951,13 @@
     background-color: #36393e;
     color: #fff;
     padding: 0 0;
+  }
+  .el-main.api-detail .empty-api {
+    height: 300px;
+    width: 170px;
+    margin: 5vh auto;
+    background: url('../assets/api-error.png') #36393e no-repeat;
+    background-size: contain;
   }
   .el-main.api-detail .api-info {
     text-align: right;
