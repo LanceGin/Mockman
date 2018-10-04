@@ -18,17 +18,20 @@
       <el-aside class="mocks">
         <div class="mock-list">
           <div class="mock-item" v-for="mock in mocks">
-            <!-- context menu start -->
-            <context-menu :ref="`CM${mock.id}`">
-              <ul>
-                <li @click="handleRemoveMock(mock)">Remove</li>
-              </ul>
-            </context-menu>
-            <!-- context menu end -->
-            <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
-              <el-button circle class="active" v-if="mock.id === activeMock.id" @click.native.right="handleContextMenu($event, mock)">{{ mock.name }}</el-button>
-              <el-button circle v-else @click="switchActiveMock(mock)" @click.native.right="handleContextMenu($event, mock)">{{ mock.name }}</el-button>
-            </el-tooltip>
+            <div v-if="mock === undefined"></div>
+            <div v-else>
+              <!-- context menu start -->
+              <context-menu :ref="`CM${mock.id}`">
+                <ul>
+                  <li @click="handleRemoveMock(mock)">Remove</li>
+                </ul>
+              </context-menu>
+              <!-- context menu end -->
+              <el-tooltip :content="mock.content" placement="right" :visible-arrow="false">
+                <el-button circle class="active" v-if="mock.id === activeMock.id" @click.native.right="handleContextMenu($event, mock)">{{ mock.name }}</el-button>
+                <el-button circle v-else @click="switchActiveMock(mock)" @click.native.right="handleContextMenu($event, mock)">{{ mock.name }}</el-button>
+              </el-tooltip>
+            </div>
           </div>
         </div>
         <div class="add-btn">
@@ -38,7 +41,8 @@
         </div>
       </el-aside>
       <el-aside class="apis">
-        <div class="mock-info">
+        <div class="mock-info" v-if="activeMock === undefined"></div>
+        <div class="mock-info" v-else>
           <div>
             <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
             <el-button
@@ -73,7 +77,8 @@
             <el-input v-model="activeMock.prefix" @blur="handleUpdateMock" class="prefix" placeholder="Prefix"></el-input>
           </div>
         </div>
-        <div>
+        <div v-if="activeMock === undefined"></div>
+        <div v-else>
           <div class="api-header">
             <span class="note">Api</span>
             <el-button type="text" icon="el-icon-plus" @click="handleNewApi"></el-button>
@@ -132,7 +137,8 @@
         </div>
       </el-aside>
       <el-container>
-        <el-main class="api-detail">
+        <el-main class="api-detail" v-if="activeApi === undefined"></el-main>
+        <el-main class="api-detail" v-else>
           <div class="api-info">
             <div>
               <el-dropdown trigger="click" placement="bottom" class="type" @command="handleReqType">
@@ -398,9 +404,16 @@
       // get mocks
       this.mocks = ipcRenderer.sendSync('getMockList');
       this.activeMock = this.mocks[0];
+
       // get api
-      this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+      if (this.activeMock !== undefined) {
+        this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+      } else {
+        this.apis = [];
+      }
       this.activeApi = this.apis[0];
+
+      console.log(11111, this.mocks.length, this.activeMock, this.activeApi);
     },
     methods: {
       // initial the dynamic params
@@ -552,12 +565,20 @@
       handleRemoveMock(mock) {
         let signal = ipcRenderer.sendSync('removeMock', mock);
         while (signal === 'success') {
-          this.mocks.splice(this.mocks.indexOf(mock), 1);
-          if (mock.id === this.activeMock.id) {
-            this.activeMock = this.mocks[this.mocks.length - 1];
-            this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+          if (this.mocks.length > 1) {
+            this.mocks.splice(this.mocks.indexOf(mock), 1);
+            if (mock.id === this.activeMock.id) {
+              this.activeMock = this.mocks[this.mocks.length - 1];
+              this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
+              this.activeApi = this.apis[0];
+            }
+          } else {
+            this.mocks = [];
+            this.apis = [];
+            this.activeMock = this.mocks[0];
             this.activeApi = this.apis[0];
           }
+
           signal = 'done';
         }
       },
