@@ -1,5 +1,7 @@
 # <img alt="Mockman" width="150" height="150" src="http://orhcxc3kd.bkt.clouddn.com/256x256.png"/>
 
+[中文文档](./README_zh.md)
+
 ![](https://img.shields.io/github/repo-size/lancegin/mockman.svg)
 ![](https://img.shields.io/github/release/lancegin/mockman.svg)
 ![](https://img.shields.io/github/last-commit/lancegin/mockman.svg)
@@ -82,8 +84,8 @@
 ## Contribute
 
 ``` bash
-# install native dependencies through `native.sh`
-./native.sh
+# install the dependencies 
+npm install
 
 # serve with hot reload at localhost:9080
 npm run dev 
