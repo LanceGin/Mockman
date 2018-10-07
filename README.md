@@ -3,6 +3,8 @@
 ![](https://img.shields.io/github/repo-size/lancegin/mockman.svg)
 ![](https://img.shields.io/github/release/lancegin/mockman.svg)
 ![](https://img.shields.io/github/last-commit/lancegin/mockman.svg)
+[![Build Status](https://travis-ci.org/LanceGin/Mockman.svg?branch=master)](https://travis-ci.org/LanceGin/Mockman)
+[![Build status](https://ci.appveyor.com/api/projects/status/9hktw5nvhbh44wtm?svg=true)](https://ci.appveyor.com/project/LanceGin/mockman)
 
 > `Mockman` is a powerful and convenient tool that helps you to manage and start mock servers locally.
 > 
