@@ -121,7 +121,7 @@ export default class serverService {
 
     // create routes
     apis.forEach((api) => {
-      service[api.method](`/${api.path}`, (req, res) => {
+      router[api.method](`/${api.path}`, (req, res) => {
         const errorDetails = [];
         setTimeout(() => {
           // check required params, body form data and headers
