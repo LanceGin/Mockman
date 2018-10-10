@@ -416,6 +416,13 @@
       this.activeApi = this.apis[0];
     },
     methods: {
+      // update service status
+      updateServiceStatus() {
+        if (this.activeMock.status === 'running') {
+          this.activeMock.status = 'forRefresh';
+          this.$forceUpdate();
+        }
+      },
       // initial the dynamic params
       initDynamicReqParam() {
         this.dynamicReqParam = {
@@ -558,6 +565,8 @@
             return mock;
           });
           this.activeMock.name = this.activeMock.content.slice(0, 1);
+          // update service status
+          this.updateServiceStatus();
           signal = 'done';
         }
       },
@@ -588,6 +597,8 @@
           this.apis = ipcRenderer.sendSync('getApiList', this.activeMock.id);
           this.activeApi = this.apis[this.apis.length - 1];
           signal = 'done';
+          // update service status
+          this.updateServiceStatus();
         }
       },
       // update an api
@@ -595,10 +606,8 @@
         let signal = ipcRenderer.sendSync('updateApi', this.activeApi);
         while (signal === 'success') {
           signal = 'done';
-          if (this.activeMock.status === 'running') {
-            this.activeMock.status = 'forRefresh';
-            this.$forceUpdate();
-          }
+          // update service status
+          this.updateServiceStatus();
         }
       },
       // remove an api
@@ -615,6 +624,8 @@
             this.activeApi = this.apis[0];
           }
           signal = 'done';
+          // update service status
+          this.updateServiceStatus();
         }
       },
     },
