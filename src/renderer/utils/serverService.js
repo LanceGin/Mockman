@@ -175,6 +175,7 @@ export default class serverService {
         }
       });
     }
+    res.set('X-Powered-By', 'Mockman');
 
     // set cookies
     if (api.response.cookies.length > 0) {
@@ -202,6 +203,7 @@ export default class serverService {
   static resError(res, errors) {
     // return status
     res.status(400);
+    res.set('X-Powered-By', 'Mockman');
 
     // return error details
     res.json({
