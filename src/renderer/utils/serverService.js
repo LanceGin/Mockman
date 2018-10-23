@@ -128,7 +128,9 @@ export default class serverService {
           Object.keys(api.request).forEach((item) => {
             if (api.request[item].length > 0) {
               api.request[item].map((conf) => {
-                if (!(conf.key in req[emumReqRes[item]]) && conf.required) {
+                // the key in headers should be non-case-sensitive.
+                const tmpKey = item === 'headers' ? conf.key.toLowerCase() : conf.key;
+                if (!(tmpKey in req[emumReqRes[item]]) && conf.required) {
                   errorDetails.push({
                     key: conf.key,
                     details: `required ${item}.`,
