@@ -67,6 +67,7 @@ export default class serverService {
     */
   static parseBody(service, formData) {
     service.use(bodyParser.json());
+    service.use(bodyParser.urlencoded({ extended: true }));
     service.all('/*', formData.array());
   }
 
