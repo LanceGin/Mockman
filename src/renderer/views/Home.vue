@@ -1115,6 +1115,9 @@
   .req-type.post {
     color: #f77b20 !important;
   }
+  .req-type.head {
+    color: #5bcba0 !important;
+  }
   .req-type.delete {
     color: #ff3c3c !important;
   }
@@ -1123,9 +1126,6 @@
   }
   .req-type.patch {
     color: #59a3f0 !important;
-  }
-  .req-type.options {
-    color: #5bcba0 !important;
   }
   
 </style>
