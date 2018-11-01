@@ -6,6 +6,10 @@
         <p>Mockman</p>
       </div>
       <div class="feature">
+        <el-tabs v-model="activePanel" @tab-click="handleSwitchPanel">
+          <el-tab-pane label="BUILDER" name="builder"></el-tab-pane>
+          <el-tab-pane label="LOGGER" name="logger"></el-tab-pane>
+        </el-tabs>
         <!-- TODO
         <el-button size="small">Builder</el-button>
         <el-button size="small">Loger</el-button>
@@ -40,6 +44,7 @@
           </el-tooltip>
         </div>
       </el-aside>
+
       <el-aside class="apis">
         <div class="mock-info" v-if="activeMock === undefined"></div>
         <div class="mock-info" v-else>
@@ -337,6 +342,7 @@
           </div>
         </el-main>
       </el-container>
+
     </el-container>
   </el-container>
 </template>
@@ -358,6 +364,7 @@
     data() {
       return {
         // active tab
+        activePanel: 'builder',
         activeHttp: 'request',
         activeReq: 'params',
         activeRes: 'body',
@@ -416,6 +423,10 @@
       this.activeApi = this.apis[0];
     },
     methods: {
+      // switch panel
+      handleSwitchPanel() {
+        console.log('panel');
+      },
       // update service status
       updateServiceStatus() {
         if (this.activeMock.status === 'running') {
@@ -687,6 +698,28 @@
   }
   .feature {
     font-size: 12px;
+  }
+  .feature .el-tabs {
+    width: 180px;
+    float: left;
+    margin-left: 20vw;
+  }
+  .feature .el-tabs .el-tabs__header {
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+    box-sizing: border-box;
+  }
+  .feature .el-tabs .el-tabs__nav-wrap::after {
+    height: 0;
+  }
+  .feature .el-tabs .el-tabs__item {
+    color: #fff;
+  }
+  .feature .el-tabs .el-tabs__item:hover,
+  .feature .el-tabs .el-tabs__item.is-active {
+    color: #33c6c5;
+  }
+  .feature .el-tabs .el-tabs__active-bar {
+    background: #33c6c5;
   }
   .feature .el-button {
     background: #5B5B5B;
