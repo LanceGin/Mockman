@@ -702,7 +702,7 @@
   .feature .el-tabs {
     width: 180px;
     float: left;
-    margin-left: 20vw;
+    margin-left: calc((100vw - 180px) / 2 - 115px);
   }
   .feature .el-tabs .el-tabs__header {
     box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
