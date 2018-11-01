@@ -32,6 +32,7 @@ export default class serverService {
       config.serviceIns = serviceIns;
       config.status = 'running';
       config.startedAt = new Date();
+      config.serviceLog = [];
     } else {
       self.$notify.error({
         title: 'Error',
@@ -123,6 +124,7 @@ export default class serverService {
     // create routes
     apis.forEach((api) => {
       router[api.method](`/${api.path}`, (req, res) => {
+        console.log(11111111, req);
         const errorDetails = [];
         setTimeout(() => {
           // check required params, body form data and headers
@@ -149,9 +151,34 @@ export default class serverService {
             // response success
             this.resSuccess(res, api);
           }
+
+          // service log
+          this.serviceLog(config, req, res);
+          console.log(2222222, res);
         }, parseInt(api.latency, 10));
       });
     });
+  }
+
+  /**
+    * record service log
+    *
+    * @params { config }
+    * @desc service instance config
+    *
+    * @params { req }
+    * @desc service request
+    *
+    * @params { res }
+    * @desc service request
+    *
+    */
+  static serviceLog(config, req, res) {
+    const log = {
+      req,
+      res,
+    };
+    config.serviceLog.push(log);
   }
 
   /**
