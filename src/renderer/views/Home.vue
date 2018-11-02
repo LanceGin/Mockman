@@ -45,303 +45,322 @@
         </div>
       </el-aside>
 
-      <el-aside class="apis">
-        <div class="mock-info" v-if="activeMock === undefined"></div>
-        <div class="mock-info" v-else>
-          <div>
-            <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
-            <el-button
-              v-if="activeMock.status === 'running'"
-              key="running"
-              class="running"
-              type="text"
-              icon="el-icon-loading"
-              @click="handleServer">
-            </el-button>
-            <el-button
-              v-else-if="activeMock.status === 'forRefresh'"
-              key="running"
-              class="for-refresh"
-              type="text"
-              icon="el-icon-refresh"
-              @click="handleServer">
-            </el-button>
-            <el-button
-              v-else
-              key="stop"
-              class="stop"
-              type="text"
-              icon="el-icon-caret-right"
-              @click="handleServer">
-            </el-button>
-          </div>
-          <div>
-            <span class="host">localhost :</span>
-            <el-input v-model="activeMock.port" @blur="handleUpdateMock" class="port" placeholder="Port"></el-input>
-            <span class="sign">/</span>
-            <el-input v-model="activeMock.prefix" @blur="handleUpdateMock" class="prefix" placeholder="Prefix"></el-input>
-          </div>
-        </div>
-        <div class="empty-mock" v-if="activeMock === undefined"></div>
-        <div v-else>
-          <div class="api-header">
-            <span class="note">Api</span>
-            <el-button type="text" icon="el-icon-plus" @click="handleNewApi"></el-button>
-          </div>
-
-          <!-- TODO: classify the apis to diffrent tags -->
-          <!-- <el-collapse v-model="activeNames" @change="handleChange">
-            <el-collapse-item name="1">
-              <template slot="title">
-                <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
-              </template>
-              <div class="sub-req">
-                <span class="req-type get">GET</span>
-                <span class="req-route">/mockman</span>
-              </div>
-              <div class="sub-req">
-                <span class="req-type delete">DELETE</span>
-                <span class="req-route">/mockman</span>
-              </div>
-              <div class="sub-req">
-                <span class="req-type post">POST</span>
-                <span class="req-route">/mockman</span>
-              </div>
-            </el-collapse-item>
-            <el-collapse-item name="2">
-              <template slot="title">
-                <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-02</span>
-              </template>
-              <div class="sub-req">
-                <span class="req-type put">PUT</span>
-                <span class="req-route">/mockman</span>
-              </div>
-              <div class="sub-req">
-                <span class="req-type patch">PATCH</span>
-                <span class="req-route">/mockman</span>
-              </div>
-              <div class="sub-req">
-                <span class="req-type options">OPTIONS</span>
-                <span class="req-route">/mockman</span>
-              </div>
-            </el-collapse-item>
-          </el-collapse> -->
-
-          <div v-for="api in apis" :class="`single-req ${activeApi.id === api.id ? 'avtive' : ''}`" @click="switchActiveApi(api)">
-            <span :class="`req-type ${api.method}`">{{ api.method.toUpperCase() }}</span>
-            <span class="req-route">/{{ api.path }}</span>
-            <span>
-              <el-button
-                type="text"
-                size="mini"
-                class="api-delete"
-                @click.stop="handleRemoveApi(api)"><i class="el-icon-close"></i></el-button>
-            </span>
-          </div>
-
-        </div>
-      </el-aside>
-      <el-container>
-        <el-main class="api-detail" v-if="activeApi === undefined">
-          <div class="empty-api"></div>
-        </el-main>
-        <el-main class="api-detail" v-else>
-          <div class="api-info">
+      <template class="builder" v-if="activePanel === 'builder'">
+        <el-aside class="apis">
+          <div class="mock-info" v-if="activeMock === undefined"></div>
+          <div class="mock-info" v-else>
             <div>
-              <el-dropdown trigger="click" placement="bottom" class="type" @command="handleReqType">
-                <span class="el-dropdown-link">
-                  {{ activeApi.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown" class="http-method">
-                  <el-dropdown-item v-for="item in httpMethod" :key="item.name" :command="item.command">{{ item.name }}</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+              <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
+              <el-button
+                v-if="activeMock.status === 'running'"
+                key="running"
+                class="running"
+                type="text"
+                icon="el-icon-loading"
+                @click="handleServer">
+              </el-button>
+              <el-button
+                v-else-if="activeMock.status === 'forRefresh'"
+                key="running"
+                class="for-refresh"
+                type="text"
+                icon="el-icon-refresh"
+                @click="handleServer">
+              </el-button>
+              <el-button
+                v-else
+                key="stop"
+                class="stop"
+                type="text"
+                icon="el-icon-caret-right"
+                @click="handleServer">
+              </el-button>
+            </div>
+            <div>
+              <span class="host">localhost :</span>
+              <el-input v-model="activeMock.port" @blur="handleUpdateMock" class="port" placeholder="Port"></el-input>
               <span class="sign">/</span>
-              <el-input v-model="activeApi.path" class="path" placeholder="path" @blur="handleUpdateApi"></el-input>
-              <el-dropdown trigger="click" placement="bottom" class="status" @command="handleResCode">
-                <span class="el-dropdown-link">
-                  {{ activeApi.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown" class="res-code">
-                  <el-dropdown-item v-for="item in resCode" :key="item.command" :command="item.command">{{ item.command }}</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <span class="time-title">TIME</span>
-              <el-input
-                placeholder="0"
-                class="time"
-                type="number"
-                v-model="activeApi.latency"
-                @blur="handleUpdateApi">
-              </el-input>
-              <span>ms</span>
+              <el-input v-model="activeMock.prefix" @blur="handleUpdateMock" class="prefix" placeholder="Prefix"></el-input>
             </div>
           </div>
-          <div class="req-res">
-            <el-tabs v-model="activeHttp" @tab-click="handleHttpClick">
-              <el-tab-pane label="REQUEST" name="request" class="request">
-                <el-tabs v-model="activeReq" @tab-click="handleReqClick">
-                  <!-- dynamic params panel start -->
-                  <el-tab-pane label="Params" name="params" class="params">
-                    <el-form label-width="100px" class="demo-dynamic">
-                      <el-form-item
-                        v-for= "(param, index) in activeApi.request.params"
-                        :key="index"
-                        :prop="activeApi.request.params[index].value">
-                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'params')"></el-button>
-                        </el-input>
-                      </el-form-item>
+          <div class="empty-mock" v-if="activeMock === undefined"></div>
+          <div v-else>
+            <div class="api-header">
+              <span class="note">Api</span>
+              <el-button type="text" icon="el-icon-plus" @click="handleNewApi"></el-button>
+            </div>
 
-                      <el-form-item
-                        key="addBtn"
-                        prop="newParam">
-                        <el-input v-model="dynamicReqParam.key" class="key">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('params')"></el-button>
-                        </el-input>
-                      </el-form-item>
-                    </el-form>
-                  </el-tab-pane>
-                  <!-- dynamic params panel end -->
-                  <!-- dynamic body panel start -->
-                  <el-tab-pane label="Body" name="body" class="params body">
-                    <el-form label-width="100px" class="demo-dynamic">
-                      <el-form-item
-                        v-for= "(param, index) in activeApi.request.body"
-                        :key="index"
-                        :prop="activeApi.request.body[index].value">
-                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'body')"></el-button>
-                        </el-input>
-                      </el-form-item>
+            <!-- TODO: classify the apis to diffrent tags -->
+            <!-- <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item name="1">
+                <template slot="title">
+                  <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-01</span>
+                </template>
+                <div class="sub-req">
+                  <span class="req-type get">GET</span>
+                  <span class="req-route">/mockman</span>
+                </div>
+                <div class="sub-req">
+                  <span class="req-type delete">DELETE</span>
+                  <span class="req-route">/mockman</span>
+                </div>
+                <div class="sub-req">
+                  <span class="req-type post">POST</span>
+                  <span class="req-route">/mockman</span>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item name="2">
+                <template slot="title">
+                  <i class="header-icon el-icon-menu"></i><span style="margin-left: 5px">Tag-02</span>
+                </template>
+                <div class="sub-req">
+                  <span class="req-type put">PUT</span>
+                  <span class="req-route">/mockman</span>
+                </div>
+                <div class="sub-req">
+                  <span class="req-type patch">PATCH</span>
+                  <span class="req-route">/mockman</span>
+                </div>
+                <div class="sub-req">
+                  <span class="req-type options">OPTIONS</span>
+                  <span class="req-route">/mockman</span>
+                </div>
+              </el-collapse-item>
+            </el-collapse> -->
 
-                      <el-form-item
-                        key="addBtn"
-                        prop="newParam">
-                        <el-input v-model="dynamicReqParam.key" class="key">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('body')"></el-button>
-                        </el-input>
-                      </el-form-item>
-                    </el-form>
-                  </el-tab-pane>
-                  <!-- dynamic body panel end -->
-                  <!-- dynamic header panel start -->
-                  <el-tab-pane label="Headers" name="header" class="params headers">
-                    <el-form label-width="100px" class="demo-dynamic">
-                      <el-form-item
-                        v-for= "(param, index) in activeApi.request.headers"
-                        :key="index"
-                        :prop="activeApi.request.headers[index].value">
-                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'headers')"></el-button>
-                        </el-input>
-                      </el-form-item>
+            <div v-for="api in apis" :class="`single-req ${activeApi.id === api.id ? 'avtive' : ''}`" @click="switchActiveApi(api)">
+              <span :class="`req-type ${api.method}`">{{ api.method.toUpperCase() }}</span>
+              <span class="req-route">/{{ api.path }}</span>
+              <span>
+                <el-button
+                  type="text"
+                  size="mini"
+                  class="api-delete"
+                  @click.stop="handleRemoveApi(api)"><i class="el-icon-close"></i></el-button>
+              </span>
+            </div>
 
-                      <el-form-item
-                        key="addBtn"
-                        prop="newParam">
-                        <el-input v-model="dynamicReqParam.key" class="key">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('headers')"></el-button>
-                        </el-input>
-                      </el-form-item>
-                    </el-form>
-                  </el-tab-pane>
-                  <!-- dynamic header panel end -->
-                </el-tabs>
-              </el-tab-pane>
-              <el-tab-pane label="RESPONSE" name="response" class="response">
-                <el-tabs v-model="activeRes" @tab-click="handleResClick">
-                  <el-tab-pane label="Body" name="body" class="editor-container">
-                    <json-editor
-                      ref="resBody"
-                      v-model="activeApi.response.body.value"
-                      @blur="handleUpdateApi">
-                    </json-editor>
-                  </el-tab-pane>
-                  <el-tab-pane label="Cookies" name="cookies" class="params cookies">
-                    <el-form label-width="100px" class="demo-dynamic">
-                      <el-form-item
-                        v-for= "(param, index) in activeApi.response.cookies"
-                        :key="index"
-                        :prop="activeApi.response.cookies[index].value">
-                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                        </el-input>
-                        <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'cookies')"></el-button>
-                        </el-input>
-                      </el-form-item>
-
-                      <el-form-item
-                        key="addBtn"
-                        prop="newParam">
-                        <el-input v-model="dynamicResParam.key" class="key">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                        </el-input>
-                        <el-input v-model="dynamicResParam.value" class="value">
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('cookies')"></el-button>
-                        </el-input>
-                      </el-form-item>
-                    </el-form>
-                  </el-tab-pane>
-                  <el-tab-pane label="Headers" name="header" class="params headers">
-                    <el-form label-width="100px" class="demo-dynamic">
-                      <el-form-item
-                        v-for= "(param, index) in activeApi.response.headers"
-                        :key="index"
-                        :prop="activeApi.response.headers[index].value">
-                        <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                        </el-input>
-                        <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
-                          <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'headers')"></el-button>
-                        </el-input>
-                      </el-form-item>
-
-                      <el-form-item
-                        key="addBtn"
-                        prop="newParam">
-                        <el-input v-model="dynamicResParam.key" class="key">
-                          <template slot="prepend">
-                            <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
-                          </template>
-                        </el-input>
-                        <el-input v-model="dynamicResParam.value" class="value">
-                          <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('headers')"></el-button>
-                        </el-input>
-                      </el-form-item>
-                    </el-form>
-                  </el-tab-pane>
-                </el-tabs>
-              </el-tab-pane>
-            </el-tabs>
           </div>
+        </el-aside>
+        <el-container>
+          <el-main class="api-detail" v-if="activeApi === undefined">
+            <div class="empty-api"></div>
+          </el-main>
+          <el-main class="api-detail" v-else>
+            <div class="api-info">
+              <div>
+                <el-dropdown trigger="click" placement="bottom" class="type" @command="handleReqType">
+                  <span class="el-dropdown-link">
+                    {{ activeApi.method.toUpperCase() }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown" class="http-method">
+                    <el-dropdown-item v-for="item in httpMethod" :key="item.name" :command="item.command">{{ item.name }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <span class="sign">/</span>
+                <el-input v-model="activeApi.path" class="path" placeholder="path" @blur="handleUpdateApi"></el-input>
+                <el-dropdown trigger="click" placement="bottom" class="status" @command="handleResCode">
+                  <span class="el-dropdown-link">
+                    {{ activeApi.resCode }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown" class="res-code">
+                    <el-dropdown-item v-for="item in resCode" :key="item.command" :command="item.command">{{ item.command }}</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <span class="time-title">TIME</span>
+                <el-input
+                  placeholder="0"
+                  class="time"
+                  type="number"
+                  v-model="activeApi.latency"
+                  @blur="handleUpdateApi">
+                </el-input>
+                <span>ms</span>
+              </div>
+            </div>
+            <div class="req-res">
+              <el-tabs v-model="activeHttp" @tab-click="handleHttpClick">
+                <el-tab-pane label="REQUEST" name="request" class="request">
+                  <el-tabs v-model="activeReq" @tab-click="handleReqClick">
+                    <!-- dynamic params panel start -->
+                    <el-tab-pane label="Params" name="params" class="params">
+                      <el-form label-width="100px" class="demo-dynamic">
+                        <el-form-item
+                          v-for= "(param, index) in activeApi.request.params"
+                          :key="index"
+                          :prop="activeApi.request.params[index].value">
+                          <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                            <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'params')"></el-button>
+                          </el-input>
+                        </el-form-item>
+
+                        <el-form-item
+                          key="addBtn"
+                          prop="newParam">
+                          <el-input v-model="dynamicReqParam.key" class="key">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                            <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('params')"></el-button>
+                          </el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                    <!-- dynamic params panel end -->
+                    <!-- dynamic body panel start -->
+                    <el-tab-pane label="Body" name="body" class="params body">
+                      <el-form label-width="100px" class="demo-dynamic">
+                        <el-form-item
+                          v-for= "(param, index) in activeApi.request.body"
+                          :key="index"
+                          :prop="activeApi.request.body[index].value">
+                          <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                            <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'body')"></el-button>
+                          </el-input>
+                        </el-form-item>
+
+                        <el-form-item
+                          key="addBtn"
+                          prop="newParam">
+                          <el-input v-model="dynamicReqParam.key" class="key">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                            <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('body')"></el-button>
+                          </el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                    <!-- dynamic body panel end -->
+                    <!-- dynamic header panel start -->
+                    <el-tab-pane label="Headers" name="header" class="params headers">
+                      <el-form label-width="100px" class="demo-dynamic">
+                        <el-form-item
+                          v-for= "(param, index) in activeApi.request.headers"
+                          :key="index"
+                          :prop="activeApi.request.headers[index].value">
+                          <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                            <el-button slot="append" icon="el-icon-close" @click.prevent="removeReqParam(param, 'headers')"></el-button>
+                          </el-input>
+                        </el-form-item>
+
+                        <el-form-item
+                          key="addBtn"
+                          prop="newParam">
+                          <el-input v-model="dynamicReqParam.key" class="key">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="dynamicReqParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                            <el-button slot="append" icon="el-icon-plus" @click.prevent="addReqParam('headers')"></el-button>
+                          </el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                    <!-- dynamic header panel end -->
+                  </el-tabs>
+                </el-tab-pane>
+                <el-tab-pane label="RESPONSE" name="response" class="response">
+                  <el-tabs v-model="activeRes" @tab-click="handleResClick">
+                    <el-tab-pane label="Body" name="body" class="editor-container">
+                      <json-editor
+                        ref="resBody"
+                        v-model="activeApi.response.body.value"
+                        @blur="handleUpdateApi">
+                      </json-editor>
+                    </el-tab-pane>
+                    <el-tab-pane label="Cookies" name="cookies" class="params cookies">
+                      <el-form label-width="100px" class="demo-dynamic">
+                        <el-form-item
+                          v-for= "(param, index) in activeApi.response.cookies"
+                          :key="index"
+                          :prop="activeApi.response.cookies[index].value">
+                          <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                          </el-input>
+                          <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
+                            <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'cookies')"></el-button>
+                          </el-input>
+                        </el-form-item>
+
+                        <el-form-item
+                          key="addBtn"
+                          prop="newParam">
+                          <el-input v-model="dynamicResParam.key" class="key">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                          </el-input>
+                          <el-input v-model="dynamicResParam.value" class="value">
+                            <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('cookies')"></el-button>
+                          </el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                    <el-tab-pane label="Headers" name="header" class="params headers">
+                      <el-form label-width="100px" class="demo-dynamic">
+                        <el-form-item
+                          v-for= "(param, index) in activeApi.response.headers"
+                          :key="index"
+                          :prop="activeApi.response.headers[index].value">
+                          <el-input v-model="param.key" class="key" @blur="handleUpdateApi">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="param.required" @change="handleUpdateApi"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                          </el-input>
+                          <el-input v-model="param.value" class="value" @blur="handleUpdateApi">
+                            <el-button slot="append" icon="el-icon-close" @click.prevent="removeResParam(param, 'headers')"></el-button>
+                          </el-input>
+                        </el-form-item>
+
+                        <el-form-item
+                          key="addBtn"
+                          prop="newParam">
+                          <el-input v-model="dynamicResParam.key" class="key">
+                            <template slot="prepend">
+                              <el-checkbox-button size="mini" v-model="dynamicResParam.required"><i class="el-icon-circle-check"></i></el-checkbox-button>
+                            </template>
+                          </el-input>
+                          <el-input v-model="dynamicResParam.value" class="value">
+                            <el-button slot="append" icon="el-icon-plus" @click.prevent="addResParam('headers')"></el-button>
+                          </el-input>
+                        </el-form-item>
+                      </el-form>
+                    </el-tab-pane>
+                  </el-tabs>
+                </el-tab-pane>
+              </el-tabs>
+            </div>
+          </el-main>
+        </el-container>
+      </template>
+      <template class="logger" v-else>
+        <el-main class="logger">
+          <el-collapse v-model="activeLog">
+            <el-collapse-item
+              v-for="item in activeMock.serviceLog"
+              :name="item.index">
+              <template slot="title">
+                <span :class="`req-type ${item.req.method.toLowerCase()}`">{{ item.req.method }}</span>
+                <span>{{ item.req.headers.host + item.req.originalUrl }}</span>
+                <span>{{ item.res.statusCode }}</span>
+              </template>
+              <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+              <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+            </el-collapse-item>
+          </el-collapse>
         </el-main>
-      </el-container>
+      </template>
 
     </el-container>
   </el-container>
@@ -368,6 +387,7 @@
         activeHttp: 'request',
         activeReq: 'params',
         activeRes: 'body',
+        activeLog: ['1'],
         // activeNames: [],
         // mock data
         mocks: [],
@@ -425,7 +445,7 @@
     methods: {
       // switch panel
       handleSwitchPanel() {
-        console.log('panel');
+        console.log('panel', this.activeMock.serviceLog);
       },
       // update service status
       updateServiceStatus() {
