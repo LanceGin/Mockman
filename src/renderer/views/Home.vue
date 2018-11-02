@@ -352,11 +352,15 @@
               :name="item.index">
               <template slot="title">
                 <span :class="`req-type ${item.req.method.toLowerCase()}`">{{ item.req.method }}</span>
-                <span>{{ item.req.headers.host + item.req.originalUrl }}</span>
-                <span>{{ item.res.statusCode }}</span>
+                <span class="path">{{ item.req.headers.host + item.req.originalUrl }}</span>
+                <span class="time">{{ item.req.startedAt.toLocaleTimeString() }}</span>
               </template>
-              <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-              <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+              <el-tabs>
+                <el-tab-pane label="Request Headers">Request Headers</el-tab-pane>
+                <el-tab-pane label="Request Body">Request Body</el-tab-pane>
+                <el-tab-pane label="Response Headers">Response Headers</el-tab-pane>
+                <el-tab-pane label="Response Body">Response Body</el-tab-pane>
+              </el-tabs>
             </el-collapse-item>
           </el-collapse>
         </el-main>
@@ -1159,6 +1163,34 @@
     color: #dcdfe6;
     height: 26px;
     line-height: 26px;
+  }
+
+  .el-main.logger {
+    border: 0;
+    background: #2f3136;
+  }
+  .el-main.logger .el-collapse {
+    border: 0;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__header {
+    padding: 0 20px;
+    background: transparent;
+    color: #c0c3cb;
+    height: 34px;
+    line-height: 34px;
+    border-bottom: 1px solid #36393f
+  }
+  .el-main.logger .el-collapse .el-collapse-item__header .el-collapse-item__arrow {
+    line-height: 34px;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__header .req-type {
+    width: 50px;
+    display: inline-block;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__header .time {
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
   }
 
   /* request type color */
