@@ -6,7 +6,7 @@
         <p>Mockman</p>
       </div>
       <div class="feature">
-        <el-tabs v-model="activePanel" @tab-click="handleSwitchPanel">
+        <el-tabs v-model="activePanel">
           <el-tab-pane label="BUILDER" name="builder"></el-tab-pane>
           <el-tab-pane label="LOGGER" name="logger"></el-tab-pane>
         </el-tabs>
@@ -453,12 +453,13 @@
         this.apis = [];
       }
       this.activeApi = this.apis[0];
+
+      // force update the el-tabs while the logger changed
+      this.$on('loggerUpdate', () => {
+        this.$forceUpdate();
+      });
     },
     methods: {
-      // switch panel
-      handleSwitchPanel() {
-        console.log('panel', this.activeMock.serviceLog);
-      },
       // update service status
       updateServiceStatus() {
         if (this.activeMock.status === 'running') {
@@ -1194,6 +1195,14 @@
   .el-main.logger .el-collapse .el-collapse-item__header .req-type {
     width: 50px;
     display: inline-block;
+    overflow: hidden;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__header .path {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 600px;
+    white-space: nowrap;
   }
   .el-main.logger .el-collapse .el-collapse-item__header .time {
     display: inline-block;
