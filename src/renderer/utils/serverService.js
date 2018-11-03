@@ -124,7 +124,6 @@ export default class serverService {
     // create routes
     apis.forEach((api) => {
       router[api.method](`/${api.path}`, (req, res) => {
-        console.log(11111111, req);
         req.startedAt = new Date();
         const errorDetails = [];
         setTimeout(() => {
@@ -155,7 +154,6 @@ export default class serverService {
 
           // service log
           this.serviceLog(config, req, res);
-          console.log(2222222, res);
         }, parseInt(api.latency, 10));
       });
     });
@@ -216,7 +214,9 @@ export default class serverService {
     }
 
     // return json data
-    res.json(JSON.parse(api.response.body.value));
+    const data = JSON.parse(api.response.body.value);
+    res.resData = data;
+    res.json(data);
   }
 
   /**
@@ -235,9 +235,11 @@ export default class serverService {
     res.set('X-Powered-By', 'Mockman');
 
     // return error details
-    res.json({
+    const data = {
       errors,
-    });
+    };
+    res.resData = data;
+    res.json(data);
 
     // end the reponse process
     res.end();
