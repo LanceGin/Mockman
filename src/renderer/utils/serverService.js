@@ -24,7 +24,7 @@ export default class serverService {
 
     this.parseBody(service, formData);
     this.setCors(service);
-    this.setRoutes(service, config);
+    this.setRoutes(service, config, self);
 
     const serviceIns = service.listen(port);
 
@@ -108,7 +108,7 @@ export default class serverService {
     *       latancy, response, request etc.
     *
     */
-  static setRoutes(service, config) {
+  static setRoutes(service, config, self) {
     const router = express.Router();
     const apis = config.apis;
     const prefix = config.prefix;
@@ -154,6 +154,7 @@ export default class serverService {
 
           // service log
           this.serviceLog(config, req, res);
+          self.$emit('loggerUpdate');
         }, parseInt(api.latency, 10));
       });
     });
