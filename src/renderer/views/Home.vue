@@ -356,10 +356,18 @@
                 <span class="time">{{ item.req.startedAt.toLocaleTimeString() }}</span>
               </template>
               <el-tabs>
-                <el-tab-pane label="Request Headers">Request Headers</el-tab-pane>
-                <el-tab-pane label="Request Body">Request Body</el-tab-pane>
-                <el-tab-pane label="Response Headers">Response Headers</el-tab-pane>
-                <el-tab-pane label="Response Body">Response Body</el-tab-pane>
+                <el-tab-pane label="Request Headers">
+                  <pre>{{ item.req.headers }}</pre>
+                </el-tab-pane>
+                <el-tab-pane label="Request Body">
+                  <pre>{{ item.req.body }}</pre>
+                </el-tab-pane>
+                <el-tab-pane label="Response Headers">
+                  <pre>{{ item.res._headers }}</pre>
+                </el-tab-pane>
+                <el-tab-pane label="Response Body">
+                  <pre>{{ item.res.resData }}</pre>
+                </el-tab-pane>
               </el-tabs>
             </el-collapse-item>
           </el-collapse>
@@ -1191,6 +1199,36 @@
     display: inline-block;
     float: right;
     margin-right: 20px;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__wrap {
+    background: transparent;
+    border-bottom: 0;
+    padding: 0 20px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+    box-sizing: border-box;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__wrap .el-tabs__nav-wrap::after {
+    height: 0;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__wrap .el-tabs__active-bar {
+    background: #33c6c5;
+    height: 1px;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__wrap .el-tabs__item {
+    color: #c0c3cb;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__wrap .el-tabs__item:hover,
+  .el-main.logger .el-collapse .el-collapse-item__wrap .el-tabs__item.is-active {
+    color: #33c6c5;
+  }
+  .el-main.logger .el-collapse .el-collapse-item__wrap .el-tabs__content {
+    color: #c0c3cb;
+    background: rgba(79,84,92,.6);
+    padding: 10px 10px;
+    border-radius: 5px;
   }
 
   /* request type color */
