@@ -155,6 +155,7 @@ export default class serverService {
           // service log
           this.serviceLog(config, req, res);
           self.$emit('loggerUpdate');
+          req.endAt = new Date();
         }, parseInt(api.latency, 10));
       });
     });

@@ -354,6 +354,8 @@
                 <span :class="`req-type ${item.req.method.toLowerCase()}`">{{ item.req.method }}</span>
                 <span class="path">{{ item.req.headers.host + item.req.originalUrl }}</span>
                 <span class="time">{{ item.req.startedAt.toLocaleTimeString() }}</span>
+                <span class="code">{{ item.res.statusCode }}</span>
+                <span class="duration">{{ `${item.req.endAt - item.req.startedAt} ms` }}</span>
               </template>
               <el-tabs>
                 <el-tab-pane label="Request Headers">
@@ -1204,7 +1206,9 @@
     max-width: 600px;
     white-space: nowrap;
   }
-  .el-main.logger .el-collapse .el-collapse-item__header .time {
+  .el-main.logger .el-collapse .el-collapse-item__header .time,
+  .el-main.logger .el-collapse .el-collapse-item__header .code,
+  .el-main.logger .el-collapse .el-collapse-item__header .duration {
     display: inline-block;
     float: right;
     margin-right: 20px;
