@@ -32,7 +32,9 @@ export default class serverService {
       config.serviceIns = serviceIns;
       config.status = 'running';
       config.startedAt = new Date();
-      config.serviceLog = [];
+      if (config.serviceLog === undefined) {
+        config.serviceLog = [];
+      }
     } else {
       self.$notify.error({
         title: 'Error',
