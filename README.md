@@ -14,7 +14,8 @@
 
 ## Screenshot
 
-![Mockman](http://orhcxc3kd.bkt.clouddn.com/mockman.png)
+![Mockman](https://i.loli.net/2018/11/03/5bdd4dd2bf440.png)
+![Logger](https://i.loli.net/2018/11/03/5bdd4deac142f.png)
 
 ## Usage
 
@@ -72,7 +73,7 @@
 - [x] add blur event to jsonEditor
 - [ ] group the apis with tag
 - [ ] check the conflict of all mocks
-- [ ] add a log panel to show the logs of an active mock server process
+- [x] add a log panel to show the logs of an active mock server process
 - [ ] add https support
 
 
