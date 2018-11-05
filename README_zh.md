@@ -14,7 +14,8 @@
 
 ## 截图
 
-![Mockman](http://orhcxc3kd.bkt.clouddn.com/mockman.png)
+![Mockman](https://i.loli.net/2018/11/03/5bdd4dd2bf440.png)
+![Logger](https://i.loli.net/2018/11/03/5bdd4deac142f.png)
 
 ## 使用
 
@@ -72,7 +73,7 @@
 - [x] jsonEditor组件暴露blur事件
 - [ ] 通过标签给api进行分类
 - [ ] 检查所有mock服务的冲突
-- [ ] 添加日志面板显示已开启的mock服务的请求日志
+- [x] 添加日志面板显示已开启的mock服务的请求日志
 - [ ] 增加https支持
 
 
