@@ -3,10 +3,13 @@
   * @dependecies { express, cors }
   *
   */
+const https = require('https');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+
+const httpsOptions = require('./httpsOptions').default;
 
 export default class serverService {
   /**
@@ -21,12 +24,19 @@ export default class serverService {
     const service = express();
     const formData = multer();
     const port = config.port;
+    let serviceIns;
 
     this.parseBody(service, formData);
     this.setCors(service);
     this.setRoutes(service, config, self);
 
-    const serviceIns = service.listen(port);
+    // check if https was enabled
+    if (config.isHttps) {
+      serviceIns = https.createServer(httpsOptions, service);
+      serviceIns.listen(port);
+    } else {
+      serviceIns = service.listen(port);
+    }
 
     if (serviceIns.listening === true) {
       config.serviceIns = serviceIns;
