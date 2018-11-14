@@ -51,46 +51,51 @@
           <div class="mock-info" v-else>
             <div>
               <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
-              <el-button
-                v-if="activeMock.status === 'running'"
-                key="running"
-                class="running"
-                type="text"
-                icon="el-icon-loading"
-                @click="handleServer">
-              </el-button>
-              <el-button
-                v-else-if="activeMock.status === 'forRefresh'"
-                key="running"
-                class="for-refresh"
-                type="text"
-                icon="el-icon-refresh"
-                @click="handleServer">
-              </el-button>
-              <el-button
-                v-else
-                key="stop"
-                class="stop"
-                type="text"
-                icon="el-icon-caret-right"
-                @click="handleServer">
-              </el-button>
-              <el-button
-                v-if="activeMock.isHttps === true"
-                key="isHttps"
-                class="is-https on"
-                type="text"
-                icon="el-icon-gin el-icon-gin-https"
-                @click="handleHttps">
-              </el-button>
-              <el-button
-                v-else
-                key="isHttps"
-                class="is-https off"
-                type="text"
-                icon="el-icon-gin el-icon-gin-https"
-                @click="handleHttps">
-              </el-button>
+              <el-tooltip v-if="activeMock.status === 'running'" content="Stop Server" placement="top-end" :visible-arrow="false">
+                <el-button
+                  key="running"
+                  class="running"
+                  type="text"
+                  icon="el-icon-loading"
+                  @click="handleServer">
+                </el-button>
+              </el-tooltip>
+              <el-tooltip v-else-if="activeMock.status === 'forRefresh'" content="Refresh Server" placement="top-end" :visible-arrow="false">
+                <el-button
+                  key="running"
+                  class="for-refresh"
+                  type="text"
+                  icon="el-icon-refresh"
+                  @click="handleServer">
+                </el-button>
+              </el-tooltip>
+              <el-tooltip v-else content="Start Server" placement="top-end" :visible-arrow="false">
+                <el-button
+                  key="stop"
+                  class="stop"
+                  type="text"
+                  icon="el-icon-caret-right"
+                  @click="handleServer">
+                </el-button>
+              </el-tooltip>
+              <el-tooltip v-if="activeMock.isHttps === true" content="Disable HTTPS" placement="top-end" :visible-arrow="false">
+                <el-button
+                  key="isHttps"
+                  class="is-https on"
+                  type="text"
+                  icon="el-icon-gin el-icon-gin-https"
+                  @click="handleHttps">
+                </el-button>
+              </el-tooltip>
+              <el-tooltip v-else content="Enable HTTPS" placement="top-end" :visible-arrow="false">
+                <el-button
+                  key="isHttps"
+                  class="is-https off"
+                  type="text"
+                  icon="el-icon-gin el-icon-gin-https"
+                  @click="handleHttps">
+                </el-button>
+              </el-tooltip>
               <!-- <el-dropdown class="stop" trigger="click">
                 <span class="el-dropdown-link">
                   <i class="el-icon-gin el-icon-gin-https"></i>
