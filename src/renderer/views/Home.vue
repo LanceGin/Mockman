@@ -75,6 +75,32 @@
                 icon="el-icon-caret-right"
                 @click="handleServer">
               </el-button>
+              <el-button
+                v-if="activeMock.isHttps === true"
+                key="isHttps"
+                class="is-https on"
+                type="text"
+                icon="el-icon-gin el-icon-gin-https"
+                @click="handleHttps">
+              </el-button>
+              <el-button
+                v-else
+                key="isHttps"
+                class="is-https off"
+                type="text"
+                icon="el-icon-gin el-icon-gin-https"
+                @click="handleHttps">
+              </el-button>
+              <!-- <el-dropdown class="stop" trigger="click">
+                <span class="el-dropdown-link">
+                  <i class="el-icon-gin el-icon-gin-https"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>
+                    <el-checkbox v-model="activeMock.isHttps">Enable Https</el-checkbox>
+                  </el-dropdown-item>·
+                </el-dropdown-menu>
+              </el-dropdown> -->
             </div>
             <div>
               <span class="host">localhost :</span>
@@ -534,6 +560,16 @@
         }
         this.$forceUpdate();
       },
+      handleHttps() {
+        const s = this.activeMock.isHttps;
+        if (s === undefined || s === false) {
+          this.activeMock.isHttps = true;
+        } else {
+          this.activeMock.isHttps = false;
+        }
+        this.updateServiceStatus();
+        this.$forceUpdate();
+      },
       handleHttpClick() {
         this.initDynamicResParam();
         this.initDynamicReqParam();
@@ -852,6 +888,18 @@
     padding: 0;
     font-size: 20px;
     color: #67c23a;
+  }
+  .el-aside.apis .mock-info .el-button--text.is-https.off {
+    padding: 0;
+    font-size: 20px;
+    color: #c0c3cb;
+    margin-left: 4px;
+  }
+  .el-aside.apis .mock-info .el-button--text.is-https.on {
+    padding: 0;
+    font-size: 20px;
+    color: #f77b20;
+    margin-left: 4px;
   }
   .el-aside.apis .mock-info div {
     height: 50px;
