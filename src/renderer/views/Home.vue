@@ -53,7 +53,7 @@
               <el-input v-model="activeMock.content" @blur="handleUpdateMock" class="mock-name" placeholder="Server Name"></el-input>
               <el-tooltip v-if="activeMock.status === 'running'" content="Stop Server" placement="top-end" :visible-arrow="false">
                 <el-button
-                  key="running"
+                  key="serverStatus"
                   class="running"
                   type="text"
                   icon="el-icon-loading"
@@ -62,7 +62,7 @@
               </el-tooltip>
               <el-tooltip v-else-if="activeMock.status === 'forRefresh'" content="Refresh Server" placement="top-end" :visible-arrow="false">
                 <el-button
-                  key="running"
+                  key="serverStatus"
                   class="for-refresh"
                   type="text"
                   icon="el-icon-refresh"
@@ -71,7 +71,7 @@
               </el-tooltip>
               <el-tooltip v-else content="Start Server" placement="top-end" :visible-arrow="false">
                 <el-button
-                  key="stop"
+                  key="serverStatus"
                   class="stop"
                   type="text"
                   icon="el-icon-caret-right"
