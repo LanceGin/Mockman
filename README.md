@@ -30,11 +30,17 @@
 
 > Where will your api data be stored?
 > 
-> Your data will be stored as a `sqlite file` absolutely on your local, the path will be different on different operation system. 
+> > Your data will be stored as a `sqlite file` absolutely on your local, the path will be different on different operation system. 
 > 
-> * `%APPDATA%`  for Windows
-> * `$XDG_CONFIG_HOME or ~/.config` for Linux
-> * `~/Library/Application Support` for macOS
+> > * `%APPDATA%`  for Windows
+> > * `$XDG_CONFIG_HOME or ~/.config` for Linux
+> > * `~/Library/Application Support` for macOS
+> 
+> Be attention before you start https server
+> 
+> > * Mockman is using `self-signed-certification` to create https server
+> > * Install [rootCA](https://github.com/LanceGin/Mockman/releases/download/1.0.5/rootCA.pem) on your client and trust it before you send https requests
+> 
 
 ## Todos
 
@@ -71,10 +77,11 @@
 - [x] response k-v input group
 - [x] response code editor
 - [x] add blur event to jsonEditor
+- [x] add a log panel to show the logs of an active mock server process
+- [x] add https support
 - [ ] group the apis with tag
 - [ ] check the conflict of all mocks
-- [x] add a log panel to show the logs of an active mock server process
-- [ ] add https support
+- [ ] Export/Import mock or api configurations
 
 
 

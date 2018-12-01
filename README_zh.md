@@ -30,11 +30,17 @@
 
 > Mock服务的api数据将会存储在哪？
 > 
-> 所有数据都将会在完全在本地以`sqlite`的形式进行存储，存储的地址因平台不同而不同：
+> > 所有数据都将会在完全在本地以`sqlite`的形式进行存储，存储的地址因平台不同而不同：
 > 
-> * `%APPDATA%`  for Windows
-> * `$XDG_CONFIG_HOME or ~/.config` for Linux
-> * `~/Library/Application Support` for macOS
+> > * `%APPDATA%`  for Windows
+> > * `$XDG_CONFIG_HOME or ~/.config` for Linux
+> > * `~/Library/Application Support` for macOS
+> 
+> 关于https需要注意的点
+> 
+> > * Mockman的https服务使用的是`自签名证书`
+> > * 在客户端请求mockman的https服务之前，需要安装[根证书](https://github.com/LanceGin/Mockman/releases/download/1.0.5/rootCA.pem)并信任
+> 
 
 ## Todos
 
@@ -71,10 +77,11 @@
 - [x] 返回数据key-value键值对
 - [x] http响应码编辑
 - [x] jsonEditor组件暴露blur事件
+- [x] 添加日志面板显示已开启的mock服务的请求日志
+- [x] 增加https支持
 - [ ] 通过标签给api进行分类
 - [ ] 检查所有mock服务的冲突
-- [x] 添加日志面板显示已开启的mock服务的请求日志
-- [ ] 增加https支持
+- [ ] 导出/导入mock或者api配置
 
 
 
