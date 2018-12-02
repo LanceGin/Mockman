@@ -10,10 +10,9 @@
           <el-tab-pane label="BUILDER" name="builder"></el-tab-pane>
           <el-tab-pane label="LOGGER" name="logger"></el-tab-pane>
         </el-tabs>
-        <!-- TODO
-        <el-button size="small">Builder</el-button>
-        <el-button size="small">Loger</el-button>
-        -->
+
+        <el-button size="small">Export</el-button>
+        <el-button size="small">Import</el-button>       
         <el-button size="small" @click="handleOuterClick('docs')">Docs</el-button>
         <el-button size="small" @click="handleOuterClick('feedback')">Feedback</el-button>
       </div>
