@@ -61,7 +61,7 @@
 
 ### Client
 
-- [x] brand header dislay
+- [x] brand header display
 - [x] mock sider display
 - [x] mock-detail and api-list display
 - [x] api-detail display
