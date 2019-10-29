@@ -65,7 +65,7 @@
     "express": "^4.16.3",
     "jsonlint": "^1.6.3",
     "multer": "^1.4.0",
-    "sequelize": "^4.39.0",
+    "sequelize": "^5.15.1",
     "sqlite3": "^4.0.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
