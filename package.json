@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "codemirror": "^5.40.2",
+    "codemirror": "^5.58.2",
     "cors": "^2.8.4",
     "element-ui": "^2.4.8",
     "express": "^4.16.3",
